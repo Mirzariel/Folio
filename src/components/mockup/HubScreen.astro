@@ -1,0 +1,109 @@
+---
+/**
+ * The hub: four real figures and three doors. No dashboard, no invented health
+ * score, no storage visualisation. FOLIO_VISION.md section 6 rules those out,
+ * and the caption under this window says so out loud.
+ *
+ * Internals size themselves with container queries (cqw), not the viewport:
+ * this window is sized by its own column.
+ */
+import Icon from '@/components/primitives/Icon.astro';
+import { doors, hubStats } from '@/data/mockup';
+---
+
+<div class="hub__head">
+  <h2 class="hub__title">Everything in its place.</h2>
+  <div class="stats" id="stats">
+    {hubStats.map((stat, i) => (
+      <>
+        {i > 0 && <span class="stats__sep" aria-hidden="true"></span>}
+        <div class="stats__c">
+          <span class="stats__l">{stat.label}</span>
+          <span class={`stats__v${'link' in stat && stat.link ? ' stats__v--link' : ''}`}>
+            {'count' in stat && stat.count !== undefined ? (
+              <span
+                data-count={stat.count}
+                data-decimals={'decimals' in stat ? stat.decimals : undefined}
+                data-suffix={'suffix' in stat ? stat.suffix : undefined}
+              >{stat.value}</span>
+            ) : stat.value}
+            {'link' in stat && stat.link && <Icon name="chevron" size={9} />}
+          </span>
+        </div>
+      </>
+    ))}
+  </div>
+</div>
+
+<div class="doors">
+  {doors.map((door, i) => (
+    <div class="door" style={`--n:${i}`}>
+      <span class="door__n">{door.n}</span>
+      <Icon name={door.icon} size={52} />
+      <h3>{door.title}</h3>
+      <p>{door.body}</p>
+      <span class="door__btn">Open</span>
+    </div>
+  ))}
+</div>
+
+<style>
+  .hub__head {
+    padding: clamp(26px, 3.6cqw, 44px) 24px clamp(24px, 3.2cqw, 38px);
+    display: flex; flex-direction: column; align-items: center;
+    gap: clamp(16px, 2.2cqw, 26px); text-align: center;
+  }
+  .hub__title {
+    font-family: var(--serif); font-weight: 600; font-size: clamp(21px, 3.3cqw, 36px);
+    letter-spacing: -.015em; line-height: 1.1; color: var(--t1);
+  }
+  .stats {
+    display: flex; align-items: center; gap: clamp(14px, 3cqw, 36px);
+    flex-wrap: wrap; justify-content: center;
+  }
+  .stats__c { display: flex; flex-direction: column; gap: 4px; text-align: left; }
+  .stats__l {
+    font-size: 10px; font-weight: 650; letter-spacing: .11em;
+    text-transform: uppercase; color: var(--t3);
+  }
+  .stats__v {
+    font-size: clamp(15px, 1.7cqw, 18px); font-weight: 650;
+    font-variant-numeric: tabular-nums; color: var(--t1);
+  }
+  .stats__v--link { color: var(--accent-t); display: inline-flex; align-items: center; gap: 5px; }
+  .stats__sep { width: 1px; height: 32px; background: var(--border); }
+
+  .doors { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--border); }
+  .door {
+    padding: clamp(24px, 3cqw, 38px) 20px; text-align: center; display: flex;
+    flex-direction: column; align-items: center; gap: clamp(11px, 1.5cqw, 17px);
+    position: relative; min-height: clamp(240px, 30cqw, 340px); justify-content: center;
+  }
+  .door + .door { border-left: 1px solid var(--border); }
+  .door:nth-child(1) { background: var(--raised); }
+  .door:nth-child(2) { background: var(--surface); }
+  .door__n {
+    position: absolute; top: 18px; left: 20px; font-size: 10px;
+    font-weight: 650; letter-spacing: .11em; color: var(--t3);
+  }
+  .door > :global(svg) { color: var(--accent-t); width: clamp(38px, 4.6cqw, 54px); height: auto; }
+  .door h3 {
+    font-family: var(--serif); font-weight: 600; font-size: clamp(16px, 2.1cqw, 23px);
+    letter-spacing: -.008em; color: var(--t1);
+  }
+  /* min-height keeps the three clusters on one baseline whatever the copy wraps
+     to, so they read as three doors rather than three drifting columns */
+  .door p {
+    font-size: clamp(12px, 1.25cqw, 14px); line-height: 1.5; color: var(--t2);
+    max-width: 26ch; min-height: 4.5em;
+  }
+  .door__btn {
+    margin-top: 2px; display: inline-flex; align-items: center; height: 32px; padding: 0 20px;
+    border: 1px solid var(--edge); border-radius: var(--r); background: var(--inset); font-size: 13px;
+  }
+  @container (max-width: 640px) {
+    .doors { grid-template-columns: 1fr; }
+    .door + .door { border-left: 0; border-top: 1px solid var(--border); }
+    .door { min-height: 0; padding: 22px 16px; }
+  }
+</style>

@@ -1,0 +1,87 @@
+---
+/**
+ * The shell every page shares: head, nav, footer and the sticky mobile buy bar.
+ *
+ * og:image must be an absolute URL or most social networks will not resolve it.
+ * It becomes absolute automatically once `site` is set in astro.config.mjs;
+ * npm run check:copy fails the build if it is still relative at that point.
+ */
+import Nav from '@/components/chrome/Nav.astro';
+import Footer from '@/components/chrome/Footer.astro';
+import BuyBar from '@/components/chrome/BuyBar.astro';
+import { site } from '@/config/site';
+
+import '@/styles/tokens.css';
+import '@/styles/reset.css';
+import '@/styles/base.css';
+import '@/styles/components.css';
+import '@/styles/mockup.css';
+import '@/styles/reduced-motion.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Suppresses the sticky buy bar on pages that are not selling. */
+  showBuyBar?: boolean;
+  ogTitle?: string;
+  ogDescription?: string;
+}
+
+const {
+  title,
+  description = site.description,
+  showBuyBar = true,
+  ogTitle = 'Folio, a personal photo archive manager',
+  ogDescription = 'Understand before you move. Verify before you remove. Folio shows you the whole plan before a single file changes.',
+} = Astro.props;
+
+const ogImage = Astro.site ? new URL('/og-card.png', Astro.site).href : '/og-card.png';
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+---
+
+<!doctype html>
+<html lang="en" class="t-dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0C0705" />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="icon" href="/folio-mark.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/folio-mark.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={ogDescription} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={site.tagline} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=Inter:wght@400..700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Gates every reveal. Without scripting the page is static and complete. -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
+  </head>
+
+  <body>
+    <Nav />
+    <main id="top">
+      <slot />
+    </main>
+    <Footer />
+    {showBuyBar && <BuyBar />}
+
+    <script>
+      import "@/scripts/main";
+    </script>
+  </body>
+</html>

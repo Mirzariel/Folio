@@ -1,0 +1,29 @@
+---
+/**
+ * The row of short guarantees. Every item must be a claim the product actually
+ * keeps; AGENTS.md forbids adding one that is not backed by behaviour.
+ */
+import Icon from './Icon.astro';
+
+export interface TrustItem {
+  readonly label: string;
+  /** Defaults to the circled check. */
+  readonly icon?: string;
+}
+
+interface Props {
+  items: readonly TrustItem[];
+  variant?: 'row' | 'stack' | 'center';
+  class?: string;
+}
+
+const { items, variant = 'row', class: className } = Astro.props;
+const variantClass = { row: '', stack: 'trust--stack', center: 'trust--center' }[variant];
+const classes = ['trust', variantClass, className].filter(Boolean).join(' ');
+---
+
+<ul class={classes}>
+  {items.map((item) => (
+    <li><Icon name={item.icon ?? 'check-c'} size={15} />{item.label}</li>
+  ))}
+</ul>

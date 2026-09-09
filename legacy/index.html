@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en" class="t-dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Folio. You capture the moments, Folio organizes the memories.</title>
+<meta name="description" content="Folio turns scattered photos on your PC and drives into an archive you can trust. Find exact duplicates, organize by date, rename in bulk, and see the whole plan before anything changes. Windows and macOS. $20 once, no subscription.">
+<meta name="theme-color" content="#0C0705">
+<link rel="icon" href="assets/brand/folio-mark.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/brand/folio-mark.png">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Folio, a personal photo archive manager">
+<meta property="og:description" content="Understand before you move. Verify before you remove. Folio shows you the whole plan before a single file changes. $20 once, no subscription.">
+<!-- Replace with an absolute https:// URL once you have a domain. Most networks will not resolve a relative one. -->
+<meta property="og:image" content="assets/img/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Folio. You capture the moments, Folio organizes the memories. $20 once, no subscription.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="assets/img/og-card.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<!-- ================= icon sprite ================= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-check-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.5 2.5 4.5-5"/></symbol>
+  <symbol id="i-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5.5c0 4.4-3 8-7 9.5-4-1.5-7-5.1-7-9.5V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M7.5 14h3M13.5 14h3M7.5 17.5h3"/></symbol>
+  <symbol id="i-dupes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="13" height="13" rx="2"/><path d="M8 21h11a2 2 0 0 0 2-2V8"/></symbol>
+  <symbol id="i-rename" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5h16v2M12 5v14M9 19h6"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2.5h8a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-photo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="M4 17l4.5-4.5 3.5 3.5 3-3L20 18"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M9 6.5l9 5.5-9 5.5z"/></symbol>
+  <symbol id="i-recycle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9.5 7V4.8h5V7M6.5 7l1 12.2a2 2 0 0 0 2 1.8h5a2 2 0 0 0 2-1.8L17.5 7"/><path d="M10.5 11v6M13.5 11v6"/></symbol>
+  <symbol id="i-fingerprint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a8 8 0 0 0-8 8v2M20 14v-2a8 8 0 0 0-4-6.9"/><path d="M8 12a4 4 0 0 1 8 0v4M12 12v5.5"/><path d="M8 16.5V19M16 16.5c0 1.2-.3 2.3-.8 3.3"/></symbol>
+  <symbol id="i-resume" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M6 8l-3 5.5h6zM18 8l-3 5.5h6z"/><path d="M5 20h14"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-windows" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.6l7.4-1v7.1H3zM11.6 4.4L21 3v8.7h-9.4zM3 12.9h7.4V20L3 19zM11.6 12.9H21V21l-9.4-1.3z"/></symbol>
+  <symbol id="i-apple" viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.15-2.8.85-3.5.85s-1.85-.83-3-.81c-1.55.02-2.98.9-3.78 2.29-1.61 2.8-.41 6.95 1.16 9.22.77 1.11 1.68 2.36 2.88 2.31 1.16-.05 1.6-.75 3-.75s1.79.75 3.01.72c1.24-.02 2.03-1.13 2.79-2.25.88-1.29 1.24-2.54 1.26-2.6-.03-.01-2.42-.93-2.44-3.68zM14.1 5.6c.63-.77 1.06-1.83.94-2.9-.91.04-2.01.61-2.67 1.37-.59.68-1.1 1.76-.96 2.8 1.02.08 2.06-.52 2.69-1.27z"/></symbol>
+</svg>
+
+<!-- ================= nav ================= -->
+<header class="nav" id="nav">
+  <div class="nav__in">
+    <a class="brand" href="#top" aria-label="Folio, home">
+      <img src="assets/brand/folio-mark.png" alt="" width="30" height="30">
+      <span>Folio</span>
+    </a>
+    <nav class="nav__links" id="navlinks" aria-label="Primary">
+      <a href="#how">How it works</a>
+      <a href="#jobs">What it does</a>
+      <a href="#promise">Safety</a>
+      <a href="#next">Roadmap</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav__cta">
+      <a class="btn btn--primary btn--sm js-buy" href="#pricing">Get Folio, $20</a>
+      <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="navlinks">
+        <svg width="20" height="20" aria-hidden="true"><use href="#i-menu"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="nav__progress" id="progress" aria-hidden="true"></div>
+</header>
+
+<main id="top">
+
+<!-- ================= hero ================= -->
+<section class="sect t-dark hero" id="hero">
+  <div class="hero__glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero__grid">
+      <div class="hero__text">
+        <p class="eyebrow ld ld-1">Windows and macOS &middot; $20 once &middot; No subscription</p>
+
+        <h1 class="display lines ld ld-2">
+          <span class="ln"><span>You capture the moments.</span></span>
+          <span class="ln"><span><span class="mark-under">Folio</span> organizes the memories.</span></span>
+        </h1>
+
+        <p class="lede ld ld-3">
+          You take the photographs. Folio looks after the archive: reading it, proving what is
+          in it, and changing nothing until you say so. The point is not tidier folders. The
+          point is knowing your memories are safe, with evidence, and staying in charge of them.
+        </p>
+
+        <div class="cta-row ld ld-4">
+          <a class="btn btn--primary js-buy" href="#pricing">Get Folio, $20 <span class="btn__sub">one time</span></a>
+          <a class="btn btn--ghost" href="#how">See how it works</a>
+        </div>
+      </div>
+
+      <!-- The signature moment. These five prints start as a pile and resolve into a grid
+           as the visitor scrolls. Positions here are the ORDERED state; the scattered state
+           is a transform offset driven by --p in styles.css. -->
+      <div class="prints" id="prints" aria-hidden="true">
+        <div class="prints__p" style="--dx:37%;   --dy:32%;  --dr:-9deg;  --ds:.34; --z:3"><img src="assets/tiles/t09.jpg" alt="" width="440" height="440" fetchpriority="high"></div>
+        <div class="prints__p" style="--dx:60%;   --dy:13%;  --dr:8deg;   --ds:.22; --z:2"><img src="assets/tiles/t14.jpg" alt="" width="440" height="440" fetchpriority="high"></div>
+        <div class="prints__p" style="--dx:-117%; --dy:93%;  --dr:-3deg;  --ds:.52; --z:5"><img src="assets/tiles/t04.jpg" alt="" width="440" height="440" fetchpriority="high"></div>
+        <div class="prints__p" style="--dx:-25%;  --dy:-9%;  --dr:12deg;  --ds:.18; --z:4"><img src="assets/tiles/t02.jpg" alt="" width="440" height="440" loading="lazy"></div>
+        <div class="prints__p" style="--dx:18%;   --dy:-14%; --dr:-12deg; --ds:.14; --z:1"><img src="assets/tiles/t12.jpg" alt="" width="440" height="440" loading="lazy"></div>
+      </div>
+    </div>
+
+    <!-- One line, full width, with its own room. It used to wrap into two ragged rows and
+         sit flush against the window below it. -->
+    <ul class="trust ld ld-5">
+      <li><svg width="15" height="15" aria-hidden="true"><use href="#i-check-c"/></svg>Pay once, own it</li>
+      <li><svg width="15" height="15" aria-hidden="true"><use href="#i-check-c"/></svg>Runs entirely on your PC</li>
+      <li><svg width="15" height="15" aria-hidden="true"><use href="#i-check-c"/></svg>Deletions go to the Recycle Bin</li>
+      <li><svg width="15" height="15" aria-hidden="true"><use href="#i-check-c"/></svg>Nothing moves without approval</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= the hub, in the app ================= -->
+<section class="sect t-dark stage" id="stage">
+  <div class="stage__floor" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="win rv tilt" id="hubwin">
+      <div class="win__bar">
+        <img src="assets/brand/folio-mark.png" alt="" width="20" height="20">
+        <span class="win__name">Folio</span>
+        <span class="win__source"><i class="dot"></i>Family Archive (D:)</span>
+        <span class="win__ctrls" aria-hidden="true"><i></i><i></i><i></i></span>
+      </div>
+
+      <div class="hub__head">
+        <h2 class="hub__title">Everything in its place.</h2>
+        <div class="stats" id="stats">
+          <div class="stats__c"><span class="stats__l">Photographs</span><span class="stats__v" data-count="128432">128,432</span></div>
+          <span class="stats__sep" aria-hidden="true"></span>
+          <div class="stats__c"><span class="stats__l">Reclaimable</span><span class="stats__v stats__v--link"><span data-count="84.2" data-decimals="1" data-suffix=" GB">84.2 GB</span> <svg width="9" height="9" aria-hidden="true"><use href="#i-chevron"/></svg></span></div>
+          <span class="stats__sep" aria-hidden="true"></span>
+          <div class="stats__c"><span class="stats__l">Single copy</span><span class="stats__v" data-count="3208">3,208</span></div>
+          <span class="stats__sep" aria-hidden="true"></span>
+          <div class="stats__c"><span class="stats__l">Last scan</span><span class="stats__v">Today 14:22</span></div>
+        </div>
+      </div>
+
+      <div class="doors">
+        <div class="door" style="--n:0">
+          <span class="door__n">01</span>
+          <svg width="52" height="52" aria-hidden="true"><use href="#i-calendar"/></svg>
+          <h3>Organize by date</h3>
+          <p>Into year and month folders, in a destination you choose.</p>
+          <span class="door__btn">Open</span>
+        </div>
+        <div class="door" style="--n:1">
+          <span class="door__n">02</span>
+          <svg width="52" height="52" aria-hidden="true"><use href="#i-dupes"/></svg>
+          <h3>Find duplicates</h3>
+          <p>Files that are byte-for-byte identical. You decide what to keep.</p>
+          <span class="door__btn">Open</span>
+        </div>
+        <div class="door" style="--n:2">
+          <span class="door__n">03</span>
+          <svg width="52" height="52" aria-hidden="true"><use href="#i-rename"/></svg>
+          <h3>Rename in bulk</h3>
+          <p>Consistent names for many files at once, with a preview first.</p>
+          <span class="door__btn">Open</span>
+        </div>
+      </div>
+
+      <div class="win__strip">
+        <span class="win__promise"><svg width="14" height="14" aria-hidden="true"><use href="#i-shield"/></svg>Changes require approval</span>
+        <span class="win__idle">No job running</span>
+        <span class="win__act">Activity</span>
+      </div>
+    </div>
+
+    <p class="stage__cap rv">Four real figures. Three doors. No dashboard, no invented health score.</p>
+  </div>
+</section>
+
+<!-- ================= the problem ================= -->
+<section class="sect t-dark" id="problem">
+  <div class="wrap">
+    <div class="head head--center rv">
+      <p class="eyebrow eyebrow--center">The problem</p>
+      <h2 class="h2 lines">
+        <span class="ln"><span>You don&rsquo;t have a photo problem.</span></span>
+        <span class="ln"><span>You have an archive problem.</span></span>
+      </h2>
+      <p class="lede">
+        The photos are all still there, on the laptop, the old phone backup, two external drives
+        and a memory card in a drawer. What is missing is an answer to the only question that
+        matters: <em>what can I safely tidy up, and what would I be losing?</em>
+      </p>
+    </div>
+
+    <div class="grid g-3 problem__grid">
+      <figure class="rv">
+        <div class="shot shot--wide"><img src="assets/img/scatter.jpg" alt="Dozens of printed photographs spread across a table" loading="lazy"></div>
+        <figcaption>
+          <h3 class="h4">Four drives, one collection</h3>
+          <p class="small">Folders inside folders, named <em>New folder (3)</em>. Copies of copies. You cannot see the shape of it from Explorer, so you keep everything, forever, just in case.</p>
+        </figcaption>
+      </figure>
+      <figure class="rv rv-d1">
+        <div class="shot shot--wide"><img src="assets/img/drive.jpg" alt="An external hard drive opened on a desk" loading="lazy"></div>
+        <figcaption>
+          <h3 class="h4">&ldquo;Is this one a duplicate, or a backup?&rdquo;</h3>
+          <p class="small">Same name, same size, two drives. One is wasted space and one is the only thing standing between you and losing 2014. They look identical from the outside.</p>
+        </figcaption>
+      </figure>
+      <figure class="rv rv-d2">
+        <div class="shot shot--wide"><img src="assets/img/elder-photos.jpg" alt="Hands holding old black and white photographs" loading="lazy"></div>
+        <figcaption>
+          <h3 class="h4">The cost of being wrong is permanent</h3>
+          <p class="small">A spreadsheet you delete twice can be rebuilt. Your daughter&rsquo;s first birthday cannot. So the safest thing is to do nothing, and the mess quietly doubles every year.</p>
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="figs rv">
+      <div class="figs__c">
+        <div class="figs__v" data-count="128432">128,432</div>
+        <p class="figs__l">Photographs Folio found and catalogued</p>
+        <p class="figs__s">A count it holds. Not an estimate, not a percentage.</p>
+      </div>
+      <div class="figs__c">
+        <div class="figs__v" data-count="84.2" data-decimals="1" data-suffix=" GB">84.2 GB</div>
+        <p class="figs__l">Reclaimable, from copies proved identical</p>
+        <p class="figs__s">Quarantined copies are <em>ready</em> to reclaim. Until you reclaim them, Folio says they free nothing.</p>
+      </div>
+      <div class="figs__c">
+        <div class="figs__v" data-count="3208">3,208</div>
+        <p class="figs__l">Photographs that exist in one copy only</p>
+        <p class="figs__s">The ones with no second copy anywhere. Worth knowing before you tidy anything.</p>
+      </div>
+    </div>
+    <p class="tiny rv figs__note">Figures shown are from Folio&rsquo;s own design canvas, standing in for a real library. Your numbers are your own.</p>
+  </div>
+</section>
+
+<!-- ================= how it works ================= -->
+<section class="sect t-paper" id="how">
+  <div class="wrap">
+    <div class="head rv">
+      <p class="eyebrow">How it works</p>
+      <h2 class="h2 lines">
+        <span class="ln"><span>You choose the source.</span></span>
+        <span class="ln"><span>Folio reads it.</span></span>
+      </h2>
+      <p class="lede">Three steps, and nothing on your drives changes until you approve a plan.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step rv">
+        <div class="step__n">1</div>
+        <div class="step__b">
+          <div><h3 class="h3">Choose a source</h3></div>
+          <div>
+            <p>Point Folio at a folder or a drive and it becomes a Folio library. Plug in a phone, camera or memory card and you can browse it without adding it to anything. Browsing costs nothing and changes nothing.</p>
+            <p class="small step__note"><svg width="14" height="14" aria-hidden="true"><use href="#i-folder"/></svg>D:\Family&nbsp;Archive &nbsp;&middot;&nbsp; C:\Users\you\Pictures &nbsp;&middot;&nbsp; that drive in the drawer</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="step rv">
+        <div class="step__n">2</div>
+        <div class="step__b">
+          <div><h3 class="h3">Folio reads it</h3></div>
+          <div>
+            <p>The scan only reads. It never changes, moves or deletes your files, and it can be paused and resumed. Folio records what each photograph actually is: its content, its capture date, its real identity. That is what lets it prove a claim later instead of guessing at one.</p>
+            <p class="small step__note">Big collections and drives that get unplugged do not send you back to the start.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="step rv">
+        <div class="step__n">3</div>
+        <div class="step__b">
+          <div><h3 class="h3">Pick a task, see the plan, approve it</h3></div>
+          <div>
+            <p>Organize by date, find duplicates, or rename in bulk. Folio writes the whole plan out first, every file, every destination, every copy it proposes to set aside, and shows you the consequences in plain language. Then it waits.</p>
+            <p class="small step__note">Approve it and Folio does the work, verifies every completed change against the plan, and reports what changed and what did not.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= the gallery ================= -->
+<section class="sect t-dark" id="gallery">
+  <div class="wrap">
+    <div class="head rv gallery__head">
+      <p class="eyebrow">The gallery</p>
+      <h2 class="h2 lines">
+        <span class="ln"><span>You see photographs.</span></span>
+        <span class="ln"><span>Folio handles the filenames.</span></span>
+      </h2>
+      <p class="lede">
+        A wall of pictures with a filename under each one reads as a list of files that happens
+        to have pictures. Folio is built the other way round: the tiles carry the photograph and
+        nothing else. Names, paths, sizes and dates belong to a photograph you have
+        <em>opened</em>. Try one.
+      </p>
+    </div>
+
+    <div class="win rv tilt">
+      <div class="win__bar">
+        <span class="win__back"><svg width="15" height="15" aria-hidden="true"><use href="#i-back"/></svg>Back</span>
+        <span class="win__name">Gallery</span>
+        <span class="win__source"><i class="dot"></i>Family Archive (D:)</span>
+        <span class="win__ctrls" aria-hidden="true"><i></i><i></i><i></i></span>
+      </div>
+      <div class="gal__bar">
+        <span class="seg" aria-hidden="true"><span>S</span><span class="on">M</span><span>L</span></span>
+        <span class="seg" aria-hidden="true"><span class="on">All</span><span>Photos</span><span>Videos</span></span>
+        <span class="gal__meta">August 2019 &middot; 1,204 items</span>
+      </div>
+
+      <!-- Tiles are real buttons: clicking one runs the connected enlargement described in
+           the product spec, where the tile grows into the viewer rather than navigating. -->
+      <div class="gal__grid" id="galgrid">
+        <button class="gal__cell gal__cell--big" style="--n:0"  data-name="IMG_4821.CR2"><img src="assets/tiles/t05.jpg" alt="A family standing in shallow water" loading="lazy" width="440" height="440"></button>
+        <button class="gal__cell" style="--n:1"  data-name="IMG_4822.CR2"><img src="assets/tiles/t01.jpg" alt="A family on the shoreline" loading="lazy" width="440" height="440"></button>
+        <button class="gal__cell" style="--n:2"  data-name="IMG_4830.CR2"><img src="assets/tiles/t02.jpg" alt="A child on an adult's shoulders at the beach" loading="lazy" width="440" height="440"></button>
+        <button class="gal__cell" style="--n:3"  data-name="DSC_0043.JPG"><img src="assets/tiles/t03.jpg" alt="Figures on a wide empty beach" loading="lazy" width="440" height="440"></button>
+        <button class="gal__cell" style="--n:4"  data-name="MVI_0071.MP4" data-clip="1"><img src="assets/tiles/t09.jpg" alt="A lake at golden hour" loading="lazy" width="440" height="440"><span class="gal__badge" aria-hidden="true"><svg width="10" height="10"><use href="#i-play"/></svg></span></button>
+        <button class="gal__cell" style="--n:5"  data-name="IMG_4831.CR2"><img src="assets/tiles/t04.jpg" alt="A family walking along the sand" loading="lazy" width="440" height="440"></button>
+        <button class="gal__cell" style="--n:6"  data-name="IMG_4840.CR2"><img src="assets/tiles/t06.jpg" alt="An adult and a child playing on the beach" loading="lazy" width="440" height="440"></button>
+        <button class="gal__cell" style="--n:7"  data-name="IMG_4855.CR2"><img src="assets/tiles/t10.jpg" alt="Mountains above a still lake" loading="lazy" width="440" height="440"></button>
+        <button class="gal__cell" style="--n:8"  data-name="IMG_4861.CR2"><img src="assets/tiles/t07.jpg" alt="A child being lifted above the sea" loading="lazy" width="440" height="440"></button>
+        <button class="gal__cell" style="--n:9"  data-name="IMG_4877.JPG"><img src="assets/tiles/t14.jpg" alt="A small dog wearing a party hat" loading="lazy" width="440" height="440"></button>
+        <button class="gal__cell gal__cell--big" style="--n:10" data-name="IMG_4890.CR2"><img src="assets/tiles/t12.jpg" alt="A turquoise lake below a mountain ridge" loading="lazy" width="440" height="440"></button>
+        <button class="gal__cell" style="--n:11" data-name="IMG_4902.CR2"><img src="assets/tiles/t08.jpg" alt="Someone looking out to sea" loading="lazy" width="440" height="440"></button>
+        <button class="gal__cell" style="--n:12" data-name="IMG_4915.CR2"><img src="assets/tiles/t11.jpg" alt="A hazy coastline at dusk" loading="lazy" width="440" height="440"></button>
+        <button class="gal__cell" style="--n:13" data-name="IMG_4928.JPG"><img src="assets/tiles/t15.jpg" alt="A dog in a party hat on grass" loading="lazy" width="440" height="440"></button>
+        <button class="gal__cell" style="--n:14" data-name="IMG_4931.CR2"><img src="assets/tiles/t13.jpg" alt="A road winding through dry hills" loading="lazy" width="440" height="440"></button>
+        <button class="gal__cell" style="--n:15" data-name="MVI_0084.MP4" data-clip="1"><img src="assets/tiles/t18.jpg" alt="A camera and passport laid out on a map" loading="lazy" width="440" height="440"><span class="gal__badge" aria-hidden="true"><svg width="10" height="10"><use href="#i-play"/></svg></span></button>
+        <button class="gal__cell" style="--n:16" data-name="IMG_4944.JPG"><img src="assets/tiles/t16.jpg" alt="A dog wearing a party hat indoors" loading="lazy" width="440" height="440"></button>
+        <button class="gal__cell" style="--n:17" data-name="IMG_4950.CR2"><img src="assets/tiles/t19.jpg" alt="An old camera resting on a folded map" loading="lazy" width="440" height="440"></button>
+        <span class="gal__sweep" aria-hidden="true"></span>
+      </div>
+
+      <div class="win__strip">
+        <span class="win__promise"><svg width="14" height="14" aria-hidden="true"><use href="#i-shield"/></svg>Changes require approval</span>
+        <span class="win__idle">Scale: M &middot; Sorted by capture date</span>
+        <span class="win__act">Activity</span>
+      </div>
+    </div>
+
+    <div class="grid g-3 gallery__notes">
+      <div class="rv"><h3 class="h4">Scale is a first-class control</h3><p class="small">S, M, L: contact sheet, normal, close reading. How large the pictures are drawn is the main decision on this page, so it is not buried in a menu.</p></div>
+      <div class="rv rv-d1"><h3 class="h4">The viewer covers the wall</h3><p class="small">Opening a photograph does not navigate away. Escape reads as putting a print back down, not as going back a page. Click any tile above and press Escape.</p></div>
+      <div class="rv rv-d2"><h3 class="h4">Video and photo, told apart</h3><p class="small">A clip and a photograph are indistinguishable as a still frame, so a clip carries one small badge. That is the only thing on a tile that is not the picture.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= three jobs ================= -->
+<section class="sect t-paper" id="jobs">
+  <div class="wrap">
+    <div class="head rv">
+      <p class="eyebrow">What it does</p>
+      <h2 class="h2">Three jobs. Each one writes the plan out before it touches anything.</h2>
+      <p class="lede">Folio is deliberately not a suite of forty utilities sharing a window. It does a small number of things and it does them where you can watch.</p>
+    </div>
+
+    <div class="grid g-3 jobs__grid">
+
+      <div class="card rv">
+        <div class="card__ico"><svg width="22" height="22" aria-hidden="true"><use href="#i-calendar"/></svg></div>
+        <h3 class="h3">Organize by date</h3>
+        <p>Sort photographs into year and month folders using the date the photo was actually taken, not the date Windows happened to stamp on the file when it was last copied.</p>
+        <div class="rows">
+          <div class="rows__r"><span>IMG_4821.CR2</span><span class="rows__arw" aria-hidden="true">&rarr;</span><b>2019_08\</b></div>
+          <div class="rows__r"><span>DSC_0043.JPG</span><span class="rows__arw" aria-hidden="true">&rarr;</span><b>2019_08\</b></div>
+          <div class="rows__r"><span>neg_0112.tif</span><span class="rows__arw" aria-hidden="true">&rarr;</span><b>2004_06\</b></div>
+        </div>
+        <p class="tiny">Arranging stays inside the source you chose. Nothing wanders off to another drive.</p>
+      </div>
+
+      <!-- Duplicate collapse: four identical copies, three of which move into quarantine. -->
+      <div class="card rv rv-d1" id="dupes">
+        <div class="card__ico"><svg width="22" height="22" aria-hidden="true"><use href="#i-dupes"/></svg></div>
+        <h3 class="h3">Find duplicates</h3>
+        <p>Only byte-for-byte identical files are called duplicates. You choose which copy to keep, and what happens to the rest. The safe option is the one already selected.</p>
+
+        <div class="dupes__stage">
+          <div class="dupes__fan">
+            <span class="dupes__c" style="--i:0"><img src="assets/tiles/t01.jpg" alt="" loading="lazy" width="440" height="440"></span>
+            <span class="dupes__c" style="--i:1"><img src="assets/tiles/t01.jpg" alt="" loading="lazy" width="440" height="440"></span>
+            <span class="dupes__c" style="--i:2"><img src="assets/tiles/t01.jpg" alt="" loading="lazy" width="440" height="440"></span>
+            <span class="dupes__c dupes__c--keep" style="--i:3"><img src="assets/tiles/t01.jpg" alt="Four identical copies of the same photograph" loading="lazy" width="440" height="440"><span class="dupes__tag">Keep</span></span>
+          </div>
+          <span class="dupes__dest" aria-hidden="true"><svg width="18" height="18"><use href="#i-folder"/></svg><b class="dupes__destname">.Folio</b></span>
+        </div>
+
+        <div class="outc-set" role="radiogroup" aria-label="What happens to the other copies">
+          <button class="outc is-on" role="radio" aria-checked="true" data-outcome="quarantine">
+            <svg width="16" height="16" aria-hidden="true"><use href="#i-check-c"/></svg>
+            <span>
+              <b>Quarantine safely</b>
+              <span class="outc__b">Moved to a .Folio folder on this drive, where you can put them back.</span>
+              <i class="outc__f">84.2 GB ready to reclaim &middot; frees 0 B now</i>
+            </span>
+          </button>
+          <button class="outc outc--danger" role="radio" aria-checked="false" data-outcome="reclaim">
+            <svg width="16" height="16" aria-hidden="true"><use href="#i-circle"/></svg>
+            <span>
+              <b>Reclaim space</b>
+              <span class="outc__b">Permanently removes the verified duplicate copies. No undo.</span>
+              <i class="outc__f">Frees 84.2 GB</i>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div class="card rv rv-d2" id="rename">
+        <div class="card__ico"><svg width="22" height="22" aria-hidden="true"><use href="#i-rename"/></svg></div>
+        <h3 class="h3">Rename in bulk</h3>
+        <p>Give a whole set of photographs names you will still understand in ten years. Extensions are preserved, the preview is mandatory, and renaming happens in place.</p>
+        <div class="rn__field"><span class="rn__label">Pattern</span><span class="rn__text" id="rnText"></span><i class="rn__caret" aria-hidden="true"></i></div>
+        <div class="rows" id="rnRows">
+          <div class="rows__r"><span>IMG_4821.CR2</span><span class="rows__arw" aria-hidden="true">&rarr;</span><b data-ext=".CR2" data-i="1">IMG_4821.CR2</b></div>
+          <div class="rows__r"><span>IMG_4822.CR2</span><span class="rows__arw" aria-hidden="true">&rarr;</span><b data-ext=".CR2" data-i="2">IMG_4822.CR2</b></div>
+          <div class="rows__r"><span>DSC_0043.JPG</span><span class="rows__arw" aria-hidden="true">&rarr;</span><b data-ext=".JPG" data-i="3">DSC_0043.JPG</b></div>
+        </div>
+        <p class="tiny">If a name would collide, Folio says so and offers to keep both. It does not silently overwrite.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= the promise ================= -->
+<section class="sect t-dark" id="promise">
+  <div class="wrap">
+    <div class="head head--center rv promise__head">
+      <p class="eyebrow eyebrow--center">The promise</p>
+      <h2 class="h2 lines">
+        <span class="ln"><span>Understand before you move.</span></span>
+        <span class="ln"><span>Verify before you remove.</span></span>
+      </h2>
+      <p class="lede">
+        Every other tool in this category asks you to trust it. Folio asks you to <em>check</em>
+        it. The plan is written out in full, real filenames and real destinations, before a
+        single byte moves. Watch it run.
+      </p>
+    </div>
+
+    <div class="promise__sticky">
+      <div class="win rv" id="planwin">
+        <div class="win__bar">
+          <span class="win__back"><svg width="15" height="15" aria-hidden="true"><use href="#i-back"/></svg>Back</span>
+          <span class="win__name">Organize by date</span>
+          <span class="win__source"><i class="dot"></i>Family Archive (D:)</span>
+          <span class="win__ctrls" aria-hidden="true"><i></i><i></i><i></i></span>
+        </div>
+
+        <div class="plan">
+          <div class="plan__col">
+            <span class="klabel" id="planLabel">What will happen</span>
+            <div class="plan__figure">
+              <span class="hero-val" id="planCount">12,480</span>
+              <span class="hero-unit" id="planUnit">files into 31 month folders</span>
+            </div>
+            <p class="small plan__detail" id="planDetail">Into <b>D:\Family Archive</b>, arranged by the date each photograph was taken. Same drive. Nothing is copied off it, and nothing is deleted.</p>
+            <div class="rows rows--plan" id="planRows">
+              <div class="rows__r"><span>IMG_4821.CR2</span><span class="rows__arw" aria-hidden="true">&rarr;</span><b>2019_08\</b><i class="rows__tick" aria-hidden="true"><svg width="11" height="11"><use href="#i-check"/></svg></i></div>
+              <div class="rows__r"><span>IMG_4822.CR2</span><span class="rows__arw" aria-hidden="true">&rarr;</span><b>2019_08\</b><i class="rows__tick" aria-hidden="true"><svg width="11" height="11"><use href="#i-check"/></svg></i></div>
+              <div class="rows__r"><span>DSC_0043.JPG</span><span class="rows__arw" aria-hidden="true">&rarr;</span><b>2019_08\</b><i class="rows__tick" aria-hidden="true"><svg width="11" height="11"><use href="#i-check"/></svg></i></div>
+              <div class="rows__r"><span>IMG_4830.CR2</span><span class="rows__arw" aria-hidden="true">&rarr;</span><b>2019_08\</b><i class="rows__tick" aria-hidden="true"><svg width="11" height="11"><use href="#i-check"/></svg></i></div>
+              <div class="rows__r"><span>neg_0112.tif</span><span class="rows__arw" aria-hidden="true">&rarr;</span><b>2004_06\</b><i class="rows__tick" aria-hidden="true"><svg width="11" height="11"><use href="#i-check"/></svg></i></div>
+              <div class="rows__r"><span>neg_0113.tif</span><span class="rows__arw" aria-hidden="true">&rarr;</span><b>2004_06\</b><i class="rows__tick" aria-hidden="true"><svg width="11" height="11"><use href="#i-check"/></svg></i></div>
+            </div>
+            <p class="tiny">6 of 12,480 shown. The full plan is scrollable, searchable and can be exported before you approve it.</p>
+          </div>
+
+          <div class="plan__col">
+            <span class="klabel">The job</span>
+            <div class="flow" id="planFlow" aria-live="polite">
+              <div class="flow__s" data-step="0">
+                <div class="flow__m"><svg width="12" height="12" aria-hidden="true"><use href="#i-check"/></svg></div>
+                <div><div class="flow__t">Plan</div><div class="flow__n">See exactly what will change, before it changes.</div></div>
+              </div>
+              <div class="flow__s" data-step="1">
+                <div class="flow__m"><svg width="12" height="12" aria-hidden="true"><use href="#i-check"/></svg></div>
+                <div>
+                  <div class="flow__t">Confirm</div>
+                  <div class="flow__n">You approve. Nothing changes until you do.</div>
+                  <button class="plan__btn" id="approve">
+                    <span class="plan__btnlabel">Approve this plan</span>
+                    <svg width="13" height="13" aria-hidden="true"><use href="#i-arrow"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flow__s" data-step="2">
+                <div class="flow__m"><svg width="12" height="12" aria-hidden="true"><use href="#i-check"/></svg></div>
+                <div><div class="flow__t">Move</div><div class="flow__n">Same drive, one file at a time.</div></div>
+              </div>
+              <div class="flow__s" data-step="3">
+                <div class="flow__m"><svg width="12" height="12" aria-hidden="true"><use href="#i-check"/></svg></div>
+                <div><div class="flow__t">Verify</div><div class="flow__n">Every completed change checked against the plan.</div></div>
+              </div>
+              <div class="flow__s" data-step="4">
+                <div class="flow__m"><svg width="12" height="12" aria-hidden="true"><use href="#i-check"/></svg></div>
+                <div><div class="flow__t">Done</div><div class="flow__n">What changed, and what did not.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="win__strip">
+          <span class="win__promise"><svg width="14" height="14" aria-hidden="true"><use href="#i-shield"/></svg>Changes require approval</span>
+          <span class="win__idle" id="planStatus">Waiting for you</span>
+          <span class="win__act">Activity</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="lede rv promise__coda">
+      <strong>&ldquo;Changes require approval&rdquo; sits in the status bar permanently</strong>,
+      not as a warning that appears the moment something is about to happen. A promise you only
+      see when you are already in danger is a warning, and people learn to click past warnings.
+    </p>
+  </div>
+</section>
+
+<!-- ================= safety ================= -->
+<section class="sect t-paper" id="safety">
+  <div class="wrap">
+    <div class="head rv">
+      <p class="eyebrow">Six things Folio will not do to you</p>
+      <h2 class="h2 lines">
+        <span class="ln"><span>You keep the memories.</span></span>
+        <span class="ln"><span>Folio keeps the proof.</span></span>
+      </h2>
+      <p class="lede">There is no such thing as a risk-free file operation, and Folio never claims one. What it offers instead is proof, recoverable steps, and a refusal to act when the conditions are not met.</p>
+    </div>
+
+    <div class="grid g-3 safety__grid">
+      <div class="card rv">
+        <div class="card__ico"><svg width="22" height="22" aria-hidden="true"><use href="#i-recycle"/></svg></div>
+        <h3 class="h4">Cleanup uses the Recycle Bin</h3>
+        <p>When Folio removes something as part of a cleanup you approved, it goes to the Windows Recycle Bin. There is no silent permanent delete.</p>
+      </div>
+      <div class="card rv rv-d1">
+        <div class="card__ico"><svg width="22" height="22" aria-hidden="true"><use href="#i-folder"/></svg></div>
+        <h3 class="h4">Quarantine before removal</h3>
+        <p>Duplicate copies are moved to a <code>.Folio</code> folder on the same drive, where you can put them back. Until you explicitly reclaim, Folio tells you it has freed nothing.</p>
+      </div>
+      <div class="card rv rv-d2">
+        <div class="card__ico"><svg width="22" height="22" aria-hidden="true"><use href="#i-fingerprint"/></svg></div>
+        <h3 class="h4">A matching name proves nothing</h3>
+        <p>Two files called <code>IMG_4821.CR2</code> are not duplicates because they share a name. Folio compares content, and says <em>likely</em> until it has verified, <em>verified</em> after.</p>
+      </div>
+      <div class="card rv">
+        <div class="card__ico"><svg width="22" height="22" aria-hidden="true"><use href="#i-shield"/></svg></div>
+        <h3 class="h4">Your backups stay backups</h3>
+        <p>A second copy on a different physical drive can be a deliberate backup, and Folio treats it as one rather than as garbage. You can mark copies as protected, and it respects that.</p>
+      </div>
+      <div class="card rv rv-d1">
+        <div class="card__ico"><svg width="22" height="22" aria-hidden="true"><use href="#i-scale"/></svg></div>
+        <h3 class="h4">It reports what actually happened</h3>
+        <p>An operation that has not been verified is never reported as finished. If a job is interrupted, Folio says precisely what completed, what did not, and what to do next.</p>
+      </div>
+      <div class="card rv rv-d2">
+        <div class="card__ico"><svg width="22" height="22" aria-hidden="true"><use href="#i-resume"/></svg></div>
+        <h3 class="h4">Unplugging a drive is not a disaster</h3>
+        <p>Large collections and drives that come and go are the normal case, not an error state. Work resumes where it stopped instead of starting from zero.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= local and private ================= -->
+<section class="sect t-dark sect--tight" id="private">
+  <div class="wrap">
+    <div class="duo">
+      <div class="rv">
+        <p class="eyebrow">Local-first</p>
+        <h2 class="h2 private__title">Local only.<br>Nothing is uploaded.</h2>
+        <p class="lede private__lede">
+          Folio is a desktop application that reads the drives you nominate and writes its
+          catalog to your own PC. Your photographs are not copied to a server, not scanned in a
+          cloud, and not used to train anything. There is no sync queue quietly working in the
+          background while you sleep.
+        </p>
+        <ul class="trust trust--stack">
+          <li><svg width="15" height="15" aria-hidden="true"><use href="#i-check-c"/></svg>Works with the internet off</li>
+          <li><svg width="15" height="15" aria-hidden="true"><use href="#i-check-c"/></svg>No cloud storage bill, ever</li>
+          <li><svg width="15" height="15" aria-hidden="true"><use href="#i-check-c"/></svg>Your files stay in your folders</li>
+        </ul>
+        <p class="small pullquote">
+          And the thing most tools will not tell you: <strong>Folio&rsquo;s catalog is not a backup.</strong>
+          It helps you understand your archive. Keeping a real second copy is still your job, and
+          Folio is built to help you keep one rather than to talk you out of it.
+        </p>
+      </div>
+      <div class="shot shot--wide rv rv-d1"><img src="assets/img/desk.jpg" alt="A laptop and camera on a wooden desk" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= comparison ================= -->
+<section class="sect t-paper" id="compare">
+  <div class="wrap">
+    <div class="head rv">
+      <p class="eyebrow">Where it fits</p>
+      <h2 class="h2">Not cloud storage. Not another cleaner.</h2>
+      <p class="lede">Folio does not compete with the place your photos are stored. It competes with the afternoon you keep not spending on this.</p>
+    </div>
+
+    <div class="tbl-scroll rv">
+      <table class="cmp">
+        <thead>
+          <tr>
+            <th scope="col"><span class="vh">Feature</span></th>
+            <th scope="col" class="is-us">Folio</th>
+            <th scope="col">Cloud photo subscription</th>
+            <th scope="col">Generic duplicate cleaner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">What it costs</th>
+            <td class="is-us">$20, once</td>
+            <td>Roughly $2 to $10 a month, for as long as you want your photos</td>
+            <td>Often free, or a yearly &ldquo;PC utilities&rdquo; bundle</td>
+          </tr>
+          <tr>
+            <th scope="row">Where your photos live</th>
+            <td class="is-us">On your own drives, in your own folders</td>
+            <td>On someone else&rsquo;s servers, in their format</td>
+            <td>Wherever they already are</td>
+          </tr>
+          <tr>
+            <th scope="row">How duplicates are judged</th>
+            <td class="is-us">Byte-for-byte identical content, verified</td>
+            <td>Usually not its job</td>
+            <td>Frequently name, size and date, which is a guess</td>
+          </tr>
+          <tr>
+            <th scope="row">Before anything changes</th>
+            <td class="is-us">The complete plan, every file and destination, then your approval</td>
+            <td>Sync happens continuously, by design</td>
+            <td>A checkbox list and a Clean button</td>
+          </tr>
+          <tr>
+            <th scope="row">Backup copies on another drive</th>
+            <td class="is-us">Recognized as possibly deliberate, and protectable</td>
+            <td>Not modelled</td>
+            <td>Usually counted as waste to be deleted</td>
+          </tr>
+          <tr>
+            <th scope="row">If you stop paying</th>
+            <td class="is-us">Nothing happens. You already own it.</td>
+            <td>Storage is reduced, and you have to move everything</td>
+            <td>Varies</td>
+          </tr>
+          <tr>
+            <th scope="row">Works offline</th>
+            <td class="is-us">Entirely</td>
+            <td>No</td>
+            <td>Usually</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tiny rv cmp__note">Comparison describes categories of product, not any specific vendor. Subscription prices are typical consumer plans and change often, so check current pricing yourself.</p>
+  </div>
+</section>
+
+<!-- ================= roadmap ================= -->
+<section class="sect t-dark sect--tight band" id="next">
+  <div class="wrap">
+    <div class="head rv">
+      <p class="eyebrow">What comes next</p>
+      <h2 class="h2">Two things are being built. Neither one is on this invoice.</h2>
+      <p class="lede">Folio has four pillars. Three of them ship today. This is the fourth, and the second platform.</p>
+    </div>
+
+    <div class="grid g-2 next__grid">
+      <div class="card rv next__card">
+        <span class="card__tag">In development</span>
+        <div class="card__ico"><svg width="22" height="22" aria-hidden="true"><use href="#i-phone"/></svg></div>
+        <h3 class="h3">Import from phone and camera</h3>
+        <p>
+          A plugged-in phone or camera is a connected source, not automatically a Folio library.
+          Browsing it costs nothing and changes nothing. When the transfer flow lands, copy is
+          the default and the destination is verified before anything is freed. An interrupted
+          transfer will report items <em>copied and verified, awaiting source removal</em>
+          rather than pretending they are finished.
+        </p>
+      </div>
+
+      <div class="card rv rv-d1 next__card">
+        <span class="card__tag">In development</span>
+        <div class="card__ico"><svg width="22" height="22" aria-hidden="true"><use href="#i-apple"/></svg></div>
+        <h3 class="h3">Folio for macOS</h3>
+        <p>
+          The same Rust engine underneath, a native Mac interface on top. Shared media
+          intelligence, platform-specific transport. That boundary was drawn on day one
+          precisely so a Mac client would not need an architectural rewrite.
+        </p>
+        <p class="next__note"><svg width="15" height="15" aria-hidden="true"><use href="#i-check-c"/></svg>Your $20 licence already covers it. When it ships, it is yours at no extra cost.</p>
+      </div>
+    </div>
+
+    <p class="small rv next__foot">
+      Windows is what you get today. Both of these are in development and neither has a release
+      date. Nothing on this page charges you for something that is not built yet.
+    </p>
+  </div>
+</section>
+
+<!-- ================= pricing ================= -->
+<section class="sect t-dark" id="pricing">
+  <div class="wrap wrap--narrow">
+    <div class="head head--center rv pricing__head">
+      <p class="eyebrow eyebrow--center">Pricing</p>
+      <h2 class="h2">One price. One payment. Yours.</h2>
+      <p class="lede">About the cost of two months of cloud storage you were going to pay forever anyway.</p>
+    </div>
+
+    <div class="price rv">
+      <div class="price__top">
+        <span class="price__badge">One-time purchase</span>
+        <div class="price__tag">
+          <span class="price__cur">$</span>
+          <span class="price__amt">20</span>
+        </div>
+        <p class="price__per">USD, once. Not per month. Not per year. Not per photo.</p>
+        <div class="price__plat" aria-hidden="true">
+          <span><svg width="15" height="15"><use href="#i-windows"/></svg>Windows</span>
+          <span><svg width="15" height="15"><use href="#i-apple"/></svg>macOS</span>
+        </div>
+        <a class="btn btn--primary js-buy" href="#" id="buy-main">Get Folio</a>
+        <p class="price__strike">Secure checkout &middot; instant license key &middot; refund within 14 days</p>
+      </div>
+
+      <ul class="price__list">
+        <li><svg width="17" height="17" aria-hidden="true"><use href="#i-check-c"/></svg><span><b>Folio for Windows 11 and Windows 10</b> (64-bit)</span></li>
+        <li><svg width="17" height="17" aria-hidden="true"><use href="#i-check-c"/></svg><span><b>Folio for macOS when it ships</b>, at no extra cost</span></li>
+        <li><svg width="17" height="17" aria-hidden="true"><use href="#i-check-c"/></svg><span><b>Up to 3 of your personal devices</b></span></li>
+        <li><svg width="17" height="17" aria-hidden="true"><use href="#i-check-c"/></svg><span><b>All version 1 updates included</b>, free</span></li>
+        <li><svg width="17" height="17" aria-hidden="true"><use href="#i-check-c"/></svg><span><b>Unlimited photos, unlimited drives.</b> No per-gigabyte or per-file limits</span></li>
+        <li><svg width="17" height="17" aria-hidden="true"><use href="#i-check-c"/></svg><span><b>No account required</b> to use the app</span></li>
+        <li><svg width="17" height="17" aria-hidden="true"><use href="#i-check-c"/></svg><span><b>Works completely offline</b></span></li>
+        <li><svg width="17" height="17" aria-hidden="true"><use href="#i-check-c"/></svg><span><b>Refund within 14 days</b> if it does not do what this page says</span></li>
+      </ul>
+
+      <p class="price__foot">
+        Windows 10 or 11, 64-bit, is what ships today, and Folio reads only the folders and
+        drives you nominate. Folio for macOS is in development with no release date; your
+        licence already covers it, so you will not be asked to pay again. Connected-device
+        transfer is also in development. Price is in US dollars and your bank may add a
+        conversion fee.
+      </p>
+    </div>
+
+    <p class="small center rv pricing__team">
+      Buying for a team, a studio, or a family that shares one archive?
+      <a href="mailto:hello@example.com" class="link">Get in touch</a> and we will sort something out.
+    </p>
+  </div>
+</section>
+
+<!--
+  ============================================================================
+  SOCIAL PROOF, deliberately left empty.
+  A block of invented customer quotes would convert well right up until the
+  first person checked. Once you have real early users, paste their words in
+  here (name, what they were dealing with, and ideally permission in writing).
+  Markup is ready in README.md.
+  ============================================================================
+-->
+
+<!-- ================= faq ================= -->
+<section class="sect t-paper" id="faq">
+  <div class="wrap wrap--narrow">
+    <div class="head rv faq__head">
+      <p class="eyebrow">Questions</p>
+      <h2 class="h2">The ones worth asking before you trust software with your memories.</h2>
+    </div>
+
+    <div class="faq rv">
+      <details open>
+        <summary>Is Folio really going to delete my photos?</summary>
+        <div class="faq__a">
+          <p>Not without you reading a plan and pressing a button, and not permanently by accident. Analysis is read-only. Cleanup you approve uses the Windows Recycle Bin. Duplicate copies are quarantined into a <b>.Folio</b> folder on the same drive first, where you can put them back.</p>
+          <p>There is exactly one path to permanent removal: an option clearly labelled as permanent, with no undo, which is never the pre-selected choice.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>How does Folio decide two photos are the same?</summary>
+        <div class="faq__a">
+          <p>By comparing what is actually inside the files. Two photographs are only called duplicates when they are byte-for-byte identical. A shared filename, a matching file size or the same timestamp is a hint, never proof, and Folio does not present hints as proof.</p>
+          <p>Before content has been verified Folio says <b>likely</b>. It says <b>verified</b> only afterwards.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>I keep a copy of everything on a backup drive. Will Folio wipe it?</summary>
+        <div class="faq__a">
+          <p>No. Identical content does not prove a copy is unwanted, and a copy on a different physical drive may be exactly the backup you intended. Folio distinguishes copies by the volume they sit on, lets you mark copies as protected, and will not treat a protected copy as waste.</p>
+          <p>Worth being precise about one thing: marking something as protected records your intention. It is not evidence that a backup has been made or checked. Folio will not claim otherwise.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Does anything get uploaded?</summary>
+        <div class="faq__a">
+          <p>No. Folio is local-first. It reads the folders and drives you nominate and keeps its catalog on your own PC. It works with the internet switched off.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What about RAW files and videos?</summary>
+        <div class="faq__a">
+          <p>Both are catalogued alongside your JPEGs. RAW files such as .CR2 keep their extension through every rename, and clips appear in the gallery with a small badge so a video is not mistaken for a still frame.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Is there a Mac version?</summary>
+        <div class="faq__a">
+          <p>It is in development, and your licence already covers it. Folio is a native Windows application today. The Rust engine underneath was deliberately built to be shared, and macOS is the next platform.</p>
+          <p>Being straight with you: there is <b>no release date</b>. If you are buying today, buy it for the Windows application. The Mac build arriving later at no extra cost is a bonus, not the thing you are paying for.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Can it pull photos off my iPhone or Android phone?</summary>
+        <div class="faq__a">
+          <p>Not in today&rsquo;s build. Connected-device transfer is designed and being built, and it is described on this page as direction rather than delivery. Your $20 buys what ships today plus every version 1 update, so if it lands in version 1, you get it.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>How many computers can I install it on?</summary>
+        <div class="faq__a">
+          <p>Up to 3 devices that you personally use, across Windows and macOS. A desktop and a laptop and the machine in the studio is fine. It is one licence for one person, not a site licence for an office.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What happens if I unplug a drive halfway through a job?</summary>
+        <div class="faq__a">
+          <p>Folio stops, keeps everything that genuinely finished, and tells you what did not. It will not report an unverified operation as complete, and it will not make you start the scan again from the beginning when the drive comes back.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>What is the refund policy?</summary>
+        <div class="faq__a">
+          <p>14 days. If Folio does not do what this page says it does, email us and we will refund you. You do not have to argue the case.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= final cta ================= -->
+<section class="sect t-dark" id="get">
+  <div class="wrap wrap--narrow center">
+    <div class="rv">
+      <p class="eyebrow eyebrow--center">Get Folio</p>
+      <h2 class="h2 lines get__title">
+        <span class="ln"><span>You already took the photographs.</span></span>
+        <span class="ln"><span>Let Folio do the rest.</span></span>
+      </h2>
+      <p class="lede get__lede">
+        Twenty dollars, once, for the afternoon you finally stop dreading. And for every time
+        afterwards, as the collection keeps growing, when you want to know exactly what you have
+        and exactly what is about to change.
+      </p>
+      <div class="cta-row get__cta">
+        <a class="btn btn--primary js-buy" href="#">Get Folio, $20 <span class="btn__sub">one time</span></a>
+      </div>
+      <ul class="trust trust--center">
+        <li><svg width="15" height="15" aria-hidden="true"><use href="#i-windows"/></svg>Windows today</li>
+        <li><svg width="15" height="15" aria-hidden="true"><use href="#i-apple"/></svg>macOS included when it ships</li>
+        <li><svg width="15" height="15" aria-hidden="true"><use href="#i-check-c"/></svg>Refund within 14 days</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= footer ================= -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__top">
+      <div>
+        <a class="brand foot__brand" href="#top"><img src="assets/brand/folio-mark.png" alt="" width="30" height="30"><span>Folio</span></a>
+        <p class="foot__blurb">
+          A personal photo archive manager. You take the photographs, Folio looks after the archive.
+        </p>
+      </div>
+      <div>
+        <h2 class="foot__h">Product</h2>
+        <ul>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#jobs">What it does</a></li>
+          <li><a href="#promise">Safety</a></li>
+          <li><a href="#next">Roadmap</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="foot__h">Support</h2>
+        <ul>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="mailto:hello@example.com">Email us</a></li>
+          <li><a href="#pricing">Refunds</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="foot__h">Legal</h2>
+        <ul>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">License</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__bot">
+      <span>&copy; <span id="yr">2026</span> Folio. All rights reserved.</span>
+      <span>Photographs on this page are from <a href="https://unsplash.com" rel="noopener" class="link">Unsplash</a> and stand in for your own.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= sticky mobile buy bar ================= -->
+<div class="buybar" id="buybar">
+  <div class="buybar__t"><b>Folio, $20</b>one-time, no subscription</div>
+  <a class="btn btn--primary btn--sm js-buy" href="#pricing">Get it</a>
+</div>
+
+<!-- ================= gallery viewer ================= -->
+<!-- The mat is deliberately neutral in both themes: a photograph judged against warm
+     archival paper is judged wrongly. -->
+<div class="viewer" id="viewer" hidden role="dialog" aria-modal="true" aria-label="Photograph viewer">
+  <div class="viewer__scrim" data-close></div>
+  <figure class="viewer__stage">
+    <img class="viewer__img" id="viewerImg" alt="">
+  </figure>
+  <div class="viewer__bar">
+    <span class="viewer__name" id="viewerName">IMG_4821.CR2</span>
+    <span class="viewer__pos" id="viewerPos">1 of 18 in August 2019</span>
+    <span class="viewer__hint">Escape returns to the wall</span>
+  </div>
+  <button class="viewer__nav viewer__nav--prev" id="viewerPrev" aria-label="Previous photograph"><svg width="20" height="20" aria-hidden="true"><use href="#i-back"/></svg></button>
+  <button class="viewer__nav viewer__nav--next" id="viewerNext" aria-label="Next photograph"><svg width="20" height="20" aria-hidden="true"><use href="#i-chevron"/></svg></button>
+  <button class="viewer__close" id="viewerClose" aria-label="Close viewer"><svg width="18" height="18" aria-hidden="true"><use href="#i-close"/></svg></button>
+</div>
+
+<script src="assets/main.js" defer></script>
+</body>
+</html>

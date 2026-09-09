@@ -1,0 +1,40 @@
+/* ==========================================================================
+   Reduced motion: a complete second design, not a broken switch.
+
+   Everything arrives in its finished state and every interaction still works,
+   without transitions. The prints arrive already in the grid, the wall arrives
+   already scanned, the counters show their real values, the rename preview
+   shows the finished pattern, and the plan still runs to Done when approved.
+
+   GSAP handles its own branch through gsap.matchMedia(); this file covers the
+   CSS-only motion. Both halves must agree. See docs/COPY_AND_MOTION.md.
+
+   Loaded last, so these overrides win over component scoped styles.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .js .rv, .js .ld { opacity: 1 !important; transform: none !important; animation: none !important; }
+  .js .lines .ln > span { transform: none !important; animation: none !important; }
+  .js .rv .door, .js .rv.in .door { opacity: 1 !important; transform: none !important; animation: none !important; }
+  .eyebrow::after, .eyebrow--center::before { transform: none !important; }
+
+  /* the prints arrive already ordered */
+  .prints { --p: 1 !important; }
+  .prints__p { will-change: auto; }
+
+  /* the wall arrives already scanned */
+  .js .gal__cell { opacity: 1 !important; filter: none !important; }
+  .gal__sweep { display: none !important; }
+
+  .hero__glow { animation: none; }
+  .rn__caret { display: none; }
+  .tilt { transform: none !important; }
+  .card:hover { transform: none; }
+  .gal__cell:hover img, .shot:hover img { transform: none; }
+
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

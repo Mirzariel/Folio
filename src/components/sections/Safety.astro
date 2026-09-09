@@ -1,0 +1,34 @@
+---
+import Eyebrow from '@/components/primitives/Eyebrow.astro';
+import SplitHeading from '@/components/primitives/SplitHeading.astro';
+import Icon from '@/components/primitives/Icon.astro';
+import { safetyCards } from '@/data/safety';
+---
+
+<section class="sect t-paper" id="safety">
+  <div class="wrap">
+    <div class="head rv">
+      <Eyebrow>Six things Folio will not do to you</Eyebrow>
+      <SplitHeading lines={['You keep the memories.', 'Folio keeps the proof.']} />
+      <p class="lede">
+        There is no such thing as a risk-free file operation, and Folio never claims one.
+        What it offers instead is proof, recoverable steps, and a refusal to act when the
+        conditions are not met.
+      </p>
+    </div>
+
+    <div class="grid g-3 safety__grid">
+      {safetyCards.map((card, i) => (
+        <div class={`card rv${i % 3 > 0 ? ` rv-d${i % 3}` : ''}`}>
+          <div class="card__ico"><Icon name={card.icon} size={22} /></div>
+          <h3 class="h4">{card.title}</h3>
+          <p set:html={card.body} />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .safety__grid { margin-top: clamp(36px, 4.4vw, 56px); }
+</style>

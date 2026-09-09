@@ -1,0 +1,61 @@
+---
+/** Long-form pages: legal, changelog entries, docs. One column, paper theme. */
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  updated?: Date;
+  draft?: boolean;
+}
+
+const { title, description, updated, draft = false }: Props = Astro.props;
+---
+
+<BaseLayout title={`${title} \u00b7 Folio`} description={description} showBuyBar={false}>
+  <article class="sect t-paper prose__sect">
+    <div class="wrap wrap--narrow">
+      <h1 class="h2">{title}</h1>
+      {updated && (
+        <p class="small prose__meta">
+          Last updated <time datetime={updated.toISOString()}>
+            {updated.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </time>
+        </p>
+      )}
+      {draft && (
+        <p class="prose__draft">
+          <b>This page is a draft.</b> It has not been reviewed and is not binding.
+          Replace it with real terms before launch. See docs/LAUNCH_CHECKLIST.md.
+        </p>
+      )}
+      <div class="prose">
+        <slot />
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .prose__sect { padding-top: clamp(120px, 12vw, 170px); }
+  .prose__meta { margin-top: 12px; }
+  .prose__draft {
+    margin-top: 24px; padding: 14px 16px; border-radius: var(--r);
+    border: 1px solid var(--bad); color: var(--t1); font-size: 14px; line-height: 1.55;
+  }
+  .prose__draft b { color: var(--bad); }
+  .prose { margin-top: clamp(28px, 3.4vw, 40px); color: var(--t2); font-size: 16px; }
+  .prose :global(h2) {
+    font-family: var(--serif); font-weight: 600; font-size: clamp(21px, 2.2vw, 27px);
+    color: var(--t1); margin: clamp(30px, 3.4vw, 42px) 0 12px; letter-spacing: -.01em;
+  }
+  .prose :global(h3) { font-size: 17px; font-weight: 640; color: var(--t1); margin: 24px 0 8px; }
+  .prose :global(p) { margin-bottom: 14px; line-height: 1.65; text-wrap: pretty; }
+  .prose :global(ul), .prose :global(ol) { margin: 0 0 16px; padding-left: 22px; list-style: disc; }
+  .prose :global(ol) { list-style: decimal; }
+  .prose :global(li) { margin-bottom: 7px; line-height: 1.6; }
+  .prose :global(a) { color: var(--accent-t); border-bottom: 1px solid var(--border-2); }
+  .prose :global(strong) { color: var(--t1); font-weight: 620; }
+  .prose :global(code) { background: var(--inset); padding: 1px 5px; border-radius: 3px; }
+  .prose :global(hr) { border: 0; border-top: 1px solid var(--border); margin: 32px 0; }
+</style>

@@ -1,0 +1,16 @@
+---
+/**
+ * The small uppercase label above a heading. Its trailing rule draws itself
+ * when the section enters, which carries the claim "there is a beginning here".
+ * Motion adds .in; see src/scripts/motion/reveal.ts.
+ */
+interface Props {
+  center?: boolean;
+  class?: string;
+}
+
+const { center = false, class: className } = Astro.props;
+const classes = ['eyebrow', center && 'eyebrow--center', className].filter(Boolean).join(' ');
+---
+
+<p class={classes}><slot /></p>

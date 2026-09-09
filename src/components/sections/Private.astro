@@ -1,0 +1,46 @@
+---
+import { Image } from 'astro:assets';
+import Eyebrow from '@/components/primitives/Eyebrow.astro';
+import TrustList from '@/components/primitives/TrustList.astro';
+import desk from '@/assets/img/desk.jpg';
+
+const guarantees = [
+  { label: 'Works with the internet off' },
+  { label: 'No cloud storage bill, ever' },
+  { label: 'Your files stay in your folders' },
+];
+---
+
+<section class="sect t-dark sect--tight" id="private">
+  <div class="wrap">
+    <div class="duo">
+      <div class="rv">
+        <Eyebrow>Local-first</Eyebrow>
+        <h2 class="h2 private__title">Local only.<br />Nothing is uploaded.</h2>
+        <p class="lede private__lede">
+          Folio is a desktop application that reads the drives you nominate and writes its
+          catalog to your own PC. Your photographs are not copied to a server, not scanned
+          in a cloud, and not used to train anything. There is no sync queue quietly working
+          in the background while you sleep.
+        </p>
+        <TrustList items={guarantees} variant="stack" />
+        <p class="small pullquote">
+          And the thing most tools will not tell you:
+          <strong>Folio&rsquo;s catalog is not a backup.</strong>
+          It helps you understand your archive. Keeping a real second copy is still your job,
+          and Folio is built to help you keep one rather than to talk you out of it.
+        </p>
+      </div>
+      <div class="shot shot--wide rv rv-d1">
+        <Image src={desk} alt="A laptop and camera on a wooden desk" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .private__title { margin-top: 16px; }
+  .private__lede { margin-top: 20px; }
+  .pullquote { margin-top: 26px; border-left: 2px solid var(--accent); padding-left: 16px; }
+  .pullquote strong { color: var(--t1); font-weight: 600; }
+</style>

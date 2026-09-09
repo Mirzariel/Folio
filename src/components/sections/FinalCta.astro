@@ -1,0 +1,41 @@
+---
+import Eyebrow from '@/components/primitives/Eyebrow.astro';
+import SplitHeading from '@/components/primitives/SplitHeading.astro';
+import BuyButton from '@/components/primitives/BuyButton.astro';
+import TrustList from '@/components/primitives/TrustList.astro';
+import { display } from '@/config/site';
+
+const closing = [
+  { label: 'Windows today', icon: 'windows' },
+  { label: 'macOS included when it ships', icon: 'apple' },
+  { label: `Refund within ${display.refundWindow}` },
+];
+---
+
+<section class="sect t-dark" id="get">
+  <div class="wrap wrap--narrow center">
+    <div class="rv">
+      <Eyebrow center>Get Folio</Eyebrow>
+      <SplitHeading
+        lines={['You already took the photographs.', 'Let Folio do the rest.']}
+        class="get__title"
+      />
+      <p class="lede get__lede">
+        Twenty dollars, once, for the afternoon you finally stop dreading. And for every
+        time afterwards, as the collection keeps growing, when you want to know exactly
+        what you have and exactly what is about to change.
+      </p>
+      <div class="cta-row get__cta">
+        <BuyButton sub="one time" />
+      </div>
+      <TrustList items={closing} variant="center" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .get__title { margin-top: 18px; }
+  .get__lede { margin-top: 22px; }
+  .get__cta { margin-top: 34px; }
+  .get__cta :global(.btn) { min-width: min(320px, 100%); }
+</style>

@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Type roles and layout primitives. The design system, not scenery.
+   Section-specific rules belong in that component's scoped <style> block.
+   ========================================================================== */
+
+/* ---- sections and containers --------------------------------------------- */
+.sect { background: var(--bg); color: var(--t1); padding: clamp(72px, 10vw, 132px) 0; position: relative; }
+.sect--tight { padding: clamp(56px, 7vw, 92px) 0; }
+.band { background: var(--surface); }
+.wrap { width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gut); position: relative; }
+.wrap--narrow { max-width: 880px; }
+
+/* ---- type roles ---------------------------------------------------------- */
+.display {
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(40px, 6.2vw, 76px); line-height: 1.04; letter-spacing: -.024em;
+  text-wrap: balance; color: var(--t1);
+}
+.h2 {
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(30px, 4.2vw, 50px); line-height: 1.1; letter-spacing: -.018em;
+  text-wrap: balance; color: var(--t1);
+}
+.h3 {
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(21px, 2.2vw, 27px); line-height: 1.22; letter-spacing: -.01em;
+  text-wrap: balance; color: var(--t1);
+}
+.h4 { font-size: 17px; font-weight: 640; line-height: 1.4; color: var(--t1); letter-spacing: -.005em; }
+.lede {
+  font-size: clamp(17px, 1.45vw, 20px); line-height: 1.6; color: var(--t2);
+  text-wrap: pretty; max-width: 62ch;
+}
+.small { font-size: 14px; line-height: 1.55; color: var(--t3); text-wrap: pretty; }
+.tiny { font-size: 12.5px; line-height: 1.5; color: var(--t3); }
+.center { text-align: center; }
+.center .lede, .center .eyebrow { margin-inline: auto; }
+.link { border-bottom: 1px solid var(--border-2); color: var(--accent-t); transition: border-color .2s; }
+.link:hover { border-bottom-color: var(--accent); }
+
+/* the underline behind Folio in the hero */
+.mark-under { position: relative; white-space: nowrap; display: inline-block; }
+.mark-under::after {
+  content: ""; position: absolute; left: -.05em; right: -.05em; bottom: .04em; height: .26em;
+  background: var(--accent-w); border-bottom: 2px solid var(--accent);
+  border-radius: 2px; z-index: -1;
+}
+
+/* ---- eyebrow. Claim: there is a beginning here, drawn as a rule. --------- */
+.eyebrow {
+  font-size: 11px; font-weight: 650; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--accent-t); display: flex; align-items: center; gap: 12px;
+}
+.eyebrow::after {
+  content: ""; flex: 1; height: 1px; background: var(--border); max-width: 110px;
+  transform: scaleX(0); transform-origin: 0 50%;
+  transition: transform .8s var(--ease) .15s;
+}
+.eyebrow--center { justify-content: center; }
+.eyebrow--center::before {
+  content: ""; flex: 1; height: 1px; background: var(--border); max-width: 110px;
+  transform: scaleX(0); transform-origin: 100% 50%;
+  transition: transform .8s var(--ease) .15s;
+}
+.eyebrow.in::after, .eyebrow.in::before { transform: none; }
+/* Without scripting the rule is simply already drawn. */
+html:not(.js) .eyebrow::after, html:not(.js) .eyebrow--center::before { transform: none; }
+
+/* ---- heads and grids ----------------------------------------------------- */
+.head { max-width: 780px; }
+.head--center { margin-inline: auto; text-align: center; }
+.head .h2 { margin-top: 16px; }
+.head .lede { margin-top: 18px; }
+.grid { display: grid; gap: clamp(18px, 2.4vw, 30px); }
+.g-2 { grid-template-columns: repeat(2, 1fr); }
+.g-3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 900px) { .g-3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 700px) { .g-2 { grid-template-columns: 1fr; } }
+@media (max-width: 620px) { .g-3 { grid-template-columns: 1fr; } }

@@ -1,0 +1,54 @@
+---
+import Eyebrow from '@/components/primitives/Eyebrow.astro';
+import SplitHeading from '@/components/primitives/SplitHeading.astro';
+import Icon from '@/components/primitives/Icon.astro';
+import { steps } from '@/data/steps';
+---
+
+<section class="sect t-paper" id="how">
+  <div class="wrap">
+    <div class="head rv">
+      <Eyebrow>How it works</Eyebrow>
+      <SplitHeading lines={['You choose the source.', 'Folio reads it.']} />
+      <p class="lede">Three steps, and nothing on your drives changes until you approve a plan.</p>
+    </div>
+
+    <div class="steps">
+      {steps.map((step) => (
+        <div class="step rv">
+          <div class="step__n">{step.n}</div>
+          <div class="step__b">
+            <div><h3 class="h3">{step.title}</h3></div>
+            <div>
+              <p>{step.body}</p>
+              <p class="small step__note">
+                {step.noteIcon && <Icon name={step.noteIcon} size={14} />}{step.note}
+              </p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .steps { margin-top: clamp(36px, 4.6vw, 60px); }
+  .step {
+    display: grid; grid-template-columns: 64px 1fr; gap: clamp(18px, 2.4vw, 32px);
+    padding: clamp(24px, 3vw, 34px) 0; border-top: 1px solid var(--border); align-items: start;
+  }
+  .step:last-child { border-bottom: 1px solid var(--border); }
+  .step__n {
+    font-family: var(--serif); font-weight: 600; font-size: clamp(30px, 3.4vw, 44px);
+    line-height: 1; color: var(--accent-t); font-variant-numeric: tabular-nums;
+  }
+  .step__b { display: grid; gap: 10px; }
+  @media (min-width: 880px) {
+    .step__b { grid-template-columns: 1fr 1.3fr; gap: clamp(20px, 3vw, 44px); align-items: start; }
+  }
+  .step__b p { color: var(--t2); font-size: 15.5px; }
+  .step__note { margin-top: 12px; display: flex; align-items: baseline; gap: 8px; }
+  .step__note :global(svg) { flex: 0 0 14px; align-self: center; }
+  @media (max-width: 560px) { .step { grid-template-columns: 44px 1fr; gap: 16px; } }
+</style>

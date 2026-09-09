@@ -1,0 +1,87 @@
+---
+/**
+ * The photograph viewer.
+ *
+ * Claim: the spec's connected enlargement. The tile grows into the frame, and
+ * Escape reads as putting a print down rather than navigating back.
+ *
+ * The mat is deliberately neutral in both themes: a photograph judged against
+ * warm archival paper is judged wrongly.
+ *
+ * Behaviour lives in src/scripts/viewer.ts. It keeps focus inside itself while
+ * open and returns focus to the tile now showing, which is where the print was
+ * put down.
+ */
+import Icon from '@/components/primitives/Icon.astro';
+---
+
+<div class="viewer" id="viewer" hidden role="dialog" aria-modal="true" aria-label="Photograph viewer">
+  <div class="viewer__scrim" data-close></div>
+  <figure class="viewer__stage">
+    <img class="viewer__img" id="viewerImg" alt="" />
+  </figure>
+  <div class="viewer__bar">
+    <span class="viewer__name" id="viewerName"></span>
+    <span class="viewer__pos" id="viewerPos"></span>
+    <span class="viewer__hint">Escape returns to the wall</span>
+  </div>
+  <button class="viewer__nav viewer__nav--prev" id="viewerPrev" aria-label="Previous photograph">
+    <Icon name="back" size={20} />
+  </button>
+  <button class="viewer__nav viewer__nav--next" id="viewerNext" aria-label="Next photograph">
+    <Icon name="chevron" size={20} />
+  </button>
+  <button class="viewer__close" id="viewerClose" aria-label="Close viewer">
+    <Icon name="close" size={18} />
+  </button>
+</div>
+
+<style>
+  .viewer {
+    position: fixed; inset: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .viewer[hidden] { display: none; }
+  .viewer__scrim {
+    position: absolute; inset: 0; background: var(--mat);
+    opacity: 0; transition: opacity .34s var(--ease);
+  }
+  .viewer.is-open .viewer__scrim { opacity: 1; }
+  .viewer__stage {
+    position: relative; margin: 0; z-index: 2;
+    width: min(88vw, 1080px); height: min(78vh, 740px);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .viewer__img {
+    width: min(78vmin, 640px); height: auto; max-width: 100%; max-height: 100%;
+    object-fit: contain; border-radius: 2px; box-shadow: 0 40px 90px rgba(0, 0, 0, .7);
+    transform-origin: top left; will-change: transform;
+  }
+  .viewer__img.is-swapping { opacity: 0; transition: opacity .16s; }
+  .viewer__bar {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 3;
+    display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap;
+    padding: 16px 20px calc(16px + env(safe-area-inset-bottom));
+    font-size: 12.5px; color: #9A9793;
+    opacity: 0; transform: translateY(8px); transition: opacity .3s .12s, transform .3s .12s;
+  }
+  .viewer.is-open .viewer__bar { opacity: 1; transform: none; }
+  .viewer__name { color: #E8E6E3; font-weight: 640; font-size: 13.5px; }
+  .viewer__nav, .viewer__close {
+    position: absolute; z-index: 3; display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(255, 255, 255, .5); border-radius: var(--r); color: #F2F1EF;
+    background: rgba(0, 0, 0, .55);
+    opacity: 0; transition: opacity .3s .12s, background .2s, border-color .2s;
+  }
+  .viewer.is-open .viewer__nav, .viewer.is-open .viewer__close { opacity: 1; }
+  .viewer__nav:hover, .viewer__close:hover {
+    background: rgba(0, 0, 0, .8); border-color: rgba(255, 255, 255, .85);
+  }
+  .viewer__nav { top: 50%; width: 46px; height: 46px; margin-top: -23px; }
+  .viewer__nav--prev { left: clamp(8px, 2vw, 26px); }
+  .viewer__nav--next { right: clamp(8px, 2vw, 26px); }
+  .viewer__close {
+    top: clamp(12px, 2vw, 24px); right: clamp(12px, 2vw, 24px); width: 40px; height: 40px;
+  }
+  @media (max-width: 600px) { .viewer__hint { display: none; } }
+</style>

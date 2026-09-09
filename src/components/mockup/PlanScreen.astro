@@ -1,0 +1,114 @@
+---
+/**
+ * Claim: you approve, then Folio does it and verifies it.
+ *
+ * The plan is written out in full, real filenames and real destinations, before
+ * a single byte moves. The flow order (Plan, Confirm, Move, Verify, Done) is the
+ * safety contract from ADRs 0014 and 0015; do not reorder or collapse it.
+ *
+ * aria-live announces the state changes as the run progresses.
+ */
+import Icon from '@/components/primitives/Icon.astro';
+import { planRows, planFlow } from '@/data/mockup';
+import { site, display } from '@/config/site';
+---
+
+<div class="plan">
+  <div class="plan__col">
+    <span class="klabel" id="planLabel">What will happen</span>
+    <div class="plan__figure">
+      <span class="hero-val" id="planCount">{display.planFiles}</span>
+      <span class="hero-unit" id="planUnit">files into {site.canvas.monthFolders} month folders</span>
+    </div>
+    <p class="small plan__detail" id="planDetail">
+      Into <b>{site.canvas.sourcePath}</b>, arranged by the date each photograph was taken.
+      Same drive. Nothing is copied off it, and nothing is deleted.
+    </p>
+    <div class="rows rows--plan" id="planRows">
+      {planRows.map((row) => (
+        <div class="rows__r">
+          <span>{row.from}</span>
+          <span class="rows__arw" aria-hidden="true">&rarr;</span>
+          <b>{row.to}</b>
+          <i class="rows__tick" aria-hidden="true"><Icon name="check" size={11} /></i>
+        </div>
+      ))}
+    </div>
+    <p class="tiny">
+      {planRows.length} of {display.planFiles} shown. The full plan is scrollable, searchable
+      and can be exported before you approve it.
+    </p>
+  </div>
+
+  <div class="plan__col">
+    <span class="klabel">The job</span>
+    <div class="flow" id="planFlow" aria-live="polite">
+      {planFlow.map((step, i) => (
+        <div class="flow__s" data-step={i}>
+          <div class="flow__m"><Icon name="check" size={12} /></div>
+          <div>
+            <div class="flow__t">{step.title}</div>
+            <div class="flow__n">{step.note}</div>
+            {i === 1 && (
+              <button class="plan__btn" id="approve">
+                <span class="plan__btnlabel">Approve this plan</span>
+                <Icon name="arrow" size={13} />
+              </button>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .plan { display: grid; grid-template-columns: 1fr 1fr; }
+  .plan__col { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+  .plan__col + .plan__col { border-left: 1px solid var(--border); background: var(--surface); }
+  .plan__figure { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin: 2px 0; }
+  .hero-val {
+    font-family: var(--serif); font-weight: 600; font-size: clamp(38px, 7.2cqw, 72px);
+    line-height: .96; letter-spacing: -.03em; font-variant-numeric: tabular-nums; color: var(--t1);
+  }
+  .hero-unit { font-size: clamp(13px, 1.6cqw, 17px); color: var(--t2); }
+  .plan__detail { color: var(--t2); }
+  .plan__detail b { color: var(--t1); font-weight: 600; }
+
+  .flow { position: relative; margin-top: 2px; }
+  .flow::before {
+    content: ""; position: absolute; left: 10px; top: 18px; bottom: 20px;
+    width: 2px; background: var(--border);
+  }
+  .flow__s {
+    position: relative; display: grid; grid-template-columns: 22px 1fr;
+    gap: 14px; padding-bottom: 15px;
+  }
+  .flow__m {
+    width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border-2);
+    background: var(--surface); display: flex; align-items: center; justify-content: center;
+    color: transparent; transition: background .3s, border-color .3s, color .3s, box-shadow .3s;
+  }
+  .flow__s.is-done .flow__m { border-color: var(--good); color: var(--good); }
+  .flow__s.is-live .flow__m {
+    background: var(--accent); border-color: var(--accent); color: transparent;
+    box-shadow: 0 0 0 4px var(--surface), 0 0 0 6px var(--accent-w);
+  }
+  .flow__t { font-size: 13.5px; font-weight: 640; color: var(--t1); }
+  .flow__s:not(.is-live):not(.is-done) .flow__t { font-weight: 450; color: var(--t2); }
+  .flow__n { font-size: 12px; color: var(--t3); margin-top: 2px; }
+  .plan__btn {
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 9px; height: 36px;
+    padding: 0 16px; border-radius: var(--r); background: var(--accent); color: var(--on-acc);
+    font-size: 13px; font-weight: 650; transition: filter .2s, transform .12s, opacity .3s;
+  }
+  .plan__btn:hover { filter: brightness(1.08); }
+  .plan__btn:active { transform: translateY(1px); }
+  .plan__btn.is-pressed { animation: press .32s var(--ease); }
+  .plan__btn[disabled] { opacity: .55; cursor: default; }
+  @keyframes press { 40% { transform: scale(.955); } 100% { transform: none; } }
+  @container (max-width: 700px) {
+    .plan { grid-template-columns: 1fr; }
+    .plan__col + .plan__col { border-left: 0; border-top: 1px solid var(--border); }
+  }
+</style>

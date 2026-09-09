@@ -1,0 +1,61 @@
+---
+import Eyebrow from '@/components/primitives/Eyebrow.astro';
+import Icon from '@/components/primitives/Icon.astro';
+import DuplicateCard from '@/components/mockup/DuplicateCard.astro';
+import RenameCard from '@/components/mockup/RenameCard.astro';
+import { arrangeRows } from '@/data/mockup';
+---
+
+<section class="sect t-paper" id="jobs">
+  <div class="wrap">
+    <div class="head rv">
+      <Eyebrow>What it does</Eyebrow>
+      <h2 class="h2">Three jobs. Each one writes the plan out before it touches anything.</h2>
+      <p class="lede">
+        Folio is deliberately not a suite of forty utilities sharing a window. It does a
+        small number of things and it does them where you can watch.
+      </p>
+    </div>
+
+    <div class="grid g-3 jobs__grid">
+      <div class="card job rv">
+        <div class="job__intro">
+        <div class="job__head">
+          <div class="card__ico"><Icon name="calendar" size={22} /></div>
+          <span class="job__n">01</span>
+        </div>
+        <h3 class="h3">Organize by date</h3>
+        <p>
+          Sort photographs into year and month folders using the date the photo was actually
+          taken, not the date Windows happened to stamp on the file when it was last copied.
+        </p>
+        </div>
+
+        <div class="job__body">
+        <div class="job__demo">
+          <span class="klabel">Plan</span>
+          <div class="rows">
+            {arrangeRows.map((row) => (
+              <div class="rows__r">
+                <span>{row.from}</span>
+                <span class="rows__arw" aria-hidden="true">&rarr;</span>
+                <b>{row.to}</b>
+              </div>
+            ))}
+          </div>
+        </div>
+        <p class="tiny job__foot">
+          Arranging stays inside the source you chose. Nothing wanders off to another drive.
+        </p>
+        </div>
+      </div>
+
+      <DuplicateCard />
+      <RenameCard />
+    </div>
+  </div>
+</section>
+
+<style>
+  .jobs__grid { margin-top: clamp(36px, 4.4vw, 56px); }
+</style>

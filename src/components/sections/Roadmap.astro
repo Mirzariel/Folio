@@ -1,0 +1,58 @@
+---
+/**
+ * Both items are tagged "In development" and the footnote repeats that Windows
+ * is what ships today. Together with the Mac and iPhone FAQ answers, that is
+ * three places stating the roadmap plainly. Keep all three: a refund from
+ * someone who thought they were buying phone import costs more than the sale.
+ */
+import Eyebrow from '@/components/primitives/Eyebrow.astro';
+import Icon from '@/components/primitives/Icon.astro';
+import { roadmapCards } from '@/data/roadmap';
+---
+
+<section class="sect t-dark sect--tight band" id="next">
+  <div class="wrap">
+    <div class="head rv">
+      <Eyebrow>What comes next</Eyebrow>
+      <h2 class="h2">Two things are being built. Neither one is on this invoice.</h2>
+      <p class="lede">
+        Folio has four pillars. Three of them ship today. This is the fourth, and the
+        second platform.
+      </p>
+    </div>
+
+    <div class="grid g-2 next__grid">
+      {roadmapCards.map((card, i) => (
+        <div class={`card rv${i > 0 ? ' rv-d1' : ''} next__card`}>
+          <span class="card__tag">In development</span>
+          <div class="card__ico"><Icon name={card.icon} size={22} /></div>
+          <h3 class="h3">{card.title}</h3>
+          <p set:html={card.body} />
+          {card.note && (
+            <p class="next__note"><Icon name="check-c" size={15} />{card.note}</p>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <p class="small rv next__foot">
+      Windows is what you get today. Both of these are in development and neither has a
+      release date. Nothing on this page charges you for something that is not built yet.
+    </p>
+  </div>
+</section>
+
+<style>
+  .next__grid { margin-top: clamp(36px, 4.4vw, 56px); }
+  .next__card { position: relative; }
+  .next__card :global(.card__tag) {
+    position: absolute; top: clamp(20px, 2.2vw, 28px); right: clamp(20px, 2.2vw, 28px);
+  }
+  .next__card .h3 { padding-right: 120px; }
+  .next__note {
+    display: flex; gap: 9px; align-items: flex-start; margin-top: 4px; padding-top: 12px;
+    border-top: 1px solid var(--border); font-size: 13.5px; color: var(--t1);
+  }
+  .next__note :global(svg) { flex: 0 0 15px; color: var(--good); margin-top: 3px; }
+  .next__foot { margin-top: clamp(22px, 2.6vw, 30px); max-width: 70ch; }
+</style>

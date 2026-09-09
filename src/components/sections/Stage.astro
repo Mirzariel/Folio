@@ -1,0 +1,44 @@
+---
+/** The app window gets its own room. It used to sit flush against the hero
+    trust row, squeezed to a 2.24 aspect against the app's real 1.6. */
+import Window from '@/components/mockup/Window.astro';
+import HubScreen from '@/components/mockup/HubScreen.astro';
+---
+
+<section class="sect t-dark stage" id="stage">
+  <div class="stage__floor" aria-hidden="true"></div>
+  <div class="wrap">
+    <Window name="Folio" id="hubwin" tilt>
+      <HubScreen />
+    </Window>
+    <p class="stage__cap rv">
+      Four real figures. Three doors. No dashboard, no invented health score.
+    </p>
+  </div>
+</section>
+
+<style>
+  /* overflow clips the floor glow, which is wider than the viewport by design
+     and would otherwise widen the document on narrow screens */
+  .stage { padding: clamp(58px, 7vw, 104px) 0 clamp(64px, 8vw, 112px); overflow: hidden; }
+  .stage__floor {
+    position: absolute; left: 50%; top: 4%; width: min(1320px, 140vw); height: 60%;
+    transform: translateX(-50%); pointer-events: none;
+    background: radial-gradient(ellipse at 50% 45%, rgba(224, 128, 58, .11), rgba(224, 128, 58, 0) 70%);
+  }
+  .stage__cap { text-align: center; margin-top: 26px; font-size: 13px; color: var(--t3); }
+</style>
+
+<style is:global>
+  /* Claim: three doors, dealt one after another. Global because the .rv gate is
+     on the window in this section and the doors live in HubScreen. */
+  .js .rv .door { opacity: 0; transform: translateY(20px); }
+  .js .rv.in .door {
+    animation: doorIn .8s var(--ease) both;
+    animation-delay: calc(.18s + var(--n) * .1s);
+  }
+  @keyframes doorIn {
+    from { opacity: 0; transform: translateY(20px) scale(.985); }
+    to { opacity: 1; transform: none; }
+  }
+</style>

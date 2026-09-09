@@ -1,0 +1,78 @@
+/* ==========================================================================
+   The app-window design language.
+
+   Three screens (hub, gallery, plan) share this chrome, and Window.astro slots
+   their bodies in, so these rules cannot live in one component's scoped style
+   block. Everything here reproduces a real Folio surface: wording that also
+   appears in the application belongs to the application, not to this page.
+
+   Widths are container queries, not media queries: a mockup window is sized by
+   its own column, never by the viewport.
+   ========================================================================== */
+
+.win {
+  border: 1px solid var(--border-2); border-radius: var(--r-lg); overflow: hidden;
+  background: var(--bg); box-shadow: var(--shadow);
+  font-size: 14px; line-height: 1.42; color: var(--t1);
+  container-type: inline-size;
+}
+
+/* pointer parallax, fine pointers only. See motion/tilt.ts */
+.tilt {
+  transform: perspective(1900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform .5s var(--ease);
+}
+
+/* ---- title bar ----------------------------------------------------------- */
+.win__bar {
+  height: 42px; display: flex; align-items: center; gap: 10px; padding: 0 12px;
+  background: var(--rail); border-bottom: 1px solid var(--border);
+}
+.win__bar > img { width: 20px; height: 20px; border-radius: 5px; }
+.win__name { font-family: var(--serif); font-weight: 500; font-size: 15px; color: var(--t1); }
+.win__back { display: inline-flex; align-items: center; gap: 7px; color: var(--t2); font-size: 13px; }
+.win__source {
+  margin-left: auto; display: inline-flex; align-items: center; gap: 7px;
+  font-size: 12px; color: var(--t2); padding: 3px 10px; border: 1px solid var(--border);
+  border-radius: 999px; white-space: nowrap;
+}
+.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--good); flex: 0 0 6px; }
+.win__ctrls { display: flex; gap: 6px; margin-left: 6px; }
+.win__ctrls i { width: 9px; height: 9px; border-radius: 50%; background: var(--border-2); display: block; }
+
+/* ---- status strip -------------------------------------------------------- */
+/* The approval promise sits here permanently, not as a warning that appears
+   the moment something is about to happen. People learn to click past warnings. */
+.win__strip {
+  display: flex; align-items: center; gap: 14px; padding: 10px 16px; flex-wrap: wrap;
+  background: var(--rail); border-top: 1px solid var(--border); font-size: 12px; color: var(--t2);
+}
+.win__promise { display: inline-flex; align-items: center; gap: 7px; color: var(--accent-t); font-weight: 640; }
+.win__promise svg { flex: 0 0 14px; }
+.win__idle { color: var(--t3); transition: color .3s; }
+.win__idle.is-done { color: var(--good); }
+.win__act { margin-left: auto; color: var(--t2); border-bottom: 1px solid var(--border-2); }
+@container (max-width: 520px) { .win__idle { display: none; } }
+
+/* ---- file rows ----------------------------------------------------------- */
+/* Used by the arrange card, the rename preview and the plan. Real filenames and
+   real destinations: the plan is written out before a single byte moves. */
+.rows { border: 1px solid var(--border); border-radius: var(--r); background: var(--inset); padding: 3px 10px; }
+.rows__r { display: grid; grid-template-columns: 1fr 16px 1fr; gap: 8px; align-items: center; padding: 5px 0; }
+.rows--plan .rows__r { grid-template-columns: 1fr 16px 1fr 14px; }
+.rows__r + .rows__r { border-top: 1px solid var(--border); }
+.rows__r span, .rows__r b {
+  font-family: var(--mono); font-size: 11.5px; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap;
+}
+.rows__r span { color: var(--t2); }
+.rows__r b { font-weight: 400; color: var(--t1); }
+.rows__arw { color: var(--t3); text-align: center; font-size: 12px; font-family: var(--sans) !important; }
+.rows__tick {
+  display: flex; color: var(--good); opacity: 0; transform: scale(.5);
+  transition: opacity .28s var(--ease), transform .28s var(--ease);
+}
+.rows__r.is-done .rows__tick { opacity: 1; transform: none; }
+
+/* ---- shared small label -------------------------------------------------- */
+.klabel { font-size: 10px; font-weight: 650; letter-spacing: .12em; text-transform: uppercase; color: var(--t3); }

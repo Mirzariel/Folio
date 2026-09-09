@@ -1,0 +1,47 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/sections/Hero.astro';
+import Stage from '@/components/sections/Stage.astro';
+import Problem from '@/components/sections/Problem.astro';
+import HowItWorks from '@/components/sections/HowItWorks.astro';
+import Gallery from '@/components/sections/Gallery.astro';
+import Jobs from '@/components/sections/Jobs.astro';
+import Promise from '@/components/sections/Promise.astro';
+import Safety from '@/components/sections/Safety.astro';
+import Private from '@/components/sections/Private.astro';
+import Compare from '@/components/sections/Compare.astro';
+import Roadmap from '@/components/sections/Roadmap.astro';
+import Pricing from '@/components/sections/Pricing.astro';
+import Faq from '@/components/sections/Faq.astro';
+import FinalCta from '@/components/sections/FinalCta.astro';
+import Viewer from '@/components/Viewer.astro';
+import { site } from '@/config/site';
+---
+
+<BaseLayout title={`Folio. ${site.tagline}`}>
+  <Hero />
+  <Stage />
+  <Problem />
+  <HowItWorks />
+  <Gallery />
+  <Jobs />
+  <Promise />
+  <Safety />
+  <Private />
+  <Compare />
+  <Roadmap />
+  <Pricing />
+
+  {/*
+    SOCIAL PROOF, deliberately left empty.
+    Invented customer quotes convert well right up until the first person checks
+    one, and a product selling trust cannot afford to be caught inventing trust.
+    When there are real early users, add a Voices section here: a real first
+    name, what they were dealing with, permission in writing, and do not tidy
+    their grammar. See docs/COPY_AND_MOTION.md.
+  */}
+
+  <Faq />
+  <FinalCta />
+  <Viewer />
+</BaseLayout>

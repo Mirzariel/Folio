@@ -1,0 +1,79 @@
+---
+/**
+ * The download page. Deliberately states what ships today and what does not,
+ * the same way the landing page does. Do not add a macOS button until there is
+ * a macOS build.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Eyebrow from '@/components/primitives/Eyebrow.astro';
+import Icon from '@/components/primitives/Icon.astro';
+import BuyButton from '@/components/primitives/BuyButton.astro';
+import TrustList from '@/components/primitives/TrustList.astro';
+import { site, display } from '@/config/site';
+
+const requirements = [
+  { label: `${site.platforms.shipping.join(' or ')}, 64-bit` },
+  { label: 'Reads only the folders and drives you nominate' },
+  { label: 'Works completely offline' },
+];
+---
+
+<BaseLayout
+  title="Download Folio"
+  description={`Folio for ${site.platforms.shipping.join(' and ')}. ${display.price} once, no subscription.`}
+  showBuyBar={false}
+>
+  <section class="sect t-paper dl__sect">
+    <div class="wrap wrap--narrow center">
+      <Eyebrow center>Download</Eyebrow>
+      <h1 class="h2 dl__title">Folio for Windows.</h1>
+      <p class="lede dl__lede">
+        One installer, {display.price} once. Your licence key arrives at checkout and works
+        on up to {site.license.devices} of your own devices.
+      </p>
+
+      <div class="dl__box">
+        <div class="dl__plat">
+          <Icon name="windows" size={22} />
+          <div>
+            <b>Folio for {site.platforms.shipping.join(' and ')}</b>
+            <span class="small">64-bit installer</span>
+          </div>
+        </div>
+        <BuyButton label={`Get Folio, ${display.price}`} />
+        <p class="tiny dl__note">
+          Bought already? Your download link and licence key are in your purchase email.
+        </p>
+      </div>
+
+      <TrustList items={requirements} variant="center" />
+
+      <p class="small dl__soon">
+        <Icon name="apple" size={15} />
+        Folio for macOS is in development and has no release date. Your licence already
+        covers it, so you will not be asked to pay again.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .dl__sect { padding-top: clamp(120px, 12vw, 170px); }
+  .dl__title { margin-top: 16px; }
+  .dl__lede { margin-top: 18px; }
+  .dl__box {
+    margin: clamp(30px, 4vw, 44px) auto 0; max-width: 460px; text-align: left;
+    border: 1px solid var(--border-2); border-radius: var(--r-lg); background: var(--raised);
+    padding: clamp(22px, 2.6vw, 30px); display: grid; gap: 16px; box-shadow: var(--shadow);
+  }
+  .dl__plat { display: flex; align-items: center; gap: 13px; color: var(--accent-t); }
+  .dl__plat b { display: block; color: var(--t1); font-size: 15.5px; font-weight: 640; }
+  .dl__plat .small { display: block; }
+  .dl__box :global(.btn) { width: 100%; }
+  .dl__note { text-align: center; }
+  .dl__soon {
+    margin-top: clamp(26px, 3vw, 36px); display: inline-flex; gap: 9px;
+    align-items: flex-start; text-align: left; max-width: 56ch;
+  }
+  .dl__soon :global(svg) { flex: 0 0 15px; margin-top: 3px; color: var(--t2); }
+</style>

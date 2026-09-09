@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Eyebrow from '@/components/primitives/Eyebrow.astro';
+import Icon from '@/components/primitives/Icon.astro';
+
+const pages = (await getCollection('docs')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Documentation · Folio"
+  description="How to use Folio: choosing a source, reading it, and approving a plan."
+  showBuyBar={false}
+>
+  <section class="sect t-paper docs__sect">
+    <div class="wrap wrap--narrow">
+      <Eyebrow>Documentation</Eyebrow>
+      <h1 class="h2 docs__title">How Folio works, in detail.</h1>
+
+      <ul class="docs__list">
+        {pages.map((page) => (
+          <li>
+            <a href={`/docs/${page.id}`}>
+              <span>
+                <b>{page.data.title}</b>
+                <span class="small">{page.data.description}</span>
+              </span>
+              <Icon name="chevron" size={14} />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .docs__sect { padding-top: clamp(120px, 12vw, 170px); }
+  .docs__title { margin-top: 16px; }
+  .docs__list { margin-top: clamp(28px, 3.4vw, 40px); border-top: 1px solid var(--border); }
+  .docs__list li { border-bottom: 1px solid var(--border); }
+  .docs__list a {
+    display: flex; align-items: center; justify-content: space-between; gap: 18px;
+    padding: 20px 4px; color: var(--t1); transition: color .2s;
+  }
+  .docs__list a:hover { color: var(--accent-t); }
+  .docs__list b { display: block; font-size: 16.5px; font-weight: 640; }
+  .docs__list .small { display: block; margin-top: 4px; }
+</style>

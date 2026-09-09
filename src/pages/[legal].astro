@@ -1,0 +1,22 @@
+---
+/** Privacy, Terms and License render from src/content/legal/. */
+import { getCollection, render } from 'astro:content';
+import ProseLayout from '@/layouts/ProseLayout.astro';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('legal');
+  return pages.map((entry) => ({ params: { legal: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<ProseLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  updated={entry.data.updated}
+  draft={entry.data.draft}
+>
+  <Content />
+</ProseLayout>

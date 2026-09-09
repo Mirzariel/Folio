@@ -1,0 +1,101 @@
+---
+import { Image } from 'astro:assets';
+import Eyebrow from '@/components/primitives/Eyebrow.astro';
+import SplitHeading from '@/components/primitives/SplitHeading.astro';
+import { problemCards } from '@/data/problem';
+import { site, display } from '@/config/site';
+
+const images = import.meta.glob<{ default: ImageMetadata }>('../../assets/img/*.jpg', { eager: true });
+const figures = [
+  {
+    value: display.photographs,
+    count: site.canvas.photographs,
+    label: 'Photographs Folio found and catalogued',
+    sub: 'A count it holds. Not an estimate, not a percentage.',
+  },
+  {
+    value: display.reclaimable,
+    count: site.canvas.reclaimableGb,
+    decimals: 1,
+    suffix: ' GB',
+    label: 'Reclaimable, from copies proved identical',
+    sub: `Quarantined copies are <em>ready</em> to reclaim. Until you reclaim them, Folio says they free nothing.`,
+  },
+  {
+    value: display.singleCopy,
+    count: site.canvas.singleCopy,
+    label: 'Photographs that exist in one copy only',
+    sub: 'The ones with no second copy anywhere. Worth knowing before you tidy anything.',
+  },
+];
+---
+
+<section class="sect t-dark" id="problem">
+  <div class="wrap">
+    <div class="head head--center rv">
+      <Eyebrow center>The problem</Eyebrow>
+      <SplitHeading
+        lines={['You don&rsquo;t have a photo problem.', 'You have an archive problem.']}
+      />
+      <p class="lede">
+        The photos are all still there, on the laptop, the old phone backup, two external
+        drives and a memory card in a drawer. What is missing is an answer to the only
+        question that matters: <em>what can I safely tidy up, and what would I be losing?</em>
+      </p>
+    </div>
+
+    <div class="grid g-3 problem__grid">
+      {problemCards.map((card, i) => (
+        <figure class={`rv${i > 0 ? ` rv-d${i}` : ''}`}>
+          <div class="shot shot--wide">
+            <Image src={images[`../../assets/img/${card.image}`]!.default} alt={card.alt} loading="lazy" />
+          </div>
+          <figcaption>
+            <h3 class="h4">{card.title}</h3>
+            <p class="small" set:html={card.body} />
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+
+    <div class="figs rv">
+      {figures.map((f) => (
+        <div class="figs__c">
+          <div
+            class="figs__v"
+            data-count={f.count}
+            data-decimals={f.decimals}
+            data-suffix={f.suffix}
+          >{f.value}</div>
+          <p class="figs__l">{f.label}</p>
+          <p class="figs__s" set:html={f.sub} />
+        </div>
+      ))}
+    </div>
+    <p class="tiny rv figs__note">
+      Figures shown are from Folio&rsquo;s own design canvas, standing in for a real library.
+      Your numbers are your own.
+    </p>
+  </div>
+</section>
+
+<style>
+  .problem__grid { margin-top: clamp(40px, 5vw, 68px); }
+  .problem__grid figcaption { margin-top: 16px; }
+  .problem__grid figcaption .small { margin-top: 6px; }
+  .figs {
+    display: grid; gap: 1px; background: var(--border); border: 1px solid var(--border);
+    border-radius: var(--r); overflow: hidden; grid-template-columns: repeat(3, 1fr);
+    margin-top: clamp(40px, 5vw, 64px);
+  }
+  @media (max-width: 760px) { .figs { grid-template-columns: 1fr; } }
+  .figs__c { background: var(--bg); padding: 26px 24px; }
+  .figs__v {
+    font-family: var(--serif); font-weight: 600; font-size: clamp(30px, 3.4vw, 42px);
+    line-height: 1.05; letter-spacing: -.02em; color: var(--accent-t);
+    font-variant-numeric: tabular-nums;
+  }
+  .figs__l { font-size: 14.5px; color: var(--t1); margin-top: 10px; text-wrap: pretty; }
+  .figs__s { font-size: 12.5px; color: var(--t3); margin-top: 8px; text-wrap: pretty; }
+  .figs__note { margin-top: 14px; }
+</style>

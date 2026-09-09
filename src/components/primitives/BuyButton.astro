@@ -1,0 +1,36 @@
+---
+/**
+ * Every "Get Folio" button on the site.
+ *
+ * While site.checkoutUrl is empty the button scrolls to the pricing section, so
+ * the site is safe to publish before the store exists. Set the URL in one place:
+ * src/config/site.ts. See docs/LAUNCH_CHECKLIST.md.
+ */
+import { site, display } from '@/config/site';
+
+interface Props {
+  /** Defaults to "Get Folio" plus the price from site config. */
+  label?: string;
+  /** Small trailing note inside the button, e.g. "one time". */
+  sub?: string;
+  size?: 'default' | 'sm';
+  class?: string;
+}
+
+const {
+  label = `Get Folio, ${display.price}`,
+  sub,
+  size = 'default',
+  class: className,
+} = Astro.props;
+
+const live = site.checkoutUrl !== '';
+const href = live ? site.checkoutUrl : '#pricing';
+const classes = ['btn', 'btn--primary', size === 'sm' && 'btn--sm', className]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<a class={classes} href={href} rel={live ? 'noopener' : undefined}>
+  {label}{sub && <span class="btn__sub">{sub}</span>}
+</a>

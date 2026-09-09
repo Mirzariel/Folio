@@ -1,0 +1,66 @@
+---
+import Eyebrow from '@/components/primitives/Eyebrow.astro';
+import { compareRows, compareColumns } from '@/data/compare';
+---
+
+<section class="sect t-paper" id="compare">
+  <div class="wrap">
+    <div class="head rv">
+      <Eyebrow>Where it fits</Eyebrow>
+      <h2 class="h2">Not cloud storage. Not another cleaner.</h2>
+      <p class="lede">
+        Folio does not compete with the place your photos are stored. It competes with the
+        afternoon you keep not spending on this.
+      </p>
+    </div>
+
+    <div class="tbl-scroll rv">
+      <table class="cmp">
+        <thead>
+          <tr>
+            <th scope="col"><span class="vh">Feature</span></th>
+            {compareColumns.map((col, i) => (
+              <th scope="col" class={i === 0 ? 'is-us' : undefined}>{col}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {compareRows.map((row) => (
+            <tr>
+              <th scope="row">{row.feature}</th>
+              <td class="is-us">{row.folio}</td>
+              <td>{row.cloud}</td>
+              <td>{row.cleaner}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="tiny rv cmp__note">
+      Comparison describes categories of product, not any specific vendor. Subscription
+      prices are typical consumer plans and change often, so check current pricing yourself.
+    </p>
+  </div>
+</section>
+
+<style>
+  .tbl-scroll {
+    overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--border);
+    border-radius: var(--r); background: var(--surface); margin-top: clamp(32px, 4vw, 48px);
+  }
+  table.cmp { width: 100%; min-width: 740px; border-collapse: collapse; }
+  table.cmp th, table.cmp td {
+    padding: 15px 18px; text-align: left; font-size: 14.5px;
+    border-bottom: 1px solid var(--border); vertical-align: top;
+  }
+  table.cmp thead th {
+    font-size: 11px; letter-spacing: .11em; text-transform: uppercase; font-weight: 650;
+    color: var(--t3); background: var(--inset); white-space: nowrap;
+  }
+  table.cmp thead th.is-us { color: var(--accent-t); }
+  table.cmp tbody th { font-weight: 640; color: var(--t1); width: 28%; }
+  table.cmp td { color: var(--t2); }
+  table.cmp td.is-us { color: var(--t1); background: var(--accent-w); font-weight: 550; }
+  table.cmp tbody tr:last-child th, table.cmp tbody tr:last-child td { border-bottom: 0; }
+  .cmp__note { margin-top: 14px; }
+</style>

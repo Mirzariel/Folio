@@ -1,0 +1,55 @@
+---
+import Eyebrow from '@/components/primitives/Eyebrow.astro';
+import SplitHeading from '@/components/primitives/SplitHeading.astro';
+import Window from '@/components/mockup/Window.astro';
+import GalleryScreen from '@/components/mockup/GalleryScreen.astro';
+
+const notes = [
+  {
+    title: 'Scale is a first-class control',
+    body: 'S, M, L: contact sheet, normal, close reading. How large the pictures are drawn is the main decision on this page, so it is not buried in a menu.',
+  },
+  {
+    title: 'The viewer covers the wall',
+    body: 'Opening a photograph does not navigate away. Escape reads as putting a print back down, not as going back a page. Click any tile above and press Escape.',
+  },
+  {
+    title: 'Video and photo, told apart',
+    body: 'A clip and a photograph are indistinguishable as a still frame, so a clip carries one small badge. That is the only thing on a tile that is not the picture.',
+  },
+];
+---
+
+<section class="sect t-dark" id="gallery">
+  <div class="wrap">
+    <div class="head rv gallery__head">
+      <Eyebrow>The gallery</Eyebrow>
+      <SplitHeading lines={['You see photographs.', 'Folio handles the filenames.']} />
+      <p class="lede">
+        A wall of pictures with a filename under each one reads as a list of files that
+        happens to have pictures. Folio is built the other way round: the tiles carry the
+        photograph and nothing else. Names, paths, sizes and dates belong to a photograph
+        you have <em>opened</em>. Try one.
+      </p>
+    </div>
+
+    <Window name="Gallery" back status="Scale: M · Sorted by capture date" tilt>
+      <GalleryScreen />
+    </Window>
+
+    <div class="grid g-3 gallery__notes">
+      {notes.map((note, i) => (
+        <div class={`rv${i > 0 ? ` rv-d${i}` : ''}`}>
+          <h3 class="h4">{note.title}</h3>
+          <p class="small">{note.body}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .gallery__head { margin-bottom: clamp(32px, 4vw, 52px); }
+  .gallery__notes { margin-top: clamp(32px, 4vw, 48px); }
+  .gallery__notes .small { margin-top: 6px; }
+</style>

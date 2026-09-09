@@ -1,0 +1,102 @@
+/* ==========================================================================
+   Design tokens.
+   Palette, type roles and vocabulary are lifted from the product's own design
+   canvas (Folio-WinUI design/canvas/build.mjs) so the page and the app agree.
+   Archival paper in light, warm near-black in dark.
+
+   Two tiers, deliberately: raw --ink-* / --pap-* values below, then a semantic
+   alias set applied by .t-dark / .t-paper. Components only ever read the
+   semantic names, so a section can switch theme without touching a component.
+   ========================================================================== */
+:root {
+  /* dark, warm near-black */
+  --ink:          #0C0705;
+  --ink-rail:     #140C08;
+  --ink-surface:  #1C1109;
+  --ink-raised:   #2E1D12;
+  --ink-inset:    #100907;
+  --ink-t1:       #F5EADF;
+  --ink-t2:       #B8A493;
+  --ink-t3:       #9C8A76;
+  --ink-border:   #33241B;
+  --ink-border-2: #4E382A;
+  --ink-edge:     #8A6C59;
+  --ink-accent:   #E0803A;
+  --ink-accent-t: #F0A468;
+  --ink-accent-w: rgba(224, 128, 58, .14);
+  --ink-on-acc:   #1A0E05;
+  --ink-good:     #9BBF7E;
+  --ink-bad:      #F0817B;
+
+  /* light, archival paper. No pure white anywhere. */
+  --pap:          #E9E1D3;
+  --pap-rail:     #E0D7C6;
+  --pap-surface:  #F0EADE;
+  --pap-raised:   #FBF6EC;
+  --pap-inset:    #DDD3C1;
+  --pap-t1:       #2A231B;
+  --pap-t2:       #5E5245;
+  --pap-t3:       #62563F;
+  --pap-border:   #D2C6B1;
+  --pap-border-2: #AE9F85;
+  --pap-edge:     #7A6B52;
+  --pap-accent:   #8A4B12;
+  --pap-accent-t: #7E430F;
+  --pap-accent-w: rgba(138, 75, 18, .12);
+  --pap-on-acc:   #FBF6EC;
+  --pap-good:     #276041;
+  --pap-bad:      #9B2F29;
+
+  /* the viewer mat is deliberately neutral in both themes: a photograph judged
+     against warm archival paper is judged wrongly */
+  --mat: #0E0E0E;
+
+  --serif: "Spectral", "Segoe UI Variable Display", Georgia, "Times New Roman", serif;
+  --sans:  "Inter", "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono:  "Cascadia Mono", "JetBrains Mono", Consolas, ui-monospace, monospace;
+
+  --wrap: 1180px;
+  --gut: clamp(20px, 5vw, 56px);
+  --r: 4px;
+  --r-lg: 10px;
+
+  --lift: 0 32px 80px rgba(0, 0, 0, .55), 0 4px 12px rgba(0, 0, 0, .42);
+  --lift-pap: 0 28px 64px rgba(42, 35, 27, .16), 0 3px 10px rgba(42, 35, 27, .09);
+
+  --ease: cubic-bezier(.22, .61, .36, 1);
+  --ease-io: cubic-bezier(.65, .05, .36, 1);
+
+  --nav-h: 66px;
+}
+
+/* Registered so --p interpolates smoothly where the browser supports it.
+   GSAP drives it per frame regardless, so this is a bonus. */
+@property --p {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+.t-dark {
+  --bg: var(--ink); --rail: var(--ink-rail); --surface: var(--ink-surface);
+  --raised: var(--ink-raised); --inset: var(--ink-inset);
+  --t1: var(--ink-t1); --t2: var(--ink-t2); --t3: var(--ink-t3);
+  --border: var(--ink-border); --border-2: var(--ink-border-2); --edge: var(--ink-edge);
+  --accent: var(--ink-accent); --accent-t: var(--ink-accent-t);
+  --accent-w: var(--ink-accent-w); --on-acc: var(--ink-on-acc);
+  --good: var(--ink-good); --bad: var(--ink-bad);
+  --shadow: var(--lift);
+  color-scheme: dark;
+}
+
+.t-paper {
+  --bg: var(--pap); --rail: var(--pap-rail); --surface: var(--pap-surface);
+  --raised: var(--pap-raised); --inset: var(--pap-inset);
+  --t1: var(--pap-t1); --t2: var(--pap-t2); --t3: var(--pap-t3);
+  --border: var(--pap-border); --border-2: var(--pap-border-2); --edge: var(--pap-edge);
+  --accent: var(--pap-accent); --accent-t: var(--pap-accent-t);
+  --accent-w: var(--pap-accent-w); --on-acc: var(--pap-on-acc);
+  --good: var(--pap-good); --bad: var(--pap-bad);
+  --shadow: var(--lift-pap);
+  color-scheme: light;
+}

@@ -1,0 +1,55 @@
+---
+/**
+ * The app window chrome shared by the hub, gallery and plan screens.
+ * Styling lives in src/styles/mockup.css because the body is slotted in from
+ * another component and scoped styles would not reach it.
+ */
+import Icon from '@/components/primitives/Icon.astro';
+import { site } from '@/config/site';
+import { approvalPromise } from '@/data/mockup';
+
+interface Props {
+  /** Screen name in the title bar. */
+  name: string;
+  /** Shows a Back affordance instead of the app mark. */
+  back?: boolean;
+  /** Right-hand status text. */
+  status?: string;
+  statusId?: string;
+  id?: string;
+  /** Pointer parallax on fine pointers. */
+  tilt?: boolean;
+  class?: string;
+}
+
+const {
+  name,
+  back = false,
+  status = 'No job running',
+  statusId,
+  id,
+  tilt = false,
+  class: className,
+} = Astro.props;
+
+const classes = ['win', 'rv', tilt && 'tilt', className].filter(Boolean).join(' ');
+---
+
+<div class={classes} id={id}>
+  <div class="win__bar">
+    {back
+      ? <span class="win__back"><Icon name="back" size={15} />Back</span>
+      : <img src="/folio-mark.png" alt="" width="20" height="20" />}
+    <span class="win__name">{name}</span>
+    <span class="win__source"><i class="dot"></i>{site.canvas.sourceName}</span>
+    <span class="win__ctrls" aria-hidden="true"><i></i><i></i><i></i></span>
+  </div>
+
+  <slot />
+
+  <div class="win__strip">
+    <span class="win__promise"><Icon name="shield" size={14} />{approvalPromise}</span>
+    <span class="win__idle" id={statusId}>{status}</span>
+    <span class="win__act">Activity</span>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+---
+/**
+ * A heading whose lines reveal one after another.
+ *
+ * The line breaks here are authorial, not incidental: the copy motif is
+ * "You X. Folio Y." and each sentence must own its line at every width. So the
+ * lines are declared as data rather than discovered by splitting rendered text,
+ * which would merge or re-break them as the viewport changes.
+ *
+ * Without JS the wrappers are inert and the heading simply shows.
+ * Motion: src/scripts/motion/reveal.ts animates .lines.in .ln > span.
+ */
+interface Props {
+  /** One entry per line. May contain inline markup. */
+  lines: readonly string[];
+  as?: 'h1' | 'h2';
+  /** Type role class. */
+  variant?: 'display' | 'h2';
+  class?: string;
+}
+
+const { lines, as: Tag = 'h2', variant = 'h2', class: className }: Props = Astro.props;
+const classes = [variant, 'lines', className].filter(Boolean).join(' ');
+---
+
+<Tag class={classes}>
+  {lines.map((line) => (
+    <span class="ln"><span set:html={line} /></span>
+  ))}
+</Tag>
