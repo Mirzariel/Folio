@@ -18,23 +18,28 @@
 }
 .h2 {
   font-family: var(--serif); font-weight: 600;
-  font-size: clamp(30px, 4.2vw, 50px); line-height: 1.1; letter-spacing: -.018em;
+  font-size: clamp(29px, 3.9vw, 46px); line-height: 1.1; letter-spacing: -.018em;
   text-wrap: balance; color: var(--t1);
 }
 .h3 {
   font-family: var(--serif); font-weight: 600;
-  font-size: clamp(21px, 2.2vw, 27px); line-height: 1.22; letter-spacing: -.01em;
+  font-size: clamp(20px, 2vw, 25px); line-height: 1.22; letter-spacing: -.01em;
   text-wrap: balance; color: var(--t1);
 }
-.h4 { font-size: 17px; font-weight: 640; line-height: 1.4; color: var(--t1); letter-spacing: -.005em; }
-.lede {
-  font-size: clamp(17px, 1.45vw, 20px); line-height: 1.6; color: var(--t2);
-  text-wrap: pretty; max-width: 62ch;
+/* The card title. Sans, so it cannot be mistaken for a section heading, and a
+   clear step away from the body size beneath it rather than 2.5px away. */
+.h4 {
+  font-size: 17px; font-weight: 650; line-height: var(--lh-tight);
+  color: var(--t1); letter-spacing: -.008em; text-wrap: balance;
 }
-.small { font-size: 14px; line-height: 1.55; color: var(--t3); text-wrap: pretty; }
-.tiny { font-size: 12.5px; line-height: 1.5; color: var(--t3); }
+.lede {
+  font-size: var(--fs-lede); line-height: var(--lh-body); color: var(--t2);
+  text-wrap: pretty; max-width: 54ch;
+}
+.small { font-size: var(--fs-small); line-height: var(--lh-body); color: var(--t3); text-wrap: pretty; max-width: 62ch; }
+.tiny { font-size: var(--fs-micro); line-height: 1.5; color: var(--t3); max-width: 68ch; }
 .center { text-align: center; }
-.center .lede, .center .eyebrow { margin-inline: auto; }
+.center .lede, .center .eyebrow, .center .small, .center .tiny { margin-inline: auto; }
 .link { border-bottom: 1px solid var(--border-2); color: var(--accent-t); transition: border-color .2s; }
 .link:hover { border-bottom-color: var(--accent); }
 

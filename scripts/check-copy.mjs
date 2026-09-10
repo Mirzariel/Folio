@@ -52,7 +52,6 @@ const FIGURES = [
   [/\b128,432\b/, '128,432'],
   [/\b12,480\b/, '12,480'],
   [/\b3,208\b/, '3,208'],
-  [/\b14[ -]day/i, '14 day'],
   [/\b1,204\b/, '1,204'],
 ];
 for (const file of srcFiles) {
@@ -100,11 +99,19 @@ if (distFiles.length === 0) {
   }
 }
 
-/* -- 5. Legal text must be written and approved before it ships. ----------- */
+/* -- 5. Legal text must be written and approved before it ships. -----------
+   Two ways it can fail. Still flagged as a draft, or written but still holding
+   a [[TOKEN]] for a fact only the owner has: the selling entity, the governing
+   law, the payment provider, the support address. A finished-looking Terms page
+   with a blank in it is worse than one that admits it is a draft. */
 for (const file of walk(join(ROOT, 'src', 'content', 'legal'))) {
   const text = readFileSync(file, 'utf8');
   if (/^draft:\s*true\s*$/m.test(text)) {
     block(`${rel(file)}: still a draft. Set draft: false once the text is reviewed.`);
+  }
+  const tokens = [...new Set(text.match(/\[\[[A-Z_]+\]\]/g) ?? [])];
+  if (tokens.length > 0) {
+    block(`${rel(file)}: unfilled placeholder(s) ${tokens.join(', ')}. See docs/LAUNCH_CHECKLIST.md.`);
   }
 }
 

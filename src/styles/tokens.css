@@ -55,6 +55,16 @@
   --sans:  "Inter", "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif;
   --mono:  "Cascadia Mono", "JetBrains Mono", Consolas, ui-monospace, monospace;
 
+  /* Type scale. Four body sizes, not seven that differ by half a pixel.
+     Components read these names. A bare px font-size in a component's <style>
+     is a hole in the design system, not a local decision. */
+  --fs-micro: 12.5px;   /* legal, disclaimers, window chrome */
+  --fs-small: 14px;     /* captions, card bodies, table cells */
+  --fs-body:  15.5px;   /* running prose */
+  --fs-lede:  clamp(17px, 1.25vw, 19px);
+  --lh-tight: 1.35;
+  --lh-body:  1.6;
+
   --wrap: 1180px;
   --gut: clamp(20px, 5vw, 56px);
   --r: 4px;

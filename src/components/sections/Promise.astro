@@ -18,23 +18,28 @@ import PlanScreen from '@/components/mockup/PlanScreen.astro';
         lines={['Understand before you move.', 'Verify before you remove.']}
       />
       <p class="lede">
-        Every other tool in this category asks you to trust it. Folio asks you to
-        <em>check</em> it. The plan is written out in full, real filenames and real
-        destinations, before a single byte moves. Watch it run.
+        Every other tool asks you to trust it. Folio asks you to <em>check</em> it.
       </p>
     </div>
 
     <div class="promise__sticky">
-      <Window name="Organize by date" back id="planwin" status="Waiting for you" statusId="planStatus">
+      <Window
+        name="Organize by date"
+        back
+        id="planwin"
+        status="Waiting for you"
+        statusId="planStatus"
+        cue="Watch it run"
+        cueHint="the plan below approves itself, then verifies every change"
+      >
         <PlanScreen />
       </Window>
     </div>
 
     <p class="lede rv promise__coda">
-      <strong>&ldquo;Changes require approval&rdquo; sits in the status bar permanently</strong>,
-      not as a warning that appears the moment something is about to happen. A promise you
-      only see when you are already in danger is a warning, and people learn to click past
-      warnings.
+      <strong>&ldquo;Changes require approval&rdquo; sits in that status bar permanently</strong>,
+      not as a warning that appears when you are already in danger. People learn to click
+      past warnings.
     </p>
   </div>
 </section>

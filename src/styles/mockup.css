@@ -13,7 +13,7 @@
 .win {
   border: 1px solid var(--border-2); border-radius: var(--r-lg); overflow: hidden;
   background: var(--bg); box-shadow: var(--shadow);
-  font-size: 14px; line-height: 1.42; color: var(--t1);
+  font-size: var(--fs-small); line-height: 1.42; color: var(--t1);
   container-type: inline-size;
 }
 
@@ -76,3 +76,21 @@
 
 /* ---- shared small label -------------------------------------------------- */
 .klabel { font-size: 10px; font-weight: 650; letter-spacing: .12em; text-transform: uppercase; color: var(--t3); }
+
+/* ---- the gallery scan ----------------------------------------------------
+   Lives here rather than in GalleryScreen.astro because motion/scanSweep.ts
+   and the reduced-motion sheet reach the same selectors, so the rules were
+   already global. Claim: this is the scan populating the wall, literally. */
+.js .gal__cell { opacity: .09; filter: grayscale(1) brightness(.5); }
+.js .gal__grid.is-scanned .gal__cell {
+  opacity: 1; filter: none;
+  transition: opacity .6s var(--ease), filter .6s var(--ease);
+  transition-delay: calc(var(--n) * 40ms);
+}
+.gal__grid.is-scanned .gal__sweep { animation: sweep 1.5s var(--ease-io) .05s both; }
+@keyframes sweep {
+  0% { opacity: 0; transform: translateX(-110%); }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(470%); }
+}

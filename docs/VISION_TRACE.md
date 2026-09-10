@@ -43,7 +43,7 @@ Three places state the roadmap explicitly rather than blurring it: the roadmap s
 items *In development*, the pricing footnote repeats that Windows is what ships today, and the
 FAQ answers the iPhone and Mac questions with a plain no plus "no release date".
 
-**Keep all three.** A refund request from someone who thought they were buying phone import
+**Keep all three.** A buyer who thought they were paying for phone import
 costs more than the sale.
 
 ## The numbers

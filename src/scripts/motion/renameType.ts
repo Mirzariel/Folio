@@ -5,7 +5,8 @@
  * so the preview is visibly downstream of the pattern. Extensions never change.
  * Under reduced motion the finished pattern and its preview are simply there.
  */
-import { gsap, ScrollTrigger, type MotionModule } from './registry';
+import { gsap, type MotionModule } from './registry';
+import { loopWhileVisible } from './loop';
 import { renamePattern } from '@/data/mockup';
 
 export const initRenameType: MotionModule = (reduced) => {
@@ -36,27 +37,26 @@ export const initRenameType: MotionModule = (reduced) => {
 
   let tween: gsap.core.Tween | null = null;
 
-  const trigger = ScrollTrigger.create({
-    trigger: root,
-    start: 'top 80%',
-    once: true,
-    onEnter: () => {
-      const state = { chars: 0 };
-      tween = gsap.to(state, {
-        chars: renamePattern.length,
-        duration: renamePattern.length * 0.062,
-        ease: 'none',
-        onUpdate: () => paint(renamePattern.slice(0, Math.round(state.chars))),
-        onComplete: () => {
-          paint(renamePattern);
-          window.setTimeout(() => caret?.classList.add('is-off'), 900);
-        },
-      });
-    },
-  });
+  const type = () => {
+    tween?.kill();
+    caret?.classList.remove('is-off');
+    const state = { chars: 0 };
+    tween = gsap.to(state, {
+      chars: renamePattern.length,
+      duration: renamePattern.length * 0.062,
+      ease: 'none',
+      onUpdate: () => paint(renamePattern.slice(0, Math.round(state.chars))),
+      onComplete: () => {
+        paint(renamePattern);
+        window.setTimeout(() => caret?.classList.add('is-off'), 900);
+      },
+    });
+  };
+
+  const stopLoop = loopWhileVisible(root, type, { every: 5, start: 'top 80%' });
 
   return () => {
-    trigger.kill();
+    stopLoop();
     tween?.kill();
   };
 };

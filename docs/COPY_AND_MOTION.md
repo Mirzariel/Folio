@@ -54,10 +54,37 @@ it is **every motion carries a claim**. A motion with no claim does not belong o
 | A light bar sweeps the gallery and tiles resolve behind it | this is the scan populating the wall | motion/scanSweep.ts |
 | Clicking a tile grows it into the viewer; Escape puts it back | the spec's connected enlargement. Escape reads as putting a print down. The mat is neutral `#0E0E0E`, because a photograph judged against warm archival paper is judged wrongly | scripts/viewer.ts |
 | The plan runs itself: rows tick, the counter races, Plan to Done | you approve, then Folio does it and verifies it | motion/planRunner.ts |
-| Three duplicates slide into the quarantine folder and one stays | quarantine frees nothing until you reclaim, and the figure says so | motion/dupeCollapse.ts |
+| Three duplicates converge on the quarantine folder, one stays, and the folder counts what arrived | quarantine frees nothing until you reclaim, and the figure says so | motion/dupeCollapse.ts |
 | The rename pattern types itself and the preview rewrites live | the preview updates before you commit | motion/renameType.ts |
 
-The hero glow is the only thing that loops, and it is nearly imperceptible.
+## The demos repeat
+
+A claim you can only watch once is a claim most visitors miss: they arrive mid-animation, or
+they scroll back to look properly and find a frozen last frame. So the four demos replay while
+they are on screen, through `loopWhileVisible` in `src/scripts/motion/loop.ts`.
+
+| Demo | Repeats every |
+|---|---|
+| The scan sweeping the gallery wall | 6s |
+| Three copies collapsing into quarantine | 6s, with the four held for 1.3s first |
+| The rename pattern typing itself | 5s |
+| The plan running to Done | 8s |
+
+The four hub figures are not on a timer; they count again whenever you scroll back to them.
+
+Three rules the helper enforces, and any new loop must keep:
+
+- **Off screen means stopped.** The interval is cleared on leave and started again on re-entry.
+  A timer running behind the fold costs battery for something nobody is looking at.
+- **A hidden tab means stopped.** A background tab throttles `requestAnimationFrame` to about
+  one frame a second, so a pass started there cannot finish and the timer would only restart an
+  animation nobody can see.
+- **A click wins.** The moment the visitor approves the plan themselves, the plan runner's loop
+  is killed for good. Nothing may replay underneath someone who has taken control.
+
+Under reduced motion nothing loops at all: every module still delivers its finished state, and
+the plan still runs to Done on click. The hero glow is the one loop that is purely decorative,
+and it is nearly imperceptible.
 
 ## Reduced motion is a complete second design
 
@@ -107,3 +134,32 @@ self-hosted `@font-face` rules if you would rather have no third-party requests.
 
 Note that the motion layer waits for `document.fonts.ready` before measuring scroll positions,
 because Spectral reflows every heading on the page.
+
+## Live surface, or photograph
+
+Visitors could not tell an app window they can actually operate from a stock photograph in a
+frame. The page answers that once, in one grammar, and nowhere else:
+
+| Reads as | Drawn as | Where |
+|---|---|---|
+| software, and this one runs | window chrome plus a `.cue` above it | `Window.astro` (`cue`, `cueHint`), the jobs section |
+| scenery | `.shot`: no border, no hover zoom, no cue | Problem, Local-first |
+
+`.cue` is an accent dot, a two-word label, and a plain-language hint that says what the visitor
+can do or why the surface exists. The four on the page today:
+
+- **The interface**, rebuilt on this page, not a screenshot (hub)
+- **Try it**, click any photograph below, then press Escape (gallery)
+- **Live panels**, the framed area in each card runs its own job (jobs)
+- **Watch it run**, the plan below approves itself, then verifies every change (promise)
+
+Do not put a cue on anything that neither runs nor responds, and do not give a photograph a
+border or a hover transform. Both halves of the grammar have to stay honest or neither works.
+
+## The type scale
+
+Four body sizes, defined in `tokens.css` as `--fs-micro`, `--fs-small`, `--fs-body`, `--fs-lede`.
+Before this, seven near-identical sizes were scattered across component styles (14px, 14.5px,
+15px, 15.5px, 13.5px, 12.5px, 12px), which reads as sloppiness rather than hierarchy. A bare px
+font-size in a section's `<style>` is a hole in the design system. The app-window mockups are the
+one exception: they reproduce the application's own denser UI scale on purpose.

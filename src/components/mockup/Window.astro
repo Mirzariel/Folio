@@ -19,6 +19,10 @@ interface Props {
   id?: string;
   /** Pointer parallax on fine pointers. */
   tilt?: boolean;
+  /** The cue above the window. Says this is software, and whether it runs. */
+  cue?: string;
+  /** Plain-language second half of the cue, for a surface you can operate. */
+  cueHint?: string;
   class?: string;
 }
 
@@ -29,11 +33,17 @@ const {
   statusId,
   id,
   tilt = false,
+  cue,
+  cueHint,
   class: className,
 } = Astro.props;
 
 const classes = ['win', 'rv', tilt && 'tilt', className].filter(Boolean).join(' ');
 ---
+
+{cue && (
+  <p class="cue rv">{cue}{cueHint && <span class="cue__hint">{cueHint}</span>}</p>
+)}
 
 <div class={classes} id={id}>
   <div class="win__bar">

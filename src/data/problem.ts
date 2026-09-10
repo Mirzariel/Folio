@@ -12,23 +12,23 @@ export const problemCards: readonly ProblemCard[] = [
     alt: 'Dozens of printed photographs spread across a table',
     title: 'Four drives, one collection',
     body:
-      'Folders inside folders, named <em>New folder (3)</em>. Copies of copies. You cannot ' +
-      'see the shape of it from Explorer, so you keep everything, forever, just in case.',
+      'Folders inside folders, named <em>New folder (3)</em>. You cannot see the shape of ' +
+      'it from Explorer, so you keep everything, forever, just in case.',
   },
   {
     image: 'drive.jpg',
     alt: 'An external hard drive opened on a desk',
-    title: '\u201cIs this one a duplicate, or a backup?\u201d',
+    title: '“Duplicate, or backup?”',
     body:
-      'Same name, same size, two drives. One is wasted space and one is the only thing ' +
-      'standing between you and losing 2014. They look identical from the outside.',
+      'Same name, same size, two drives. One is wasted space. One is the only thing ' +
+      'standing between you and losing 2014.',
   },
   {
     image: 'elder-photos.jpg',
     alt: 'Hands holding old black and white photographs',
-    title: 'The cost of being wrong is permanent',
+    title: 'Being wrong is permanent',
     body:
-      'A spreadsheet you delete twice can be rebuilt. Your daughter\u2019s first birthday ' +
-      'cannot. So the safest thing is to do nothing, and the mess quietly doubles every year.',
+      'A deleted spreadsheet can be rebuilt. Your daughter’s first birthday cannot. So ' +
+      'you do nothing, and the mess doubles every year.',
   },
 ] as const;

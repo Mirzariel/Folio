@@ -51,11 +51,16 @@ export const initCounters: MotionModule = (reduced) => {
     const decimals = Number.parseInt(el.dataset.decimals ?? '0', 10);
     const suffix = el.dataset.suffix ?? '';
 
+    /* Not `once`: scrolling back to the figures counts them again, which is
+       what the owner asked for. The markup value stands in between, so a
+       counter is never caught showing a zero. */
+    const run = () => void countTo(el, target, { decimals, suffix });
     return ScrollTrigger.create({
       trigger: el,
       start: 'top 90%',
-      once: true,
-      onEnter: () => void countTo(el, target, { decimals, suffix }),
+      end: 'bottom 10%',
+      onEnter: run,
+      onEnterBack: run,
     });
   });
 

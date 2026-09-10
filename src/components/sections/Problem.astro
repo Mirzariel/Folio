@@ -10,8 +10,8 @@ const figures = [
   {
     value: display.photographs,
     count: site.canvas.photographs,
-    label: 'Photographs Folio found and catalogued',
-    sub: 'A count it holds. Not an estimate, not a percentage.',
+    label: 'Photographs found and catalogued',
+    sub: 'A count Folio holds. Not an estimate.',
   },
   {
     value: display.reclaimable,
@@ -19,13 +19,13 @@ const figures = [
     decimals: 1,
     suffix: ' GB',
     label: 'Reclaimable, from copies proved identical',
-    sub: `Quarantined copies are <em>ready</em> to reclaim. Until you reclaim them, Folio says they free nothing.`,
+    sub: 'Quarantined, not gone. Until you reclaim them, Folio says they free nothing.',
   },
   {
     value: display.singleCopy,
     count: site.canvas.singleCopy,
     label: 'Photographs that exist in one copy only',
-    sub: 'The ones with no second copy anywhere. Worth knowing before you tidy anything.',
+    sub: 'No second copy anywhere. Worth knowing before you tidy anything.',
   },
 ];
 ---
@@ -38,9 +38,8 @@ const figures = [
         lines={['You don&rsquo;t have a photo problem.', 'You have an archive problem.']}
       />
       <p class="lede">
-        The photos are all still there, on the laptop, the old phone backup, two external
-        drives and a memory card in a drawer. What is missing is an answer to the only
-        question that matters: <em>what can I safely tidy up, and what would I be losing?</em>
+        The photos are all still there. What is missing is the answer to one question:
+        <em>what can I safely tidy up, and what would I be losing?</em>
       </p>
     </div>
 
@@ -73,8 +72,7 @@ const figures = [
       ))}
     </div>
     <p class="tiny rv figs__note">
-      Figures shown are from Folio&rsquo;s own design canvas, standing in for a real library.
-      Your numbers are your own.
+      Figures from Folio&rsquo;s design canvas, standing in for a real library. Yours will differ.
     </p>
   </div>
 </section>
@@ -95,7 +93,7 @@ const figures = [
     line-height: 1.05; letter-spacing: -.02em; color: var(--accent-t);
     font-variant-numeric: tabular-nums;
   }
-  .figs__l { font-size: 14.5px; color: var(--t1); margin-top: 10px; text-wrap: pretty; }
-  .figs__s { font-size: 12.5px; color: var(--t3); margin-top: 8px; text-wrap: pretty; }
+  .figs__l { font-size: var(--fs-small); color: var(--t1); margin-top: 10px; text-wrap: pretty; }
+  .figs__s { font-size: var(--fs-micro); color: var(--t3); margin-top: 8px; text-wrap: pretty; }
   .figs__note { margin-top: 14px; }
 </style>

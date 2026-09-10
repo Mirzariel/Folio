@@ -16,8 +16,8 @@ to one component and one content source. Do not read the whole tree to change on
 
 ## Content boundary
 
-- **Commercial facts live in `src/config/site.ts` and nowhere else.** Price, refund window,
-  device count, update scope, platform status, the design-canvas figures. Import `site` or
+- **Commercial facts live in `src/config/site.ts` and nowhere else.** Price, device count,
+  update scope, platform status, the design-canvas figures. Import `site` or
   `display`; never retype a number. `npm run check:copy` fails the build on a hard-coded one.
 - **Structured lists live in `src/data/`.** FAQ answers, comparison rows, safety cards, gallery
   tiles, mockup rows. FAQ is data rather than Markdown because its answers state commercial

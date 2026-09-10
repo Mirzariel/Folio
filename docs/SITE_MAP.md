@@ -11,12 +11,13 @@ Commercial facts never live in a component. They come from `src/config/site.ts` 
 
 | Task | Component | Content source |
 |---|---|---|
-| Price, refund window, device count, checkout URL, support email | any | **src/config/site.ts** |
+| Price, device count, checkout URL, support email | any | **src/config/site.ts** |
 | Hero copy, the scattered-to-ordered prints | src/components/sections/Hero.astro | src/data/gallery.ts (`prints`) |
 | Hub window, four figures, three doors | src/components/mockup/HubScreen.astro | src/data/mockup.ts (`doors`, `hubStats`) |
 | The problem section, three figures | src/components/sections/Problem.astro | src/data/problem.ts |
 | How it works, three steps | src/components/sections/HowItWorks.astro | src/data/steps.ts |
 | Gallery wall and its tiles | src/components/mockup/GalleryScreen.astro | src/data/gallery.ts (`tiles`) |
+| Gallery scale and kind controls | src/components/mockup/GalleryScreen.astro | behaviour in src/scripts/interactions.ts |
 | Photograph viewer | src/components/Viewer.astro | behaviour in src/scripts/viewer.ts |
 | Organize / duplicates / rename cards | src/components/sections/Jobs.astro, mockup/DuplicateCard.astro, mockup/RenameCard.astro | src/data/mockup.ts |
 | The plan window, Plan to Done | src/components/mockup/PlanScreen.astro | src/data/mockup.ts (`planRows`, `planFlow`) |
@@ -27,6 +28,7 @@ Commercial facts never live in a component. They come from `src/config/site.ts` 
 | Pricing card and the included list | src/components/sections/Pricing.astro | src/config/site.ts |
 | FAQ | src/components/sections/Faq.astro | **src/data/faq.ts** |
 | Final call to action | src/components/sections/FinalCta.astro | inline |
+| Live-surface cue on a mockup | src/components/mockup/Window.astro (`cue`, `cueHint`) | inline, per section |
 | Section order on the page | src/pages/index.astro | — |
 
 ## Other pages
@@ -41,6 +43,12 @@ Commercial facts never live in a component. They come from `src/config/site.ts` 
 Legal pages carry `draft: true` until a human has written and approved them. While a page is a
 draft it renders a visible notice, and once `site` is set in `astro.config.mjs` the draft flag
 fails the build. See [the launch checklist](LAUNCH_CHECKLIST.md).
+
+## Marketing assets
+
+| Task | File |
+|---|---|
+| Promo video, 9:16 and 30s: script, shot list, AI prompts, claims audit | docs/PROMO_VIDEO_KIT.md |
 
 ## Chrome, layout and system
 
@@ -73,6 +81,7 @@ in `motion/index.ts` and receive a `reduced` flag.
 | dupeCollapse.ts | quarantine frees nothing until you reclaim |
 | renameType.ts | the preview updates before you commit |
 | reveal.ts, navProgress.ts, tilt.ts | infrastructure, no claim |
+| loop.ts | infrastructure: a demo repeats while on screen, and only while on screen |
 
 Interaction that must survive a preference change (menu, FAQ, viewer) is registered outside
 matchMedia, in `src/scripts/interactions.ts` and `src/scripts/viewer.ts`.

@@ -7,7 +7,7 @@ import { faqEntries } from '@/data/faq';
   <div class="wrap wrap--narrow">
     <div class="head rv faq__head">
       <Eyebrow>Questions</Eyebrow>
-      <h2 class="h2">The ones worth asking before you trust software with your memories.</h2>
+      <h2 class="h2">Worth asking before you trust software with your memories.</h2>
     </div>
 
     <div class="faq rv">
@@ -29,7 +29,7 @@ import { faqEntries } from '@/data/faq';
   .faq details { border-bottom: 1px solid var(--border); }
   .faq summary {
     list-style: none; cursor: pointer; padding: 22px 46px 22px 0; position: relative;
-    font-family: var(--serif); font-weight: 600; font-size: clamp(17px, 1.7vw, 21px);
+    font-family: var(--serif); font-weight: 600; font-size: clamp(17px, 1.6vw, 20px);
     letter-spacing: -.008em; color: var(--t1); text-wrap: balance;
     transition: color .2s;
   }
@@ -42,7 +42,7 @@ import { faqEntries } from '@/data/faq';
     transform: rotate(45deg); transition: transform .25s var(--ease), margin-top .25s var(--ease);
   }
   .faq details[open] summary::after { transform: rotate(-135deg); margin-top: -2px; }
-  .faq__a { padding: 0 46px 24px 0; color: var(--t2); font-size: 15.5px; max-width: 76ch; }
+  .faq__a { padding: 0 46px 24px 0; color: var(--t2); font-size: var(--fs-body); line-height: var(--lh-body); max-width: 68ch; }
   .faq details[open] .faq__a { animation: faqIn .4s var(--ease) both; }
   @keyframes faqIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
   .faq__a p + p { margin-top: 12px; }

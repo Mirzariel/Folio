@@ -10,10 +10,12 @@ import { arrangeRows } from '@/data/mockup';
   <div class="wrap">
     <div class="head rv">
       <Eyebrow>What it does</Eyebrow>
-      <h2 class="h2">Three jobs. Each one writes the plan out before it touches anything.</h2>
+      <h2 class="h2">Three jobs. Each writes the plan out first.</h2>
       <p class="lede">
-        Folio is deliberately not a suite of forty utilities sharing a window. It does a
-        small number of things and it does them where you can watch.
+        Not forty utilities sharing a window. A few things, done where you can watch.
+      </p>
+      <p class="cue jobs__cue">
+        Live panels<span class="cue__hint">the framed area in each card runs its own job</span>
       </p>
     </div>
 
@@ -26,8 +28,8 @@ import { arrangeRows } from '@/data/mockup';
         </div>
         <h3 class="h3">Organize by date</h3>
         <p>
-          Sort photographs into year and month folders using the date the photo was actually
-          taken, not the date Windows happened to stamp on the file when it was last copied.
+          Year and month folders, by the date the photo was taken. Not the date Windows
+          stamped on the file.
         </p>
         </div>
 
@@ -45,7 +47,7 @@ import { arrangeRows } from '@/data/mockup';
           </div>
         </div>
         <p class="tiny job__foot">
-          Arranging stays inside the source you chose. Nothing wanders off to another drive.
+          Stays inside the source you chose.
         </p>
         </div>
       </div>
@@ -57,5 +59,6 @@ import { arrangeRows } from '@/data/mockup';
 </section>
 
 <style>
-  .jobs__grid { margin-top: clamp(36px, 4.4vw, 56px); }
+  .jobs__cue { margin-top: 20px; margin-bottom: 0; }
+  .jobs__grid { margin-top: clamp(30px, 3.6vw, 46px); }
 </style>

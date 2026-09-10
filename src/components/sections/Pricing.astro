@@ -9,15 +9,14 @@ import Icon from '@/components/primitives/Icon.astro';
 import BuyButton from '@/components/primitives/BuyButton.astro';
 import { site, display } from '@/config/site';
 
+/* Five, and one column. The update scope is not repeated here, the FAQ carries
+   it. A list that restates what is two inches above it stops being read. */
 const included = [
   `<b>Folio for ${site.platforms.shipping.join(' and ')}</b> (64-bit)`,
   '<b>Folio for macOS when it ships</b>, at no extra cost',
   `<b>Up to ${site.license.devices} of your personal devices</b>`,
-  `<b>All ${site.license.updatesScope} updates included</b>, free`,
-  '<b>Unlimited photos, unlimited drives.</b> No per-gigabyte or per-file limits',
-  '<b>No account required</b> to use the app',
+  '<b>Unlimited photos and drives.</b> No per-gigabyte limits',
   '<b>Works completely offline</b>',
-  `<b>Refund within ${display.refundWindow}</b> if it does not do what this page says`,
 ];
 ---
 
@@ -27,7 +26,7 @@ const included = [
       <Eyebrow center>Pricing</Eyebrow>
       <h2 class="h2">One price. One payment. Yours.</h2>
       <p class="lede">
-        About the cost of two months of cloud storage you were going to pay forever anyway.
+        About two months of the cloud storage you were going to pay for forever.
       </p>
     </div>
 
@@ -47,7 +46,7 @@ const included = [
         </div>
         <BuyButton label="Get Folio" />
         <p class="price__strike">
-          Secure checkout &middot; instant license key &middot; refund within {display.refundWindow}
+          Secure checkout &middot; instant license key
         </p>
       </div>
 
@@ -58,18 +57,15 @@ const included = [
       </ul>
 
       <p class="price__foot">
-        {site.platforms.shipping.join(' or ')}, 64-bit, is what ships today, and Folio reads
-        only the folders and drives you nominate. Folio for macOS is in development with no
-        release date; your licence already covers it, so you will not be asked to pay again.
-        Connected-device transfer is also in development. Price is in US dollars and your
-        bank may add a conversion fee.
+        {site.platforms.shipping.join(' or ')}, 64-bit, is what ships today. Folio for macOS
+        and connected-device transfer are in development with no release date. Your licence
+        already covers macOS, so you will not be asked to pay again. Price is in US dollars.
       </p>
     </div>
 
     <p class="small center rv pricing__team">
-      Buying for a team, a studio, or a family that shares one archive?
-      <a href={`mailto:${site.support.email}`} class="link">Get in touch</a>
-      and we will sort something out.
+      Team, studio, or a family sharing one archive?
+      <a href={`mailto:${site.support.email}`} class="link">Get in touch</a>.
     </p>
   </div>
 </section>
@@ -93,29 +89,32 @@ const included = [
     font-family: var(--serif); font-size: clamp(26px, 3vw, 38px); color: var(--t2);
     align-self: flex-start; margin-top: .12em;
   }
-  .price__per { font-size: 15px; color: var(--t2); }
+  .price__per { font-size: var(--fs-body); color: var(--t2); }
   .price__plat { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
   .price__plat span {
     display: inline-flex; align-items: center; gap: 7px; padding: 5px 13px;
-    border: 1px solid var(--border); border-radius: 999px; font-size: 12.5px; color: var(--t2);
+    border: 1px solid var(--border); border-radius: 999px; font-size: var(--fs-micro); color: var(--t2);
   }
   .price__plat :global(svg) { color: var(--t1); }
   .price__top :global(.btn) { min-width: min(340px, 100%); }
-  .price__strike { color: var(--t3); font-size: 14px; }
+  .price__strike { color: var(--t3); font-size: var(--fs-small); }
+  /* One centred column. Two columns worked at eight items and went ragged at
+     five, with a hole where the sixth used to be. A single column also reads
+     as a list rather than as a table of specifications. */
   .price__list {
-    border-top: 1px solid var(--border); padding: clamp(24px, 3vw, 34px);
-    display: grid; gap: 13px; background: var(--surface);
+    border-top: 1px solid var(--border); padding: clamp(26px, 3vw, 36px);
+    display: grid; grid-template-columns: minmax(0, 48ch); justify-content: center;
+    gap: 15px; background: var(--surface);
   }
-  @media (min-width: 720px) { .price__list { grid-template-columns: 1fr 1fr; gap: 13px 30px; } }
   .price__list li {
-    display: flex; gap: 11px; font-size: 15px; color: var(--t2);
-    align-items: flex-start; line-height: 1.5;
+    display: flex; gap: 11px; font-size: var(--fs-body); color: var(--t2);
+    align-items: flex-start; line-height: var(--lh-body); text-wrap: pretty;
   }
   .price__list :global(svg) { flex: 0 0 17px; color: var(--good); margin-top: 3px; }
   .price__list :global(b) { color: var(--t1); font-weight: 620; }
   .price__foot {
     border-top: 1px solid var(--border); padding: 16px clamp(24px, 3vw, 34px);
-    font-size: 12.5px; color: var(--t3); background: var(--inset); text-wrap: pretty;
+    font-size: var(--fs-micro); color: var(--t3); background: var(--inset); text-wrap: pretty;
   }
   .price__badge {
     display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px;

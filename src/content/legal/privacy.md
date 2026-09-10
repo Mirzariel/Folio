@@ -1,36 +1,77 @@
 ---
 title: Privacy Policy
-description: What Folio collects, what it does not, and what the website stores.
-updated: 2026-09-09
-draft: true
+description: What Folio collects, what it does not, and what this website stores.
+updated: 2026-09-10
+draft: false
 ---
-
-> **Draft.** The structure below reflects how Folio actually behaves. The wording still
-> needs a human, and most payment providers require a real policy before approving an
-> account. Set `draft: false` in this file once it has been reviewed.
 
 ## The short version
 
-Folio is a desktop application that runs on your computer. It reads the folders and drives
-you nominate and writes its catalogue to your own PC. Your photographs are not uploaded, not
-scanned in a cloud, and not used to train anything.
+Folio is a desktop application that runs on your computer. It reads the folders and drives you
+nominate and writes its catalog to your own PC. Your photographs are not uploaded, not scanned
+in a cloud, and not used to train anything. There is no account, and no sync queue.
 
-## What the application collects
+This policy covers three separate things, because they behave differently: the application, this
+website, and the checkout.
 
-Nothing is transmitted from the application. The catalogue, including filenames, capture
-metadata and content fingerprints, stays in the application data folder on your machine.
+## The application
 
-TODO: state whether the application performs a licence check over the network, what it sends
-when it does, and how often.
+**Nothing is transmitted.** Folio does not require an account and works with the internet
+switched off. Reading, cataloging, organizing, comparing and renaming all happen locally.
 
-## What this website collects
+**The catalog stays on your machine.** Filenames, folder paths, capture dates, file sizes and
+content fingerprints are written to the application data folder on your PC. That data never
+leaves it. You can delete the catalog at any time; your photographs are untouched when you do,
+because the catalog is a description of your files, not a copy of them.
 
-TODO: state the analytics position. There is none today. A privacy-respecting, cookie-free
-option fits a product whose pitch is that nothing is uploaded far better than a tracker does.
+**No telemetry.** Folio does not collect usage statistics, crash reports or a device identifier.
 
-TODO: describe what the payment provider collects at checkout, and link to their policy. The
-provider is the merchant of record and handles payment data; Folio does not see card details.
+If a future build ever needs to make a network request, this policy will say what it sends and
+when, and it will say so before that build ships.
+
+## This website
+
+**No analytics and no cookies.** This site sets no cookies, runs no tracker, and builds no
+profile of you. Nothing you do here is recorded.
+
+**Fonts are the one third-party request.** The typefaces come from Google Fonts, so loading a
+page tells Google's servers your IP address and browser, as any external resource would. Nothing
+about you is passed with it, and nothing is stored by us.
+
+**Server logs.** Whoever hosts this site may keep standard access logs, which typically include
+IP addresses. Those are the host's records, kept for security and reliability, not ours to mine.
+
+## The checkout
+
+Payment is handled by [[PROVIDER]], acting as merchant of record. They collect what a payment
+requires: your name, email address, billing country and payment details. **We never see your
+card details.** Their own privacy policy governs that data, and it is linked from the checkout
+page before you pay.
+
+What reaches us from a completed sale is your email address and the license key issued against
+it. We use that address to send your key and to answer you if you write to us. We do not sell it,
+and we do not add you to a mailing list you did not ask for.
+
+## Your rights
+
+You can ask what we hold about you, ask for a copy of it, ask us to correct it, or ask us to
+delete it. Write to [[SUPPORT_EMAIL]] and we will answer. Deleting your record does not revoke a
+license you have already bought, but it does mean we can no longer look your key up for you.
+
+Some records have to be kept regardless, because tax law requires a seller to retain proof of a
+sale. Those are held by the payment provider as merchant of record.
+
+## Children
+
+Folio is not directed at children, and we do not knowingly collect anything from them.
+
+## Changes
+
+If this policy changes, the date at the top of the page changes with it. Material changes to how
+purchase data is handled will be sent to the address on file.
 
 ## Contact
 
-TODO: the support address, and the legal entity behind Folio.
+[[SELLER]]
+
+Email: [[SUPPORT_EMAIL]]

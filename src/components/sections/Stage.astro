@@ -8,12 +8,15 @@ import HubScreen from '@/components/mockup/HubScreen.astro';
 <section class="sect t-dark stage" id="stage">
   <div class="stage__floor" aria-hidden="true"></div>
   <div class="wrap">
-    <Window name="Folio" id="hubwin" tilt>
+    <Window
+      name="Folio"
+      id="hubwin"
+      tilt
+      cue="The interface"
+      cueHint="rebuilt on this page, not a screenshot. Four figures, three doors, no invented health score."
+    >
       <HubScreen />
     </Window>
-    <p class="stage__cap rv">
-      Four real figures. Three doors. No dashboard, no invented health score.
-    </p>
   </div>
 </section>
 
@@ -26,7 +29,6 @@ import HubScreen from '@/components/mockup/HubScreen.astro';
     transform: translateX(-50%); pointer-events: none;
     background: radial-gradient(ellipse at 50% 45%, rgba(224, 128, 58, .11), rgba(224, 128, 58, 0) 70%);
   }
-  .stage__cap { text-align: center; margin-top: 26px; font-size: 13px; color: var(--t3); }
 </style>
 
 <style is:global>

@@ -1,8 +1,8 @@
 /**
  * The single source of truth for every commercial fact on this site.
  *
- * Before this file existed, `$20` appeared 11 times in the markup, `84.2` 8
- * times and the refund window 4 times, and changing the price meant grepping.
+ * Before this file existed, `$20` appeared 11 times in the markup and `84.2`
+ * 8 times, and changing the price meant grepping.
  * Nothing in `src/components/` or `src/scripts/` may hard-code these values.
  * `npm run check:copy` fails the build if it finds one.
  *
@@ -39,7 +39,6 @@ const schema = z.object({
   license: z.object({
     /** Must match what the licence server actually enforces. */
     devices: z.number().int().positive(),
-    refundDays: z.number().int().positive(),
     updatesScope: z.string(),
     /** A binding promise to every Windows buyer. */
     macOsIncluded: z.boolean(),
@@ -89,7 +88,6 @@ const config = schema.parse({
 
   license: {
     devices: 3,
-    refundDays: 14,
     updatesScope: 'version 1',
     macOsIncluded: true,
     macOsReleaseDate: null,
@@ -141,10 +139,6 @@ export const display = Object.freeze({
   singleCopy: int.format(site.canvas.singleCopy),
   /** "12,480" */
   planFiles: int.format(site.canvas.planFiles),
-  /** "14 days" */
-  refundWindow: `${site.license.refundDays} days`,
-  /** "14-day" */
-  refundAdjective: `${site.license.refundDays}-day`,
   /** "1,204 items" */
   galleryItems: `${int.format(site.canvas.galleryItems)} items`,
 });

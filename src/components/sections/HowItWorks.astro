@@ -10,7 +10,7 @@ import { steps } from '@/data/steps';
     <div class="head rv">
       <Eyebrow>How it works</Eyebrow>
       <SplitHeading lines={['You choose the source.', 'Folio reads it.']} />
-      <p class="lede">Three steps, and nothing on your drives changes until you approve a plan.</p>
+      <p class="lede">Three steps. Nothing on your drives changes until you approve a plan.</p>
     </div>
 
     <div class="steps">
@@ -47,7 +47,7 @@ import { steps } from '@/data/steps';
   @media (min-width: 880px) {
     .step__b { grid-template-columns: 1fr 1.3fr; gap: clamp(20px, 3vw, 44px); align-items: start; }
   }
-  .step__b p { color: var(--t2); font-size: 15.5px; }
+  .step__b p { color: var(--t2); font-size: var(--fs-body); line-height: var(--lh-body); }
   .step__note { margin-top: 12px; display: flex; align-items: baseline; gap: 8px; }
   .step__note :global(svg) { flex: 0 0 14px; align-self: center; }
   @media (max-width: 560px) { .step { grid-template-columns: 44px 1fr; gap: 16px; } }

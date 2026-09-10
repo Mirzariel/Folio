@@ -1,15 +1,23 @@
 /**
  * Claim: quarantine frees nothing until you reclaim, and Folio says so.
  *
- * Three of four identical copies slide into the quarantine folder and one
- * stays. Choosing the permanent outcome re-labels the destination and turns it
- * red, because the page must not make the dangerous option look like the safe
- * one. The CSS owns the movement; this owns the state.
+ * Three of four identical copies converge on the quarantine folder and one
+ * stays. The folder then says how many arrived, so the panel ends on a fact
+ * rather than on three pictures having vanished. Choosing the permanent outcome
+ * re-labels the destination and turns it red, because the page must not make
+ * the dangerous option look like the safe one. The CSS owns the movement; this
+ * owns the state and the timing.
  *
  * The outcome buttons are a radiogroup and keep working under reduced motion.
  */
-import { ScrollTrigger, type MotionModule } from './registry';
+import { type MotionModule } from './registry';
+import { loopWhileVisible } from './loop';
 import { site } from '@/config/site';
+
+/** How long the four copies sit there before the three leave. */
+const HOLD = 1300;
+/** A click deserves a faster answer than a replay does. */
+const HOLD_ON_CLICK = 320;
 
 export const initDupeCollapse: MotionModule = (reduced) => {
   const root = document.querySelector<HTMLElement>('#dupes');
@@ -20,16 +28,18 @@ export const initDupeCollapse: MotionModule = (reduced) => {
   const outcomes = Array.from(root.querySelectorAll<HTMLButtonElement>('.outc'));
   if (!stage || !destName) return;
 
-  const collapse = () => {
-    stage.classList.remove('is-collapsed');
+  let hold = 0;
+
+  /* The "before" is the half that carries the problem: four copies you have to
+     be able to count. The old pass spent less than half a second on it. */
+  const collapse = (wait: number) => {
+    window.clearTimeout(hold);
     if (reduced) {
       stage.classList.add('is-collapsed');
       return;
     }
-    // let the reset paint before replaying
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => stage.classList.add('is-collapsed'));
-    });
+    stage.classList.remove('is-collapsed');
+    hold = window.setTimeout(() => stage.classList.add('is-collapsed'), wait);
   };
 
   const onOutcome = (chosen: HTMLButtonElement) => {
@@ -41,7 +51,7 @@ export const initDupeCollapse: MotionModule = (reduced) => {
     const reclaim = chosen.dataset.outcome === 'reclaim';
     stage.classList.toggle('is-danger', reclaim);
     destName.textContent = reclaim ? 'Removed for good' : site.canvas.quarantineFolder;
-    collapse();
+    collapse(HOLD_ON_CLICK);
   };
 
   const handlers = outcomes.map((button) => {
@@ -50,15 +60,15 @@ export const initDupeCollapse: MotionModule = (reduced) => {
     return { button, handler };
   });
 
-  const trigger = ScrollTrigger.create({
-    trigger: root,
-    start: 'top 80%',
-    once: true,
-    onEnter: () => window.setTimeout(collapse, 420),
-  });
+  /* Reduced motion gets no loop: the copies are already collapsed and the
+     outcome buttons still work. */
+  const stopLoop = reduced
+    ? null
+    : loopWhileVisible(root, () => collapse(HOLD), { every: 6, delay: 0.4, start: 'top 80%' });
 
   return () => {
     handlers.forEach((entry) => entry.button.removeEventListener('click', entry.handler));
-    trigger.kill();
+    window.clearTimeout(hold);
+    stopLoop?.();
   };
 };

@@ -6,7 +6,8 @@
  * reduced motion the stylesheet has already delivered the wall scanned, so the
  * class is added immediately and nothing sweeps.
  */
-import { ScrollTrigger, type MotionModule } from './registry';
+import { type MotionModule } from './registry';
+import { loopWhileVisible, replayClass } from './loop';
 
 export const initScanSweep: MotionModule = (reduced) => {
   const grid = document.querySelector<HTMLElement>('#galgrid');
@@ -17,12 +18,8 @@ export const initScanSweep: MotionModule = (reduced) => {
     return;
   }
 
-  const trigger = ScrollTrigger.create({
-    trigger: grid,
+  return loopWhileVisible(grid, () => replayClass(grid, 'is-scanned'), {
+    every: 6,
     start: 'top 85%',
-    once: true,
-    onEnter: () => grid.classList.add('is-scanned'),
   });
-
-  return () => trigger.kill();
 };

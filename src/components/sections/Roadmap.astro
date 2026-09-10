@@ -2,8 +2,8 @@
 /**
  * Both items are tagged "In development" and the footnote repeats that Windows
  * is what ships today. Together with the Mac and iPhone FAQ answers, that is
- * three places stating the roadmap plainly. Keep all three: a refund from
- * someone who thought they were buying phone import costs more than the sale.
+ * three places stating the roadmap plainly. Keep all three: a buyer who thought
+ * they were paying for phone import costs more than the sale.
  */
 import Eyebrow from '@/components/primitives/Eyebrow.astro';
 import Icon from '@/components/primitives/Icon.astro';
@@ -16,8 +16,7 @@ import { roadmapCards } from '@/data/roadmap';
       <Eyebrow>What comes next</Eyebrow>
       <h2 class="h2">Two things are being built. Neither one is on this invoice.</h2>
       <p class="lede">
-        Folio has four pillars. Three of them ship today. This is the fourth, and the
-        second platform.
+        Folio has four pillars. Three ship today. This is the fourth, and the second platform.
       </p>
     </div>
 
@@ -36,8 +35,8 @@ import { roadmapCards } from '@/data/roadmap';
     </div>
 
     <p class="small rv next__foot">
-      Windows is what you get today. Both of these are in development and neither has a
-      release date. Nothing on this page charges you for something that is not built yet.
+      Windows is what you get today. Neither of these has a release date, and neither is
+      something this page charges you for.
     </p>
   </div>
 </section>
@@ -51,7 +50,7 @@ import { roadmapCards } from '@/data/roadmap';
   .next__card .h3 { padding-right: 120px; }
   .next__note {
     display: flex; gap: 9px; align-items: flex-start; margin-top: 4px; padding-top: 12px;
-    border-top: 1px solid var(--border); font-size: 13.5px; color: var(--t1);
+    border-top: 1px solid var(--border); font-size: var(--fs-small); color: var(--t1);
   }
   .next__note :global(svg) { flex: 0 0 15px; color: var(--good); margin-top: 3px; }
   .next__foot { margin-top: clamp(22px, 2.6vw, 30px); max-width: 70ch; }

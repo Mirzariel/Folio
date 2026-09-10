@@ -27,23 +27,42 @@ page, so they need to be true. Both live in `src/config/site.ts`.
 | macOS at no extra cost when it ships | `license.macOsIncluded` | Are you really giving Windows buyers the Mac build free? If macOS slips two years or is cancelled, this is the line people will quote back at you. The page repeats "no release date" next to it, which is your protection. |
 | Up to N personal devices | `license.devices` | Whatever number you pick must match what your licence server actually enforces. |
 
-Also confirm `license.updatesScope` and `license.refundDays`. Changing any of these updates the
-pricing list, the FAQ, the comparison table and the closing section at once.
+Also confirm `license.updatesScope`. Changing any of these updates the pricing list, the FAQ,
+the comparison table and the closing section at once.
+
+**There is no refund window.** The site does not advertise one, and the FAQ no longer answers a
+refund question. `src/content/legal/terms.md` states the position: no advertised period,
+statutory rights unaffected, and the merchant of record's own policy still applies. Two things
+follow. Most payment providers require a refund policy before they approve an account, so check
+your provider's rules against that page. And in the EU and UK a consumer normally has a 14-day
+right to withdraw from a digital purchase unless they expressly consent to immediate delivery
+and acknowledge losing it; the terms page relies on that consent, so your checkout has to
+actually collect it. Confirm your provider does.
 
 ## 3. Replace the support email
 
 `src/config/site.ts`, field `support.email`. It is `hello@example.com` today, and the check
 reports it as a launch blocker.
 
-## 4. Write the legal pages
+## 4. Fill in the legal pages, then have them reviewed
 
-`src/content/legal/privacy.md`, `terms.md` and `license.md` are structured drafts with TODO
-markers, not legal advice. Each carries `draft: true`, which renders a visible notice on the
-page and blocks the build once your domain is set. Have them written and reviewed, then set
-`draft: false`.
+`src/content/legal/privacy.md`, `terms.md` and `license.md` are written and no longer drafts.
+They describe how Folio actually behaves and what this site actually promises. **They are not
+legal advice and have not been reviewed by a lawyer.**
 
-Most payment providers require a real privacy policy and refund policy before they approve an
-account.
+Four facts in them are yours, and no one else can supply them. They are written as `[[TOKEN]]`
+placeholders, and `npm run check:copy` reports every one as a launch blocker, so a
+finished-looking Terms page with a blank in it cannot reach a buyer:
+
+| Token | What it is |
+|---|---|
+| `[[SELLER]]` | The legal entity or trading name behind Folio, and its contact address. |
+| `[[JURISDICTION]]` | The governing law and courts. Normally where the seller is established. |
+| `[[PROVIDER]]` | The payment provider acting as merchant of record. Decided in step 1. |
+| `[[SUPPORT_EMAIL]]` | The same address as `support.email` in `src/config/site.ts`, step 3. |
+
+Replace every token, then have a lawyer read all three. A product sold on being checkable cannot
+afford terms nobody checked.
 
 ## 5. Set the domain
 

@@ -55,10 +55,16 @@ export function initViewer(): void {
   let isOpen = false;
   let lastFocus: HTMLElement | null = null;
 
+  /* The gallery's kind filter hides tiles, and a hidden tile must not be
+     reachable through the arrows or counted in "n of N". */
+  const shown = () => cells.filter((cell) => !cell.classList.contains('is-out'));
+
   const paintMeta = () => {
     const tile = cells[index];
     nameEl.textContent = tile?.dataset.name ?? 'Photograph';
-    posEl.textContent = `${index + 1} of ${cells.length}${month ? ` in ${month}` : ''}`;
+    const list = shown();
+    const at = tile ? list.indexOf(tile) : -1;
+    posEl.textContent = `${at + 1} of ${list.length}${month ? ` in ${month}` : ''}`;
   };
 
   const tileImage = (i: number) => cells[i]?.querySelector('img') ?? null;
@@ -151,7 +157,10 @@ export function initViewer(): void {
   };
 
   const step = (direction: number) => {
-    index = (index + direction + cells.length) % cells.length;
+    const list = shown();
+    if (list.length === 0) return;
+    const at = list.indexOf(cells[index]!);
+    index = cells.indexOf(list[(Math.max(at, 0) + direction + list.length) % list.length]!);
     const source = tileImage(index);
     if (!source) return;
     const swap = () => {

@@ -1,4 +1,6 @@
 /** Primary nav and footer links. One list, used by both. */
+import { site } from '@/config/site';
+
 export interface Link {
   readonly href: string;
   readonly label: string;
@@ -34,7 +36,7 @@ export const footerColumns: readonly { title: string; links: readonly Link[] }[]
     links: [
       { href: '/#faq', label: 'FAQ' },
       { href: '/docs', label: 'Documentation' },
-      { href: '/#pricing', label: 'Refunds' },
+      { href: `mailto:${site.support.email}`, label: 'Contact' },
     ],
   },
   {

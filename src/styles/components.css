@@ -18,8 +18,8 @@
 .btn--primary:hover { filter: brightness(1.07); box-shadow: 0 12px 32px var(--accent-w); }
 .btn--ghost { border-color: var(--edge); color: var(--t1); background: transparent; }
 .btn--ghost:hover { background: var(--accent-w); border-color: var(--accent); color: var(--accent-t); }
-.btn--sm { min-height: 40px; padding: 0 18px; font-size: 14.5px; }
-.btn__sub { font-weight: 450; opacity: .8; font-size: 14px; }
+.btn--sm { min-height: 40px; padding: 0 18px; font-size: var(--fs-small); }
+.btn__sub { font-weight: 450; opacity: .8; font-size: var(--fs-small); }
 .cta-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
 .center .cta-row { justify-content: center; }
 
@@ -34,7 +34,7 @@
   width: 42px; height: 42px; border-radius: var(--r); display: flex; align-items: center;
   justify-content: center; background: var(--accent-w); color: var(--accent-t); margin-bottom: 4px;
 }
-.card p { font-size: 14.5px; color: var(--t2); line-height: 1.55; }
+.card p { font-size: var(--fs-small); color: var(--t2); line-height: var(--lh-body); }
 .card .rows { margin-top: 2px; }
 .card__tag {
   align-self: flex-start; font-size: 10.5px; font-weight: 650; letter-spacing: .1em;
@@ -42,10 +42,33 @@
   background: var(--accent-w); border-radius: 999px; padding: 4px 11px;
 }
 
-/* ---- photograph frame ---------------------------------------------------- */
-.shot { border-radius: var(--r); overflow: hidden; border: 1px solid var(--border); background: var(--surface); }
-.shot img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
-.shot:hover img { transform: scale(1.03); }
+/* ---- live surface vs photograph ------------------------------------------ */
+/* Visitors could not tell an app window they can actually use from a stock
+   photograph sitting in a frame. The page now answers that in one grammar,
+   used everywhere and nowhere else:
+     framed chrome + an accent cue  = software, and this one runs
+     no frame, no hover, no cue     = a photograph, it is scenery
+   Nothing else on the page may borrow either half. */
+.cue {
+  display: flex; align-items: center; gap: 9px; margin-bottom: 12px;
+  font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--accent-t);
+}
+.cue::before {
+  content: ""; flex: 0 0 7px; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 0 4px var(--accent-w);
+}
+.cue__hint {
+  text-transform: none; letter-spacing: 0; font-weight: 450;
+  font-size: var(--fs-micro); color: var(--t3);
+}
+@media (max-width: 560px) { .cue { flex-wrap: wrap; gap: 6px 9px; } }
+
+/* ---- photograph ---------------------------------------------------------- */
+/* No border and no hover zoom, on purpose. Both read as "this panel does
+   something", which is the confusion the cue above is there to end. */
+.shot { border-radius: var(--r); overflow: hidden; background: var(--surface); }
+.shot img { width: 100%; height: 100%; object-fit: cover; }
 .shot--wide { aspect-ratio: 16 / 10; }
 .duo { display: grid; gap: clamp(28px, 4vw, 60px); align-items: center; }
 @media (min-width: 920px) { .duo { grid-template-columns: 1fr 1fr; } }
@@ -61,7 +84,7 @@
 }
 .trust li {
   display: flex; align-items: center; gap: 8px; min-width: 0;
-  font-size: clamp(12px, 1.05vw, 13.5px); color: var(--t2); white-space: nowrap;
+  font-size: var(--fs-micro); color: var(--t2); white-space: nowrap;
 }
 .trust svg { flex: 0 0 15px; color: var(--good); }
 .trust--stack { flex-wrap: wrap; justify-content: flex-start; gap: 10px 24px; }

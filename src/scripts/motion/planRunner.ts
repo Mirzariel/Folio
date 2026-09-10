@@ -8,7 +8,8 @@
  *
  * The strip is aria-live, so a screen reader hears the state change.
  */
-import { gsap, ScrollTrigger, type MotionModule } from './registry';
+import { gsap, type MotionModule } from './registry';
+import { loopWhileVisible } from './loop';
 import { countTo } from './counters';
 import { site, display } from '@/config/site';
 
@@ -37,6 +38,7 @@ export const initPlanRunner: MotionModule = (reduced) => {
 
   let running = false;
   let played = false;
+  let stopLoop: (() => void) | null = null;
   let timeline: gsap.core.Timeline | null = null;
 
   const setFlow = (live: number) => {
@@ -110,6 +112,9 @@ export const initPlanRunner: MotionModule = (reduced) => {
 
   const onClick = () => {
     if (running) return;
+    /* The visitor has taken over. Stop replaying underneath them. */
+    stopLoop?.();
+    stopLoop = null;
     /* After a finished run the button says Run it again, so it must do exactly
        that: snap back to the plan, then play it through. */
     if (played) {
@@ -124,20 +129,27 @@ export const initPlanRunner: MotionModule = (reduced) => {
   setFlow(1);
   approve.addEventListener('click', onClick);
 
-  /* Plays itself once so the story is told even if nobody clicks. Never under
-     reduced motion: there, the visitor asks for the run. */
-  const autoplay = reduced
-    ? null
-    : ScrollTrigger.create({
-        trigger: win,
-        start: 'top 70%',
-        once: true,
-        onEnter: () => window.setTimeout(() => { if (!played) run(); }, 1200),
-      });
+  /* Plays itself over and over while the window is on screen, so the story is
+     told even if nobody clicks and can be watched again without a reload. Never
+     under reduced motion: there, the visitor asks for the run. */
+  if (!reduced) {
+    stopLoop = loopWhileVisible(
+      win,
+      () => {
+        if (running) return;
+        if (played) {
+          reset();
+          played = false;
+        }
+        run();
+      },
+      { every: 8, delay: 1.2, start: 'top 70%' },
+    );
+  }
 
   return () => {
     approve.removeEventListener('click', onClick);
-    autoplay?.kill();
+    stopLoop?.();
     timeline?.kill();
   };
 };
