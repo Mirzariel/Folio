@@ -7,6 +7,7 @@
 import Eyebrow from '@/components/primitives/Eyebrow.astro';
 import Icon from '@/components/primitives/Icon.astro';
 import BuyButton from '@/components/primitives/BuyButton.astro';
+import CopyEmail from '@/components/primitives/CopyEmail.astro';
 import { site, display } from '@/config/site';
 
 /* Five, and one column. The update scope is not repeated here, the FAQ carries
@@ -64,8 +65,8 @@ const included = [
     </div>
 
     <p class="small center rv pricing__team">
-      Team, studio, or a family sharing one archive?
-      <a href={`mailto:${site.support.email}`} class="link">Get in touch</a>.
+      Team, studio, or a family sharing one archive? Write to
+      <CopyEmail email={site.support.email} />
     </p>
   </div>
 </section>

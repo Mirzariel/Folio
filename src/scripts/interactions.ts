@@ -1,11 +1,12 @@
 /**
  * Interaction that must work whatever the motion preference, and whatever GSAP
- * is doing: the mobile menu, the FAQ accordion, and the gallery's two
- * segmented controls.
+ * is doing: the mobile menu, the FAQ accordion, the gallery's two segmented
+ * controls, and the copy buttons beside email addresses.
  *
  * Registered outside gsap.matchMedia() on purpose, so a preference change never
  * tears a listener down and leaves a control dead.
  */
+import { initCopyEmail } from './copyEmail';
 
 /** The burger menu. Mirrors its state into aria-expanded and the label. */
 function initMenu(): void {
@@ -117,4 +118,5 @@ export function initInteractions(): void {
   initMenu();
   initFaq();
   initGallery();
+  initCopyEmail();
 }

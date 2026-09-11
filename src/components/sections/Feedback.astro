@@ -11,6 +11,7 @@
 import Eyebrow from '@/components/primitives/Eyebrow.astro';
 import SplitHeading from '@/components/primitives/SplitHeading.astro';
 import FeedbackForm from '@/components/FeedbackForm.astro';
+import CopyEmail from '@/components/primitives/CopyEmail.astro';
 import { site } from '@/config/site';
 
 const configured = site.feedback.accessKey !== '';
@@ -32,7 +33,7 @@ const configured = site.feedback.accessKey !== '';
       <FeedbackForm />
     ) : (
       <p class="lede rv fb__fallback" data-feedback-unconfigured>
-        Write to us at <a class="link" href={`mailto:${site.support.email}`}>{site.support.email}</a>.
+        Write to us at <CopyEmail email={site.support.email} />
       </p>
     )}
   </div>

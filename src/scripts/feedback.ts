@@ -6,6 +6,8 @@
  * Two rules: never report a send the service did not confirm, and never clear
  * what someone wrote unless it went.
  */
+import { copyEmailNode } from './copyEmail';
+
 interface Web3FormsReply {
   success?: boolean;
 }
@@ -31,11 +33,7 @@ export function initFeedback(): void {
 
   const sayFailed = () => {
     say('That did not send, and nothing you wrote was lost. Try again, or write to ', 'error');
-    const link = document.createElement('a');
-    link.className = 'link';
-    link.href = `mailto:${fallback}`;
-    link.textContent = fallback;
-    status.append(link, '.');
+    status.append(copyEmailNode(fallback));
   };
 
   form.addEventListener('submit', async (event) => {

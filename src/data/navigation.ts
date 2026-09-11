@@ -18,7 +18,16 @@ export const primaryNav: readonly Link[] = [
 /** Section ids the nav marks as you scroll past them. */
 export const navSectionIds = ['how', 'jobs', 'promise', 'next', 'pricing', 'faq'] as const;
 
-export const footerColumns: readonly { title: string; links: readonly Link[] }[] = [
+/**
+ * A footer entry that is an address to copy rather than a page to visit. Not a
+ * mailto: link, which would open the system mail app; see CopyEmail.astro.
+ */
+export interface CopyItem {
+  readonly label: string;
+  readonly copy: string;
+}
+
+export const footerColumns: readonly { title: string; links: readonly (Link | CopyItem)[] }[] = [
   {
     title: 'Product',
     links: [
@@ -37,7 +46,7 @@ export const footerColumns: readonly { title: string; links: readonly Link[] }[]
       { href: '/#faq', label: 'FAQ' },
       { href: '/#feedback', label: 'Feedback' },
       { href: '/docs', label: 'Documentation' },
-      { href: `mailto:${site.support.email}`, label: 'Contact' },
+      { label: 'Contact', copy: site.support.email },
     ],
   },
   {

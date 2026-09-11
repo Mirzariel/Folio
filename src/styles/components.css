@@ -23,6 +23,21 @@
 .cta-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
 .center .cta-row { justify-content: center; }
 
+/* ---- copyable email address ---------------------------------------------- */
+/* Not a mailto: link. That opens whatever mail app the system registered, which
+   on Windows is usually Mail whether anyone uses it or not. The address is text
+   a click selects whole, beside a button that copies it. Used in the pricing
+   note, the feedback section and the footer; src/scripts/copyEmail.ts. */
+.copy-email { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+.copy-email__addr { color: var(--accent-t); user-select: all; overflow-wrap: anywhere; }
+.copy-email__btn {
+  min-height: 30px; padding: 0 12px; border: 1px solid var(--border-2); border-radius: 999px;
+  font-size: var(--fs-micro); font-weight: 620; line-height: 1; color: var(--t2);
+  transition: border-color .2s, color .2s, background .2s;
+}
+.copy-email__btn:hover { border-color: var(--accent); color: var(--accent-t); background: var(--accent-w); }
+html:not(.js) .copy-email__btn { display: none; }
+
 /* ---- card ---------------------------------------------------------------- */
 .card {
   border: 1px solid var(--border); border-radius: var(--r); background: var(--surface);

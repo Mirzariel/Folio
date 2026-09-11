@@ -1,0 +1,17 @@
+---
+/**
+ * An email address with a Copy button, used instead of a mailto: link, which
+ * would open the system mail app. See src/scripts/copyEmail.ts, which builds
+ * the same markup for addresses added at runtime: change both together.
+ *
+ * Kept on one line so no stray whitespace lands between the parts. Without
+ * scripting the button is hidden and the address is plain, selectable text.
+ */
+interface Props {
+  email: string;
+}
+
+const { email } = Astro.props;
+---
+
+<span class="copy-email"><span class="copy-email__addr">{email}</span><button type="button" class="copy-email__btn" data-copy={email}><span class="copy-email__label">Copy</span><span class="vh"> email address</span></button></span>
