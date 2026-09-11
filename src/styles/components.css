@@ -24,12 +24,16 @@
 .center .cta-row { justify-content: center; }
 
 /* ---- copyable email address ---------------------------------------------- */
-/* Not a mailto: link. That opens whatever mail app the system registered, which
-   on Windows is usually Mail whether anyone uses it or not. The address is text
-   a click selects whole, beside a button that copies it. Used in the pricing
+/* A mailto: link opens whatever mail app the system registered, which on
+   Windows is usually Mail whether anyone uses it or not. So the link keeps a
+   Copy button beside it, for people who write from webmail. Used in the pricing
    note, the feedback section and the footer; src/scripts/copyEmail.ts. */
 .copy-email { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
-.copy-email__addr { color: var(--accent-t); user-select: all; overflow-wrap: anywhere; }
+.copy-email__addr {
+  color: var(--accent-t); border-bottom: 1px solid var(--border-2);
+  overflow-wrap: anywhere; transition: border-color .2s;
+}
+.copy-email__addr:hover { border-bottom-color: var(--accent); }
 .copy-email__btn {
   min-height: 30px; padding: 0 12px; border: 1px solid var(--border-2); border-radius: 999px;
   font-size: var(--fs-micro); font-weight: 620; line-height: 1; color: var(--t2);

@@ -1,11 +1,12 @@
 ---
 /**
- * An email address with a Copy button, used instead of a mailto: link, which
- * would open the system mail app. See src/scripts/copyEmail.ts, which builds
- * the same markup for addresses added at runtime: change both together.
+ * An email address as a mailto: link, with a Copy button beside it. The link
+ * opens the system mail app; the button serves visitors who use webmail
+ * instead. See src/scripts/copyEmail.ts, which builds the same markup for
+ * addresses added at runtime: change both together.
  *
  * Kept on one line so no stray whitespace lands between the parts. Without
- * scripting the button is hidden and the address is plain, selectable text.
+ * scripting the button is hidden and the link still works.
  */
 interface Props {
   email: string;
@@ -14,4 +15,4 @@ interface Props {
 const { email } = Astro.props;
 ---
 
-<span class="copy-email"><span class="copy-email__addr">{email}</span><button type="button" class="copy-email__btn" data-copy={email}><span class="copy-email__label">Copy</span><span class="vh"> email address</span></button></span>
+<span class="copy-email"><a class="copy-email__addr" href={`mailto:${email}`}>{email}</a><button type="button" class="copy-email__btn" data-copy={email}><span class="copy-email__label">Copy</span><span class="vh"> email address</span></button></span>

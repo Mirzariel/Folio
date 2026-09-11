@@ -19,8 +19,8 @@ export const primaryNav: readonly Link[] = [
 export const navSectionIds = ['how', 'jobs', 'promise', 'next', 'pricing', 'faq'] as const;
 
 /**
- * A footer entry that is an address to copy rather than a page to visit. Not a
- * mailto: link, which would open the system mail app; see CopyEmail.astro.
+ * A footer entry that is an email address rather than a page: rendered as a
+ * mailto: link with a Copy button beside it. See CopyEmail.astro.
  */
 export interface CopyItem {
   readonly label: string;

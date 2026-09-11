@@ -55,7 +55,7 @@ fails the build. See [the launch checklist](LAUNCH_CHECKLIST.md).
 | Footer and its columns | src/components/chrome/Footer.astro, src/data/navigation.ts |
 | Sticky mobile buy bar | src/components/chrome/BuyBar.astro |
 | Buy buttons, checkout fallback | src/components/primitives/BuyButton.astro |
-| Email address with a Copy button (no mailto: links) | src/components/primitives/CopyEmail.astro, behaviour in src/scripts/copyEmail.ts |
+| Email address: mailto: link plus a Copy button | src/components/primitives/CopyEmail.astro, behaviour in src/scripts/copyEmail.ts |
 | Icons | src/icons/*.svg, src/components/primitives/Icon.astro |
 | Palette and theme tokens | src/styles/tokens.css |
 | Type roles, sections, grids | src/styles/base.css |

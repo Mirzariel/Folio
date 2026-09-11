@@ -1,8 +1,8 @@
 /**
- * Copyable email addresses, used instead of mailto: links. A mailto: link hands
- * the visitor to whatever mail app the operating system has registered, which
- * on Windows is usually Mail whether or not anyone uses it. Copying lets them
- * paste the address into the inbox they actually use.
+ * A Copy button beside each mailto: link. The link hands the visitor to
+ * whatever mail app the operating system has registered, which on Windows is
+ * usually Mail whether or not anyone uses it. Copying lets them paste the
+ * address into the inbox they actually use instead.
  *
  * Delegated from the document, so an address added later (the feedback form's
  * error line) works without registering anything. Plain timers, no
@@ -18,8 +18,9 @@ export function copyEmailNode(email: string): HTMLElement {
   const wrap = document.createElement('span');
   wrap.className = 'copy-email';
 
-  const address = document.createElement('span');
+  const address = document.createElement('a');
   address.className = 'copy-email__addr';
+  address.href = `mailto:${email}`;
   address.textContent = email;
 
   const label = document.createElement('span');
