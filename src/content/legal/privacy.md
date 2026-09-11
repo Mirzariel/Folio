@@ -1,7 +1,7 @@
 ---
 title: Privacy Policy
 description: What Folio collects, what it does not, and what this website stores.
-updated: 2026-09-10
+updated: 2026-09-12
 draft: false
 ---
 
@@ -32,11 +32,17 @@ when, and it will say so before that build ships.
 ## This website
 
 **No analytics and no cookies.** This site sets no cookies, runs no tracker, and builds no
-profile of you. Nothing you do here is recorded.
+profile of you. Browsing it records nothing.
 
-**Fonts are the one third-party request.** The typefaces come from Google Fonts, so loading a
-page tells Google's servers your IP address and browser, as any external resource would. Nothing
-about you is passed with it, and nothing is stored by us.
+**No third-party requests when a page loads.** The typefaces are served from this site itself,
+not from a font service, so opening a page does not contact anyone else.
+
+**The feedback form, and only when you send it.** If you use the feedback form on the home page,
+what you wrote is sent to Web3Forms, the service that delivers it to our inbox as an email: the
+kind of message you picked, the message itself, and your email address if you chose to give one.
+Nothing is sent until you press Send. Web3Forms passes the message on to us, and its own privacy
+policy covers how it handles it on the way. We use your message to read it and, if you left an
+address, to answer you. We do not add you to a mailing list, and you can ask us to delete it.
 
 **Server logs.** Whoever hosts this site may keep standard access logs, which typically include
 IP addresses. Those are the host's records, kept for security and reliability, not ours to mine.

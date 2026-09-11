@@ -11,6 +11,12 @@ import Footer from '@/components/chrome/Footer.astro';
 import BuyBar from '@/components/chrome/BuyBar.astro';
 import { site } from '@/config/site';
 
+/* Self-hosted, so a page load contacts no third party. The privacy page says
+   so, and check-copy.mjs fails if a Google Fonts URL comes back. */
+import '@fontsource/spectral/500.css';
+import '@fontsource/spectral/600.css';
+import '@fontsource-variable/inter';
+
 import '@/styles/tokens.css';
 import '@/styles/reset.css';
 import '@/styles/base.css';
@@ -60,13 +66,6 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
     <meta property="og:image:alt" content={site.tagline} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImage} />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=Inter:wght@400..700&display=swap"
-      rel="stylesheet"
-    />
 
     <!-- Gates every reveal. Without scripting the page is static and complete. -->
     <script is:inline>document.documentElement.classList.add('js');</script>

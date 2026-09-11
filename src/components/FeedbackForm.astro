@@ -1,0 +1,101 @@
+---
+/**
+ * The feedback form. A plain HTML POST to Web3Forms, so it works with scripting
+ * off; src/scripts/feedback.ts upgrades it to an in-page send with a status
+ * line. Native radios rather than a custom segmented control: the keyboard
+ * behaviour comes from the browser and cannot break.
+ */
+import { site } from '@/config/site';
+import { feedbackTopics } from '@/data/feedback';
+---
+
+<form
+  class="fb rv"
+  id="feedbackForm"
+  action="https://api.web3forms.com/submit"
+  method="POST"
+  data-fallback={site.support.email}
+>
+  <input type="hidden" name="access_key" value={site.feedback.accessKey} />
+  <input type="hidden" name="from_name" value="Folio website" />
+  <input type="hidden" name="subject" value={feedbackTopics[0]?.subject} />
+  <input type="checkbox" name="botcheck" class="vh" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+  <fieldset class="fb__topics">
+    <legend class="fb__label">What is it about?</legend>
+    <div class="fb__chips">
+      {feedbackTopics.map((topic, i) => (
+        <label class="fb__topic">
+          <input type="radio" name="topic" value={topic.label} data-subject={topic.subject} checked={i === 0} />
+          <span>{topic.label}</span>
+        </label>
+      ))}
+    </div>
+  </fieldset>
+
+  <label class="fb__label" for="fbMessage">Your message</label>
+  <textarea
+    id="fbMessage" name="message" class="fb__field" rows="6" required maxlength="4000"
+    placeholder="Tell us what you need, or what happened."
+  ></textarea>
+
+  <label class="fb__label" for="fbEmail">Email <span class="fb__opt">optional</span></label>
+  <input
+    id="fbEmail" name="email" type="email" class="fb__field" autocomplete="email"
+    aria-describedby="fbEmailHint"
+  />
+  <p class="tiny fb__hint" id="fbEmailHint">Only if you want a reply.</p>
+
+  <div class="fb__foot">
+    <button type="submit" class="btn btn--primary">Send</button>
+    <p class="tiny fb__note">
+      Sent through Web3Forms to our inbox. Nothing leaves this page until you press Send.
+      <a class="link" href="/privacy">Privacy</a>
+    </p>
+  </div>
+  <p class="fb__status" id="fbStatus" role="status" aria-live="polite"></p>
+</form>
+
+<style>
+  .fb {
+    margin-top: clamp(28px, 3.4vw, 44px); display: grid; gap: 10px;
+    border: 1px solid var(--border); border-radius: var(--r-lg); background: var(--bg);
+    padding: clamp(20px, 2.6vw, 32px);
+  }
+  .fb__topics { border: 0; padding: 0; margin: 0 0 10px; min-width: 0; }
+  .fb__topics legend { padding: 0 0 10px; }
+  .fb__chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .fb__topic { position: relative; }
+  .fb__topic input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+  .fb__topic span {
+    display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px;
+    border: 1px solid var(--border-2); border-radius: 999px;
+    font-size: var(--fs-small); color: var(--t2);
+    transition: background .2s, border-color .2s, color .2s;
+  }
+  .fb__topic:hover span { border-color: var(--edge); color: var(--t1); }
+  .fb__topic input:checked + span {
+    border-color: var(--accent); background: var(--accent-w); color: var(--accent-t); font-weight: 620;
+  }
+  .fb__topic input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .fb__label { font-size: var(--fs-small); font-weight: 620; color: var(--t1); }
+  .fb__opt { font-weight: 450; color: var(--t3); }
+  .fb__field {
+    width: 100%; font: inherit; font-size: var(--fs-body); color: var(--t1);
+    background: var(--inset); border: 1px solid var(--border-2); border-radius: var(--r);
+    padding: 12px 14px; transition: border-color .2s;
+  }
+  textarea.fb__field { resize: vertical; min-height: 140px; line-height: var(--lh-body); }
+  .fb__field::placeholder { color: var(--t3); }
+  .fb__field:hover { border-color: var(--edge); }
+  .fb__field:focus-visible { border-color: var(--accent); outline-offset: 0; }
+  .fb__label + .fb__field { margin-bottom: 8px; }
+  .fb__hint { margin-top: -12px; }
+
+  .fb__foot { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 8px; }
+  .fb__note { flex: 1 1 240px; }
+  .fb__status { font-size: var(--fs-small); line-height: var(--lh-body); color: var(--t2); }
+  .fb__status[data-state="ok"] { color: var(--good); }
+  .fb__status[data-state="error"] { color: var(--bad); }
+</style>

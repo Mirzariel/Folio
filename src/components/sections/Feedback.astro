@@ -1,0 +1,43 @@
+---
+/**
+ * Feedback and feature requests. Messages go through Web3Forms to the inbox
+ * the key in src/config/site.ts belongs to. Nothing here promises that a
+ * request will be built, or when: the roadmap rules in AGENTS.md apply here too.
+ *
+ * While the key is empty the section offers a plain email link instead, and
+ * check-copy.mjs reports data-feedback-unconfigured as a launch blocker, so a
+ * form that cannot send never reaches a visitor.
+ */
+import Eyebrow from '@/components/primitives/Eyebrow.astro';
+import SplitHeading from '@/components/primitives/SplitHeading.astro';
+import FeedbackForm from '@/components/FeedbackForm.astro';
+import { site } from '@/config/site';
+
+const configured = site.feedback.accessKey !== '';
+---
+
+<section class="sect sect--tight t-dark band" id="feedback">
+  <div class="wrap wrap--narrow">
+    <div class="head rv">
+      <Eyebrow>Feedback</Eyebrow>
+      <SplitHeading lines={['You know what is missing.', 'Folio wants to hear it.']} />
+      <p class="lede">
+        A feature you need, something that confused you, or a problem you hit. Every message is
+        read by a person. We cannot promise to build everything asked for, and we will not guess
+        at dates.
+      </p>
+    </div>
+
+    {configured ? (
+      <FeedbackForm />
+    ) : (
+      <p class="lede rv fb__fallback" data-feedback-unconfigured>
+        Write to us at <a class="link" href={`mailto:${site.support.email}`}>{site.support.email}</a>.
+      </p>
+    )}
+  </div>
+</section>
+
+<style>
+  .fb__fallback { margin-top: clamp(24px, 3vw, 34px); }
+</style>

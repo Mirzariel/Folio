@@ -32,8 +32,18 @@ const schema = z.object({
   checkoutUrl: z.url().or(z.literal('')),
 
   support: z.object({
-    /** Placeholder until launch. check-copy.mjs fails on example.com in dist. */
+    /** Buyer-facing contact, and the fallback when the feedback form cannot send. */
     email: z.email(),
+  }),
+
+  /**
+   * Web3Forms access key for the feedback section. Generate it at web3forms.com
+   * with the inbox that should receive messages; the key is public by design.
+   * While it is empty the section shows a plain email link instead of a form,
+   * and check-copy.mjs reports it as a launch blocker.
+   */
+  feedback: z.object({
+    accessKey: z.string(),
   }),
 
   license: z.object({
@@ -84,7 +94,8 @@ const config = schema.parse({
 
   price: { amount: 20, currency: 'USD' },
   checkoutUrl: '',
-  support: { email: 'hello@example.com' },
+  support: { email: 'folioarchive@gmail.com' },
+  feedback: { accessKey: '' },
 
   license: {
     devices: 3,

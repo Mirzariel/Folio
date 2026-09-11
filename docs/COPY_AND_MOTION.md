@@ -128,9 +128,12 @@ a real library, swap them in. Nothing beats the real thing.
 
 ## Fonts
 
-Spectral (display) and Inter (UI) load from Google Fonts, matching the application's Spectral
-plus Segoe UI Variable pairing. Every stack has real fallbacks, so the page survives a swap to
-self-hosted `@font-face` rules if you would rather have no third-party requests.
+Spectral (display) and Inter (UI) match the application's Spectral plus Segoe UI Variable
+pairing. They are self-hosted through Fontsource (`@fontsource/spectral` at 500 and 600,
+`@fontsource-variable/inter`), imported in `src/layouts/BaseLayout.astro`, so opening a page
+makes no request to a font service. That is what lets the privacy page say a page load contacts
+no third party, and `npm run check:copy` fails if a Google Fonts URL comes back. Every stack keeps
+real fallbacks.
 
 Note that the motion layer waits for `document.fonts.ready` before measuring scroll positions,
 because Spectral reflows every heading on the page.

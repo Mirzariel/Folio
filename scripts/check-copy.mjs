@@ -96,6 +96,14 @@ if (distFiles.length === 0) {
     if (/property="og:image" content="\//.test(html)) {
       block(`${rel(file)}: og:image is relative. Set \`site\` in astro.config.mjs.`);
     }
+    if (html.includes('data-feedback-unconfigured')) {
+      block(`${rel(file)}: feedback form has no Web3Forms key. Set feedback.accessKey in src/config/site.ts.`);
+    }
+    /* The privacy page says a page load contacts no third party. Fonts are
+       self-hosted through Fontsource; a Google Fonts link would make that false. */
+    if (/fonts\.(googleapis|gstatic)\.com/.test(html)) {
+      fail(`${rel(file)}: requests Google Fonts. Fonts are self-hosted, see src/layouts/BaseLayout.astro.`);
+    }
   }
 }
 

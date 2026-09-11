@@ -27,6 +27,7 @@ Commercial facts never live in a component. They come from `src/config/site.ts` 
 | Roadmap, the two in-development items | src/components/sections/Roadmap.astro | src/data/roadmap.ts |
 | Pricing card and the included list | src/components/sections/Pricing.astro | src/config/site.ts |
 | FAQ | src/components/sections/Faq.astro | **src/data/faq.ts** |
+| Feedback and feature requests | src/components/sections/Feedback.astro, src/components/FeedbackForm.astro | src/data/feedback.ts, behaviour in src/scripts/feedback.ts, Web3Forms key in src/config/site.ts |
 | Final call to action | src/components/sections/FinalCta.astro | inline |
 | Live-surface cue on a mockup | src/components/mockup/Window.astro (`cue`, `cueHint`) | inline, per section |
 | Section order on the page | src/pages/index.astro | — |
@@ -43,12 +44,6 @@ Commercial facts never live in a component. They come from `src/config/site.ts` 
 Legal pages carry `draft: true` until a human has written and approved them. While a page is a
 draft it renders a visible notice, and once `site` is set in `astro.config.mjs` the draft flag
 fails the build. See [the launch checklist](LAUNCH_CHECKLIST.md).
-
-## Marketing assets
-
-| Task | File |
-|---|---|
-| Promo video, 9:16 and 30s: script, shot list, AI prompts, claims audit | docs/PROMO_VIDEO_KIT.md |
 
 ## Chrome, layout and system
 

@@ -18,3 +18,8 @@ void import('./motion').then((module) => module.initMotion());
 if (document.querySelector('.gal__cell')) {
   void import('./viewer').then((module) => module.initViewer());
 }
+
+/* Until this lands the form still works, as a plain POST to Web3Forms. */
+if (document.querySelector('#feedbackForm')) {
+  void import('./feedback').then((module) => module.initFeedback());
+}

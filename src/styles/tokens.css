@@ -52,7 +52,7 @@
   --mat: #0E0E0E;
 
   --serif: "Spectral", "Segoe UI Variable Display", Georgia, "Times New Roman", serif;
-  --sans:  "Inter", "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --sans:  "Inter Variable", "Inter", "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif;
   --mono:  "Cascadia Mono", "JetBrains Mono", Consolas, ui-monospace, monospace;
 
   /* Type scale. Four body sizes, not seven that differ by half a pixel.

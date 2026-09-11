@@ -35,6 +35,7 @@ export const footerColumns: readonly { title: string; links: readonly Link[] }[]
     title: 'Support',
     links: [
       { href: '/#faq', label: 'FAQ' },
+      { href: '/#feedback', label: 'Feedback' },
       { href: '/docs', label: 'Documentation' },
       { href: `mailto:${site.support.email}`, label: 'Contact' },
     ],

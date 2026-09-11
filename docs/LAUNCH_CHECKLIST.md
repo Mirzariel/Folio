@@ -39,10 +39,16 @@ right to withdraw from a digital purchase unless they expressly consent to immed
 and acknowledge losing it; the terms page relies on that consent, so your checkout has to
 actually collect it. Confirm your provider does.
 
-## 3. Replace the support email
+## 3. Confirm the support email, and connect the feedback form
 
-`src/config/site.ts`, field `support.email`. It is `hello@example.com` today, and the check
-reports it as a launch blocker.
+`src/config/site.ts`, field `support.email`. It is `folioarchive@gmail.com`, which is also where
+feedback arrives. Confirm that is the address you want buyers to see.
+
+The feedback section on the home page sends through Web3Forms. Go to web3forms.com, enter the
+inbox that should receive messages, and paste the access key it emails you into
+`feedback.accessKey`. The key is public by design. While it is empty the section shows a plain
+email link instead of a form, and the check reports it as a launch blocker. Once it is set, send
+one real test message and confirm it arrives.
 
 ## 4. Fill in the legal pages, then have them reviewed
 
@@ -77,6 +83,11 @@ Semibold is the correct face.
 
 There is none. A privacy-respecting, cookie-free option (Plausible, Fathom, Umami) fits a
 product whose whole pitch is "nothing is uploaded" far better than Google Analytics does.
+
+There is no cookie banner, on purpose: the site sets no cookies and loads nothing from a third
+party, so a banner would ask consent for nothing and contradict the privacy page. If you ever add
+something that does set a cookie or track, a consent banner becomes necessary, and
+`src/content/legal/privacy.md` has to change the same day.
 
 ## 7. Decide on the spelling
 
