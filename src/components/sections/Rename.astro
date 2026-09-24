@@ -1,0 +1,88 @@
+---
+/**
+ * Rename in bulk, as a working task page. Type a name, choose how the photos
+ * are numbered, and the preview rewrites every row before anything changes.
+ *
+ * Claim: the preview is mandatory and it updates before you commit. Renaming
+ * happens in place and every file keeps its own extension, RAW included.
+ * Behaviour: src/scripts/demos/rename.ts; motion/renameType.ts types the
+ * example name once, and only if the visitor has not started typing.
+ */
+import SplitHeading from '@/components/primitives/SplitHeading.astro';
+import Window from '@/components/mockup/Window.astro';
+import { renameFiles, renameDefault, sequences, separators, renameTo, extOf } from '@/data/rename';
+
+const seq = 'number';
+const sep = 'space';
+const seg = (on: boolean) => ({ class: on ? 'is-on' : undefined, 'aria-checked': (on ? 'true' : 'false') as 'true' | 'false', tabindex: on ? 0 : -1 });
+---
+
+<section class="t-void chapter rename" id="rename">
+  <div class="wrap">
+    <div class="chapter__head rv">
+      <p class="kicker kicker--accent">03 &middot; Rename in bulk</p>
+      <SplitHeading lines={['You name it once.', 'Folio names them all.']} class="mega mega--md" />
+      <p class="lede">Names you will still understand in ten years. Only the name changes: every photograph stays in its folder and keeps its file type.</p>
+    </div>
+
+    <Window name="Rename in bulk" back statusId="rnStatus" status="Preview only · nothing renamed yet" cue="Try it" cueHint="type any name. The preview follows every keystroke.">
+      <div class="rn" id="renameDemo">
+        <div class="rn__cfg">
+          <label class="klabel" for="rnName">Name</label>
+          <input class="rn__input" id="rnName" value={renameDefault} placeholder="e.g. Bali 2019" autocomplete="off" spellcheck="false" maxlength="40" />
+          <p class="rn__hint">Type the name only. Each photograph keeps its own file type.</p>
+          <p class="klabel">Number them by</p>
+          <div class="seg" role="radiogroup" aria-label="Number them by" id="rnSeq">
+            {sequences.map((s) => <button type="button" role="radio" data-v={s.id} {...seg(s.id === seq)}>{s.label}</button>)}
+          </div>
+          <p class="rn__hint" id="rnSeqHint">{sequences.find((s) => s.id === seq)!.hint}</p>
+          <p class="klabel">Between the name and the number</p>
+          <div class="seg" role="radiogroup" aria-label="Between the name and the number" id="rnSep">
+            {separators.map((s) => <button type="button" role="radio" data-v={s.id} {...seg(s.id === sep)}>{s.label}</button>)}
+          </div>
+        </div>
+
+        <div class="rn__plan">
+          <p class="rn__fig"><b id="rnCount">{renameFiles.length}</b><span id="rnUnit">photographs will be renamed</span></p>
+          <p class="rn__warn" id="rnWarn" role="status"></p>
+          <div class="rows" id="rnRows">
+            {renameFiles.map((file, i) => (
+              <div class="rows__r">
+                <span>{file.name}</span>
+                <span class="rows__arw" aria-hidden="true">&rarr;</span>
+                <b><span class="rn__nm">{renameTo(file, i, renameDefault, seq, sep)}</span><span class="rn__ext">{extOf(file.name)}</span></b>
+              </div>
+            ))}
+          </div>
+          <p class="rn__hint">Renamed in place. Name collisions are flagged, never silently overwritten.</p>
+        </div>
+      </div>
+    </Window>
+  </div>
+</section>
+
+<style>
+  .rename { background: var(--bg); color: var(--t1); }
+  .rn { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); }
+  .rn__cfg { padding: clamp(18px, 3cqw, 34px); display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+  .rn__cfg .klabel:not(:first-child) { margin-top: 10px; }
+  .rn__input {
+    width: 100%; max-width: 360px; height: 44px; padding: 0 14px; font: inherit; font-family: var(--mono); font-size: 15px;
+    color: var(--t1); background: var(--inset); border: 1px solid var(--border-2); border-radius: 6px; transition: border-color .15s, box-shadow .15s;
+  }
+  .rn__input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-w); }
+  .rn__hint { font-size: 12px; color: var(--t3); line-height: 1.5; max-width: 46ch; }
+  .rn__plan { padding: clamp(18px, 3cqw, 34px); background: var(--surface); border-left: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; }
+  .rn__fig { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .rn__fig b { font-size: clamp(40px, 6cqw, 60px); font-weight: 620; letter-spacing: -.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .rn__fig span { color: var(--t2); font-size: 14px; }
+  .rn__warn { font-size: 12.5px; color: var(--accent-t); min-height: 1.2em; }
+  .rn__plan .rows__r b { display: flex; min-width: 0; }
+  .rn__nm { overflow: hidden; text-overflow: ellipsis; white-space: pre; }
+  .rn__ext { color: var(--accent-t); flex: 0 0 auto; }
+  .rn__plan :global(.rows__r.is-left) b { color: var(--t3); font-family: var(--sans); font-style: italic; }
+  @container (max-width: 760px) {
+    .rn { grid-template-columns: 1fr; }
+    .rn__plan { border-left: 0; border-top: 1px solid var(--border); }
+  }
+</style>

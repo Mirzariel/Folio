@@ -1,62 +1,50 @@
 /**
- * Claim: the preview is mandatory and it updates before you commit.
+ * Claim: the preview updates before you commit.
  *
- * The pattern types itself and the rows rewrite live, one character at a time,
- * so the preview is visibly downstream of the pattern. Extensions never change.
- * Under reduced motion the finished pattern and its preview are simply there.
+ * The first time the rename panel comes into view, the example name types
+ * itself into the real field, one character at a time, and the preview rows
+ * follow every keystroke through the same input event a visitor would fire.
+ * It happens once, and never after the visitor has touched the field. Under
+ * reduced motion the example name is simply already there.
  */
-import { gsap, type MotionModule } from './registry';
-import { loopWhileVisible } from './loop';
-import { renamePattern } from '@/data/mockup';
+import { ScrollTrigger, type MotionModule } from './registry';
+import { renameDefault } from '@/data/rename';
 
 export const initRenameType: MotionModule = (reduced) => {
-  const root = document.querySelector<HTMLElement>('#rename');
-  if (!root) return;
+  const input = document.querySelector<HTMLInputElement>('#rnName');
+  if (!input || reduced) return;
 
-  const text = root.querySelector<HTMLElement>('#rnText');
-  const caret = root.querySelector<HTMLElement>('.rn__caret');
-  const previews = Array.from(root.querySelectorAll<HTMLElement>('#rnRows b'));
-  if (!text) return;
+  let touched = false;
+  let timer = 0;
+  const stop = () => { touched = true; window.clearTimeout(timer); };
+  input.addEventListener('pointerdown', stop, { once: true });
+  input.addEventListener('keydown', stop, { once: true });
 
-  const paint = (typed: string) => {
-    text.textContent = typed;
-    // a half-typed token must not leak into the preview
-    const base = typed.replace(/\{n?$/, '');
-    previews.forEach((el) => {
-      const index = String(el.dataset.i ?? '').padStart(3, '0');
-      const name = base.includes('{n}') ? base.replace('{n}', index) : base;
-      el.textContent = name + (el.dataset.ext ?? '');
-    });
+  const type = (i: number) => {
+    if (touched) return;
+    input.value = renameDefault.slice(0, i);
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    if (i < renameDefault.length) timer = window.setTimeout(() => type(i + 1), 95 + Math.random() * 70);
   };
 
-  if (reduced) {
-    paint(renamePattern);
-    caret?.classList.add('is-off');
-    return;
-  }
-
-  let tween: gsap.core.Tween | null = null;
-
-  const type = () => {
-    tween?.kill();
-    caret?.classList.remove('is-off');
-    const state = { chars: 0 };
-    tween = gsap.to(state, {
-      chars: renamePattern.length,
-      duration: renamePattern.length * 0.062,
-      ease: 'none',
-      onUpdate: () => paint(renamePattern.slice(0, Math.round(state.chars))),
-      onComplete: () => {
-        paint(renamePattern);
-        window.setTimeout(() => caret?.classList.add('is-off'), 900);
-      },
-    });
-  };
-
-  const stopLoop = loopWhileVisible(root, type, { every: 5, start: 'top 80%' });
+  const st = ScrollTrigger.create({
+    trigger: input,
+    start: 'top 75%',
+    once: true,
+    onEnter: () => {
+      if (touched || input.value !== renameDefault) return;
+      type(0);
+    },
+  });
 
   return () => {
-    stopLoop();
-    tween?.kill();
+    st.kill();
+    window.clearTimeout(timer);
+    input.removeEventListener('pointerdown', stop);
+    input.removeEventListener('keydown', stop);
+    if (!touched && input.value !== renameDefault) {
+      input.value = renameDefault;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
   };
 };

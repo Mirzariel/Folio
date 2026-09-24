@@ -12,14 +12,18 @@ Commercial facts never live in a component. They come from `src/config/site.ts` 
 | Task | Component | Content source |
 |---|---|---|
 | Price, device count, checkout URL, support email | any | **src/config/site.ts** |
-| Hero copy, the scattered-to-ordered prints | src/components/sections/Hero.astro | src/data/gallery.ts (`prints`) |
-| Hub window, four figures, three doors | src/components/mockup/HubScreen.astro | src/data/mockup.ts (`doors`, `hubStats`) |
-| The problem section, three figures | src/components/sections/Problem.astro | src/data/problem.ts |
-| How it works, three steps | src/components/sections/HowItWorks.astro | src/data/steps.ts |
+| Hero: full-bleed title, developing prints, actions, spec row | src/components/sections/Hero.astro | inline, figures from src/config/site.ts |
+| Pinned film: scattered, read, placed | src/components/sections/Film.astro | src/data/gallery.ts (`prints`), motion in src/scripts/motion/film.ts |
+| Launch-readout figures | src/components/sections/Numbers.astro | src/config/site.ts |
+| Hub window, four figures, timeline, three doors | src/components/sections/Stage.astro, mockup/HubScreen.astro, mockup/HubTimeline.astro | src/data/mockup.ts (`doors`, `hubStats`), src/data/timeline.ts |
+| Live demo: Drop, Preview, Approve | src/components/sections/TryIt.astro, demo/TourDrop.astro, demo/TourPlan.astro | src/data/tour.ts, behaviour in src/scripts/demos/tour.ts |
+| Organize by date, working | src/components/sections/Organize.astro | src/data/arrange.ts, behaviour in src/scripts/demos/arrange.ts |
+| Find duplicates, working (Recycle Bin and put back) | src/components/sections/Duplicates.astro, demo/DupDemo.astro | src/data/dupes.ts, behaviour in src/scripts/demos/dupes.ts |
+| Rename in bulk, working | src/components/sections/Rename.astro | src/data/rename.ts, behaviour in src/scripts/demos/rename.ts |
 | Gallery wall and its tiles | src/components/mockup/GalleryScreen.astro | src/data/gallery.ts (`tiles`) |
 | Gallery scale and kind controls | src/components/mockup/GalleryScreen.astro | behaviour in src/scripts/interactions.ts |
 | Photograph viewer | src/components/Viewer.astro | behaviour in src/scripts/viewer.ts |
-| Organize / duplicates / rename cards | src/components/sections/Jobs.astro, mockup/DuplicateCard.astro, mockup/RenameCard.astro | src/data/mockup.ts |
+| The rules paragraph, lit word by word | src/components/sections/Statement.astro | inline, motion in src/scripts/motion/wordLight.ts |
 | The plan window, Plan to Done | src/components/mockup/PlanScreen.astro | src/data/mockup.ts (`planRows`, `planFlow`) |
 | Six safety cards | src/components/sections/Safety.astro | src/data/safety.ts |
 | Local-first section | src/components/sections/Private.astro | inline, one section |
@@ -70,17 +74,23 @@ in `motion/index.ts` and receive a `reduced` flag.
 
 | Module | Claim |
 |---|---|
-| heroPrints.ts | scattered photographs become an ordered archive |
+| film.ts | scattered photographs become an ordered archive, and the reading changes nothing |
 | counters.ts | these are figures Folio actually holds |
 | scanSweep.ts | this is the scan populating the wall |
 | planRunner.ts | you approve, then Folio does it and verifies it |
-| dupeCollapse.ts | quarantine frees nothing until you reclaim |
-| renameType.ts | the preview updates before you commit |
+| renameType.ts | the preview updates before you commit (types into the real field once) |
+| tourAutoplay.ts | nothing changes until you approve, played once for a visitor who only watches |
+| wordLight.ts | these are rules, read at the visitor's own pace |
 | reveal.ts, navProgress.ts, tilt.ts | infrastructure, no claim |
 | loop.ts | infrastructure: a demo repeats while on screen, and only while on screen |
 
-Interaction that must survive a preference change (menu, FAQ, viewer) is registered outside
-matchMedia, in `src/scripts/interactions.ts` and `src/scripts/viewer.ts`.
+Interaction that must survive a preference change (menu, FAQ, viewer, the four live demos) is
+registered outside matchMedia, in `src/scripts/interactions.ts`, `src/scripts/viewer.ts` and
+`src/scripts/demos/`. A demo's state is set by class at once; any flight on top is a Web Animation
+or timer, never a requestAnimationFrame loop a user must wait for.
+
+Scoped `<style>` blocks are scoped per selector part, so a rule gated on the `.js` class on
+`<html>` must be written `:global(.js) .thing`, or it never matches.
 
 ## Not in the read path
 

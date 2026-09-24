@@ -82,3 +82,26 @@ html:not(.js) .eyebrow::after, html:not(.js) .eyebrow--center::before { transfor
 @media (max-width: 900px) { .g-3 { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 700px) { .g-2 { grid-template-columns: 1fr; } }
 @media (max-width: 620px) { .g-3 { grid-template-columns: 1fr; } }
+
+/* ---- chapter type. Full-bleed sections speak in one very large line. ------ */
+.mega {
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(44px, 8.4vw, 120px); line-height: .98; letter-spacing: -.034em;
+  text-wrap: balance; color: var(--t1);
+}
+.mega--md { font-size: clamp(38px, 6vw, 84px); line-height: 1.02; }
+/* Small, wide, uppercase: a label from a flight deck, not a sentence. */
+.kicker {
+  font-size: 12px; font-weight: 650; letter-spacing: .28em; text-transform: uppercase;
+  color: var(--t3);
+}
+.kicker--accent { color: var(--accent-t); }
+/* A chapter: a centered head, then the one thing it is about, very large. */
+.chapter { padding: clamp(96px, 14vw, 180px) 0; }
+.chapter__head { text-align: center; max-width: 980px; margin: 0 auto clamp(40px, 6vw, 80px); }
+.chapter__head .mega, .chapter__head .h2 { margin-top: 18px; }
+.chapter__head .lede { margin: 22px auto 0; }
+.grad-text {
+  background: linear-gradient(180deg, var(--t1) 30%, var(--accent-t) 140%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}

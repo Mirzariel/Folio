@@ -15,24 +15,26 @@
  */
 import { gsap, ScrollTrigger, type MotionModule } from './registry';
 import { initReveal } from './reveal';
-import { initHeroPrints } from './heroPrints';
+import { initFilm } from './film';
 import { initNavProgress } from './navProgress';
 import { initCounters } from './counters';
 import { initScanSweep } from './scanSweep';
 import { initPlanRunner } from './planRunner';
-import { initDupeCollapse } from './dupeCollapse';
 import { initRenameType } from './renameType';
+import { initTourAutoplay } from './tourAutoplay';
+import { initWordLight } from './wordLight';
 import { initTilt } from './tilt';
 
 const modules: MotionModule[] = [
   initReveal,
-  initHeroPrints,
+  initFilm,
   initNavProgress,
   initCounters,
   initScanSweep,
   initPlanRunner,
-  initDupeCollapse,
   initRenameType,
+  initTourAutoplay,
+  initWordLight,
   initTilt,
 ];
 

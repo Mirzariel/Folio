@@ -11,10 +11,12 @@ your files and do not create files inside your sources.
 
 ## Removal is recoverable
 
-Cleanup you approve uses the Windows Recycle Bin. Duplicate copies are quarantined into a
-`.Folio` folder on the same drive first, where you can put them back.
+Cleanup you approve moves copies to the Windows Recycle Bin, where you can put them back. Folio
+counts a copy as removed only when Windows confirms it is in the Recycle Bin, and it refuses to
+remove from a drive that has no Recycle Bin, such as most network shares.
 
-Until you explicitly reclaim, Folio reports that it has freed nothing, because it has.
+Folio will not propose removing every copy of a photograph. At least one always remains. There is
+no permanent delete in Folio: emptying the Recycle Bin is your decision, made in Windows.
 
 ## Evidence, not guesses
 

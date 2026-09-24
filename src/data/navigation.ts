@@ -7,16 +7,16 @@ export interface Link {
 }
 
 export const primaryNav: readonly Link[] = [
-  { href: '/#how', label: 'How it works' },
-  { href: '/#jobs', label: 'What it does' },
+  { href: '/#try', label: 'Try it' },
+  { href: '/#organize', label: 'Organize' },
+  { href: '/#duplicates', label: 'Duplicates' },
+  { href: '/#rename', label: 'Rename' },
   { href: '/#promise', label: 'Safety' },
-  { href: '/#next', label: 'Roadmap' },
   { href: '/#pricing', label: 'Pricing' },
-  { href: '/#faq', label: 'FAQ' },
 ] as const;
 
 /** Section ids the nav marks as you scroll past them. */
-export const navSectionIds = ['how', 'jobs', 'promise', 'next', 'pricing', 'faq'] as const;
+export const navSectionIds = ['try', 'organize', 'duplicates', 'rename', 'promise', 'pricing'] as const;
 
 /**
  * A footer entry that is an email address rather than a page: rendered as a
@@ -31,8 +31,10 @@ export const footerColumns: readonly { title: string; links: readonly (Link | Co
   {
     title: 'Product',
     links: [
-      { href: '/#how', label: 'How it works' },
-      { href: '/#jobs', label: 'What it does' },
+      { href: '/#try', label: 'Try it' },
+      { href: '/#organize', label: 'Organize by date' },
+      { href: '/#duplicates', label: 'Find duplicates' },
+      { href: '/#rename', label: 'Rename in bulk' },
       { href: '/#promise', label: 'Safety' },
       { href: '/#next', label: 'Roadmap' },
       { href: '/#pricing', label: 'Pricing' },

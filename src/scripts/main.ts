@@ -10,8 +10,19 @@
  * the .js gate keeps every reveal in its finished state without scripting.
  */
 import { initInteractions } from './interactions';
+import { initTour } from './demos/tour';
+import { initArrange } from './demos/arrange';
+import { initDupes } from './demos/dupes';
+import { initRename } from './demos/rename';
 
 initInteractions();
+
+/* The live demos are interaction too: each works under every motion
+   preference, and each is a no-op on a page without its markup. */
+initTour();
+initArrange();
+initDupes();
+initRename();
 
 void import('./motion').then((module) => module.initMotion());
 

@@ -21,7 +21,7 @@ export const doors: readonly Door[] = [
     n: '01',
     icon: 'calendar',
     title: 'Organize by date',
-    body: 'Into year and month folders, in a destination you choose.',
+    body: 'Into year and month folders, alongside your photographs.',
   },
   {
     n: '02',
@@ -68,25 +68,4 @@ export const planFlow = [
   { title: 'Move', note: 'Same drive, one file at a time.' },
   { title: 'Verify', note: 'Every completed change checked against the plan.' },
   { title: 'Done', note: 'What changed, and what did not.' },
-] as const;
-
-/** Rows in the organize-by-date card. */
-export const arrangeRows = [
-  { from: 'IMG_4821.CR2', to: '2019_08\\' },
-  { from: 'IMG_4822.CR2', to: '2019_08\\' },
-  { from: 'DSC_0043.JPG', to: '2019_08\\' },
-  { from: 'IMG_4830.CR2', to: '2019_08\\' },
-  { from: 'neg_0112.tif', to: '2004_06\\' },
-  { from: 'neg_0113.tif', to: '2004_06\\' },
-] as const;
-
-/** Rows the rename preview rewrites live. The pattern types itself. */
-export const renamePattern = 'Bali {n}';
-export const renameRows = [
-  { from: 'IMG_4821.CR2', ext: '.CR2', i: 1 },
-  { from: 'IMG_4822.CR2', ext: '.CR2', i: 2 },
-  { from: 'DSC_0043.JPG', ext: '.JPG', i: 3 },
-  { from: 'IMG_4830.CR2', ext: '.CR2', i: 4 },
-  { from: 'MVI_0071.MP4', ext: '.MP4', i: 5 },
-  { from: 'neg_0112.tif', ext: '.tif', i: 6 },
 ] as const;

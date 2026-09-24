@@ -46,7 +46,7 @@ function initFaq(): void {
  * what role="radio" promises a keyboard user. Returns nothing; `onPick` owns
  * whatever the choice actually does.
  */
-function initSegment(group: HTMLElement, onPick: (chosen: HTMLElement) => void): void {
+export function initSegment(group: HTMLElement, onPick: (chosen: HTMLElement) => void): void {
   const options = Array.from(group.querySelectorAll<HTMLElement>('[role="radio"]'));
 
   const select = (chosen: HTMLElement, focus = false) => {

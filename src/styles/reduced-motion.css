@@ -17,16 +17,25 @@
   .js .rv .door, .js .rv.in .door { opacity: 1 !important; transform: none !important; animation: none !important; }
   .eyebrow::after, .eyebrow--center::before { transform: none !important; }
 
-  /* the prints arrive already ordered */
+  /* the film is an ordinary section: grid finished, every beat listed */
   .prints { --p: 1 !important; }
   .prints__p { will-change: auto; }
+  .js .film__track, .js .stmt__track { height: auto !important; }
+  .js .film__sticky, .js .stmt__sticky { position: static !important; height: auto !important; min-height: 0 !important; }
+  .js .film__beats { min-height: 0 !important; }
+  .js .film__beats li { position: static !important; opacity: 1 !important; transform: none !important; }
+  .js .film__meter, .prints__scan { display: none !important; }
+
+  /* the rules are simply lit, the timeline simply drawn */
+  .js .stmt__w { opacity: 1 !important; }
+  .js .tl__bars i { transform: none !important; animation: none !important; }
+  .td__cursor, .td__ghost { transition: none !important; }
 
   /* the wall arrives already scanned */
   .js .gal__cell { opacity: 1 !important; filter: none !important; }
   .gal__sweep { display: none !important; }
 
-  .hero__glow { animation: none; }
-  .rn__caret { display: none; }
+  .hero__glow, .hero__print, .hero__print img, .hero__scroll i { animation: none !important; }
   .tilt { transform: none !important; }
   .card:hover { transform: none; }
   .gal__cell:hover img, .shot:hover img { transform: none; }

@@ -1,0 +1,41 @@
+---
+/**
+ * Find duplicates, as a working task page.
+ *
+ * Claim: only byte-for-byte identical files are duplicates, you decide what
+ * stays, one copy always remains, and removal goes to the Recycle Bin, where it
+ * can be undone. That is ADR 0014's recoverable-removal path, the only removal
+ * the application performs.
+ */
+import SplitHeading from '@/components/primitives/SplitHeading.astro';
+import Window from '@/components/mockup/Window.astro';
+import TrustList from '@/components/primitives/TrustList.astro';
+import DupDemo from '@/components/demo/DupDemo.astro';
+
+const rules = [
+  { label: 'Identical content, not a matching name', icon: 'fingerprint' },
+  { label: 'One copy of every photograph always remains', icon: 'shield' },
+  { label: 'Removed copies go to the Recycle Bin', icon: 'recycle' },
+];
+---
+
+<section class="t-void chapter dupes" id="duplicates">
+  <div class="wrap">
+    <div class="chapter__head rv">
+      <p class="kicker kicker--accent">02 &middot; Find duplicates</p>
+      <SplitHeading lines={['You choose what to keep.', 'Folio proves what is identical.']} class="mega mega--md" />
+      <p class="lede">Mark copies yourself, or let Folio suggest. Try marking all four. Then send them to the Recycle Bin, and bring them back.</p>
+    </div>
+
+    <Window name="Find duplicates" back statusId="dupStatus" status="Results reflect the current catalog" cue="Try it" cueHint="mark, review, remove, then put them back.">
+      <DupDemo />
+    </Window>
+
+    <TrustList items={rules} variant="center" class="rv dupes__rules" />
+  </div>
+</section>
+
+<style>
+  .dupes { background: var(--bg); color: var(--t1); }
+  .dupes :global(.dupes__rules) { margin-top: clamp(28px, 4vw, 44px); }
+</style>

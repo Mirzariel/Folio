@@ -1,19 +1,25 @@
 ---
 /** The app window gets its own room. It used to sit flush against the hero
     trust row, squeezed to a 2.24 aspect against the app's real 1.6. */
+import SplitHeading from '@/components/primitives/SplitHeading.astro';
 import Window from '@/components/mockup/Window.astro';
 import HubScreen from '@/components/mockup/HubScreen.astro';
 ---
 
-<section class="sect t-dark stage" id="stage">
+<section class="t-void chapter stage" id="stage">
   <div class="stage__floor" aria-hidden="true"></div>
   <div class="wrap">
+    <div class="chapter__head rv">
+      <p class="kicker kicker--accent">The app</p>
+      <SplitHeading lines={['You open Folio.', 'Folio shows the whole archive at once.']} class="mega mega--md" />
+      <p class="lede">Four figures, a timeline of when your photographs were taken, and three doors. No dashboard, no invented health score.</p>
+    </div>
     <Window
       name="Folio"
       id="hubwin"
       tilt
       cue="The interface"
-      cueHint="rebuilt on this page, not a screenshot. Four figures, three doors, no invented health score."
+      cueHint="rebuilt on this page, not a screenshot."
     >
       <HubScreen />
     </Window>
@@ -23,7 +29,7 @@ import HubScreen from '@/components/mockup/HubScreen.astro';
 <style>
   /* overflow clips the floor glow, which is wider than the viewport by design
      and would otherwise widen the document on narrow screens */
-  .stage { padding: clamp(58px, 7vw, 104px) 0 clamp(64px, 8vw, 112px); overflow: hidden; }
+  .stage { background: var(--bg); color: var(--t1); position: relative; overflow: hidden; }
   .stage__floor {
     position: absolute; left: 50%; top: 4%; width: min(1320px, 140vw); height: 60%;
     transform: translateX(-50%); pointer-events: none;

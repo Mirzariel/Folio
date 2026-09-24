@@ -1,0 +1,129 @@
+---
+/**
+ * The pinned film. The room stays still while you scroll through three beats:
+ * scattered, read, placed. The prints resolve from a pile into a grid as the
+ * beats advance.
+ *
+ * Claim: scattered photographs become an ordered archive, and the reading in
+ * the middle changes nothing. motion/film.ts drives --p (0 pile, 1 grid) and
+ * data-beat. Without scripting, or under reduced motion, the section is an
+ * ordinary page: the grid is finished and all three beats are listed.
+ */
+import { Image } from 'astro:assets';
+import SplitHeading from '@/components/primitives/SplitHeading.astro';
+import { prints } from '@/data/gallery';
+
+const tiles = import.meta.glob<{ default: ImageMetadata }>('../../assets/tiles/*.jpg', { eager: true });
+
+const beats = [
+  {
+    k: 'Scattered',
+    t: 'Four drives. One collection.',
+    b: 'Folders inside folders named New folder (3). You keep all of it, just in case.',
+  },
+  {
+    k: 'Read',
+    t: 'Folio reads. It never touches.',
+    b: 'What each photograph is, when it was taken, whether it has a twin. The scan changes nothing.',
+  },
+  {
+    k: 'Placed',
+    t: 'Then, with your approval, order.',
+    b: 'Each photograph goes where it belongs, and every move is checked against the plan.',
+  },
+];
+---
+
+<section class="t-void film" id="film" data-beat="0">
+  <div class="film__track" id="filmTrack">
+    <div class="film__sticky">
+      <div class="wrap film__grid">
+        <div class="film__copy">
+          <p class="kicker kicker--accent">The whole idea</p>
+          <SplitHeading lines={['You kept everything.', 'Folio gives it a place.']} class="film__title" />
+          <ol class="film__beats">
+            {beats.map((beat, i) => (
+              <li style={`--i:${i}`}>
+                <span class="film__k">0{i + 1} &middot; {beat.k}</span>
+                <b>{beat.t}</b>
+                <p>{beat.b}</p>
+              </li>
+            ))}
+          </ol>
+          <div class="film__meter" aria-hidden="true"><i></i></div>
+        </div>
+
+        <div class="prints" id="prints" aria-hidden="true">
+          {prints.map((print) => (
+            <div
+              class="prints__p"
+              style={`--dx:${print.dx}; --dy:${print.dy}; --dr:${print.dr}; --ds:${print.ds}; --z:${print.z}`}
+            >
+              <Image src={tiles[`../../assets/tiles/${print.file}`]!.default} alt="" width={440} height={440} loading="lazy" />
+            </div>
+          ))}
+          <span class="prints__scan"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .film { background: var(--bg); color: var(--t1); position: relative; }
+  :global(.js) .film__track { height: 330vh; }
+  :global(.js) .film__sticky { position: sticky; top: 0; height: 100svh; display: flex; align-items: center; overflow: hidden; }
+  .film__sticky { padding: clamp(80px, 10vh, 120px) 0; }
+  .film__grid { display: grid; gap: clamp(30px, 5vw, 80px); align-items: center; }
+  @media (min-width: 960px) { .film__grid { grid-template-columns: .9fr 1.1fr; } }
+  .film__title { margin-top: 16px; font-size: clamp(32px, 4.2vw, 58px); }
+
+  .film__beats { position: relative; margin-top: clamp(26px, 4vh, 44px); display: grid; gap: 22px; }
+  .film__beats li { display: grid; gap: 6px; transition: opacity .6s var(--ease), transform .6s var(--ease); }
+  .film__k { font-size: 11px; font-weight: 650; letter-spacing: .2em; text-transform: uppercase; color: var(--accent-t); }
+  .film__beats b { font-family: var(--serif); font-weight: 600; font-size: clamp(22px, 2.3vw, 32px); line-height: 1.15; letter-spacing: -.012em; }
+  .film__beats p { color: var(--t2); font-size: var(--fs-body); max-width: 44ch; }
+  /* With motion, one beat at a time, stacked in the same place. */
+  :global(.js) .film__beats { min-height: 170px; }
+  :global(.js) .film__beats li { position: absolute; inset: 0 0 auto 0; opacity: 0; transform: translateY(26px); pointer-events: none; }
+  :global(.js) .film[data-beat="0"] li:nth-child(1),
+  :global(.js) .film[data-beat="1"] li:nth-child(2),
+  :global(.js) .film[data-beat="2"] li:nth-child(3) { opacity: 1; transform: none; }
+  .film__meter { display: none; }
+  :global(.js) .film__meter { display: block; margin-top: 26px; height: 2px; width: min(320px, 100%); background: var(--border); border-radius: 2px; overflow: hidden; }
+  .film__meter i { display: block; height: 100%; background: var(--accent); transform: scaleX(var(--prog, 0)); transform-origin: 0 50%; }
+
+  .prints { position: relative; aspect-ratio: 4 / 3.3; --p: 0; }
+  .prints__p {
+    position: absolute; width: 30%; aspect-ratio: 1; z-index: var(--z, 1);
+    border-radius: 2px; overflow: hidden; background: var(--ink-raised);
+    border: 5px solid #F3ECE0; border-bottom-width: 17px;
+    box-shadow: 0 26px 60px rgba(0, 0, 0, .62), 0 2px 6px rgba(0, 0, 0, .5);
+    transform:
+      translate(calc(var(--dx) * (1 - var(--p))), calc(var(--dy) * (1 - var(--p))))
+      rotate(calc(var(--dr) * (1 - var(--p))))
+      scale(calc(1 + var(--ds) * (1 - var(--p))));
+    will-change: transform;
+  }
+  .prints__p :global(img) { width: 100%; height: 100%; object-fit: cover; transition: filter .6s var(--ease); }
+  .prints__p:nth-child(1) { left: 2%; top: 10%; }
+  .prints__p:nth-child(2) { left: 35%; top: 10%; }
+  .prints__p:nth-child(3) { left: 68%; top: 10%; }
+  .prints__p:nth-child(4) { left: 18.5%; top: 53%; }
+  .prints__p:nth-child(5) { left: 51.5%; top: 53%; }
+  :global(html:not(.js)) .prints { --p: 1; }
+
+  /* Beat two: a reading line passes over the pile. It reads; nothing moves. */
+  .prints__scan {
+    position: absolute; top: -4%; bottom: -4%; left: 0; width: 18%; z-index: 9; opacity: 0;
+    background: linear-gradient(90deg, transparent, rgba(240, 164, 104, .35), transparent);
+    border-right: 1px solid rgba(240, 164, 104, .8); pointer-events: none;
+  }
+  .film[data-beat="1"] .prints__scan { animation: read 2.2s var(--ease-io) infinite; }
+  .film[data-beat="1"] .prints__p :global(img) { filter: saturate(.55) brightness(.92); }
+  @keyframes read {
+    0% { opacity: 0; transform: translateX(-20%); }
+    15%, 85% { opacity: 1; }
+    100% { opacity: 0; transform: translateX(520%); }
+  }
+</style>

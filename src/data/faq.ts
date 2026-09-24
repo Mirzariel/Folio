@@ -2,7 +2,7 @@
  * The questions worth asking before trusting software with your memories.
  *
  * These live as typed data rather than Markdown because almost every answer
- * states a commercial fact (the price, the device count, the quarantine folder)
+ * states a commercial fact (the price, the device count, the update scope)
  * that must come from src/config/site.ts. Interpolating here keeps one
  * source of truth; a Markdown body could not import it.
  *
@@ -23,11 +23,11 @@ export const faqEntries: readonly FaqEntry[] = [
   {
     question: 'Is Folio really going to delete my photos?',
     answer: [
-      'Not without you reading a plan and pressing a button. Analysis is read-only. Cleanup ' +
-        'you approve uses the Windows Recycle Bin, and duplicate copies are quarantined into ' +
-        `a <b>${site.canvas.quarantineFolder}</b> folder first, where you can put them back.`,
-      'There is one path to permanent removal: an option labelled as permanent, with no undo, ' +
-        'never pre-selected.',
+      'Not without you reading a plan and pressing a button. Scanning and analysis only read. ' +
+        'A cleanup you approve moves copies to the <b>Windows Recycle Bin</b>, where you can ' +
+        'put them back, and one copy of every photograph always remains.',
+      'Today’s Folio has no permanent delete at all. Emptying the Recycle Bin stays your ' +
+        'decision, made in Windows.',
     ],
   },
   {
@@ -66,7 +66,7 @@ export const faqEntries: readonly FaqEntry[] = [
   {
     question: 'Is there a Mac version?',
     answer: [
-      'In development, and your licence already covers it. Folio is a native Windows ' +
+      'In development, and your license already covers it. Folio is a native Windows ' +
         'application today, and macOS is the next platform.',
       'Being straight with you: there is <b>no release date</b>. Buy it for the Windows ' +
         'application. The Mac build is a bonus, not the thing you are paying for.',
@@ -85,7 +85,7 @@ export const faqEntries: readonly FaqEntry[] = [
     question: 'How many computers can I install it on?',
     answer: [
       `Up to ${site.license.devices} devices that you personally use, across Windows and ` +
-        'macOS. One licence for one person, not a site licence for an office.',
+        'macOS. One license for one person, not a site license for an office.',
     ],
   },
   {

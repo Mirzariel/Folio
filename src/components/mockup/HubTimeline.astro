@@ -1,0 +1,42 @@
+---
+/**
+ * The hub's timeline: one bar per month, from the first photograph to the last.
+ * A quiet picture of the whole archive at once, no invented health score.
+ *
+ * Claim: this is the archive, read. The bars grow when the window arrives
+ * (the .rv gate on Window), and the busiest month is marked.
+ */
+import { timelineMonths, timelinePeak, timelineFrom, timelineTo } from '@/data/timeline';
+
+const max = Math.max(...timelineMonths);
+const years = Array.from({ length: timelineTo - timelineFrom + 1 }, (_, i) => timelineFrom + i);
+const peakYear = timelineFrom + Math.floor(timelinePeak / 12);
+const peakMonth = new Date(2000, timelinePeak % 12, 1).toLocaleString('en-US', { month: 'long' });
+const fmt = new Intl.NumberFormat('en-US');
+---
+
+<div class="tl">
+  <p class="tl__lab"><span class="klabel">When they were taken</span><span>Busiest month: {peakMonth} {peakYear} &middot; {fmt.format(max)} photographs</span></p>
+  <div class="tl__bars" role="img" aria-label={`Photographs per month, ${timelineFrom} to ${timelineTo}`}>
+    {timelineMonths.map((n, k) => (
+      <i class={n === 0 ? 'z' : k === timelinePeak ? 'peak' : undefined} style={`--h:${((n / max) * 100).toFixed(1)}%; --k:${k}`} title={`${fmt.format(n)} photographs`}></i>
+    ))}
+  </div>
+  <div class="tl__years" aria-hidden="true">{years.map((y) => <span>{y}</span>)}</div>
+</div>
+
+<style>
+  .tl { padding: 0 clamp(18px, 4cqw, 44px) clamp(18px, 2.6cqw, 28px); max-width: 980px; margin: 0 auto; }
+  .tl__lab { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 11.5px; color: var(--t3); margin-bottom: 10px; }
+  .tl__bars { display: grid; grid-template-columns: repeat(84, minmax(0, 1fr)); column-gap: 2px; height: clamp(48px, 8cqw, 80px); align-items: end; }
+  .tl__bars i { display: block; height: var(--h); min-height: 3px; background: rgba(224, 128, 58, .46); border-radius: 2px 2px 0 0; transform-origin: bottom; transition: background .12s; }
+  .tl__bars i.z { min-height: 1px; height: 1px; background: var(--border); }
+  .tl__bars i.peak { background: var(--accent); }
+  .tl__bars i:not(.z):hover { background: var(--accent-t); }
+  :global(.js) .tl__bars i { transform: scaleY(0); }
+  :global(.rv.in) .tl__bars i { animation: grow .8s var(--ease) both; animation-delay: calc(.3s + var(--k) * 8ms); transform: none; }
+  @keyframes grow { from { transform: scaleY(0); } }
+  .tl__years { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); border-top: 1px solid var(--border); margin-top: 6px; }
+  .tl__years span { font-size: 11px; color: var(--t3); padding: 5px 0 0 3px; border-left: 1px solid var(--border); font-variant-numeric: tabular-nums; }
+  .tl__years span:first-child { border-left: 0; }
+</style>

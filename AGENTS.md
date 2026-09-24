@@ -34,9 +34,10 @@ to one component and one content source. Do not read the whole tree to change on
 - Never add a testimonial, review, user count or logo that is not real. The social-proof slot in
   `src/pages/index.astro` is deliberately empty and commented; leave it empty until there are
   real users who gave permission in writing.
-- Never soften a safety guarantee: recoverable removal, quarantine before removal, content-based
-  duplicate proof, protected backups, honest interrupted-job reporting. These mirror the
-  application's own ADRs.
+- Never soften a safety guarantee: recoverable removal through the Recycle Bin, one copy always
+  remains, content-based duplicate proof, protected backups, honest interrupted-job reporting.
+  These mirror the application's own ADRs (0014 and 0015). The old `.Folio` quarantine folder
+  is a legacy path the new engine does not use; do not advertise it.
 - Do not promise "risk free". The page refuses to, on purpose.
 
 ## Copy rules

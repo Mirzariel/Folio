@@ -49,12 +49,15 @@ it is **every motion carries a claim**. A motion with no claim does not belong o
 
 | Motion | Claim | Module |
 |---|---|---|
-| Prints fly from a scattered pile into an ordered grid as you scroll | scattered photographs become an ordered archive. The whole pitch, before a word is read | motion/heroPrints.ts |
+| Hero prints develop from blank paper to the picture | a photograph arrives as itself | Hero.astro (CSS) |
+| In the pinned film, prints resolve from a pile into a grid across three beats | scattered photographs become an ordered archive, and the reading changes nothing | motion/film.ts |
+| A cursor drags the folder, the scan counts, photos fly into date folders and are checked | nothing changes until you approve, and what changes is verified | demos/tour.ts, motion/tourAutoplay.ts |
+| The rules paragraph lights word by word | these are rules, read at your pace | motion/wordLight.ts |
 | The four hub statistics count up | these are figures Folio actually holds | motion/counters.ts |
 | A light bar sweeps the gallery and tiles resolve behind it | this is the scan populating the wall | motion/scanSweep.ts |
 | Clicking a tile grows it into the viewer; Escape puts it back | the spec's connected enlargement. Escape reads as putting a print down. The mat is neutral `#0E0E0E`, because a photograph judged against warm archival paper is judged wrongly | scripts/viewer.ts |
 | The plan runs itself: rows tick, the counter races, Plan to Done | you approve, then Folio does it and verifies it | motion/planRunner.ts |
-| Three duplicates converge on the quarantine folder, one stays, and the folder counts what arrived | quarantine frees nothing until you reclaim, and the figure says so | motion/dupeCollapse.ts |
+| Marked copies fly into the Recycle Bin and can be flown back out; marking every copy is refused | removal is recoverable and one copy always remains | demos/dupes.ts |
 | The rename pattern types itself and the preview rewrites live | the preview updates before you commit | motion/renameType.ts |
 
 ## The demos repeat
@@ -66,7 +69,6 @@ they are on screen, through `loopWhileVisible` in `src/scripts/motion/loop.ts`.
 | Demo | Repeats every |
 |---|---|
 | The scan sweeping the gallery wall | 6s |
-| Three copies collapsing into quarantine | 6s, with the four held for 1.3s first |
 | The rename pattern typing itself | 5s |
 | The plan running to Done | 8s |
 

@@ -1,0 +1,70 @@
+---
+/**
+ * The figures, set like a launch readout: very large, very few, and each one
+ * labelled with exactly what it is.
+ *
+ * Claim: these are figures Folio actually holds. The first two come from the
+ * design canvas library and the small print says so; they are not measured
+ * averages. The other two are properties of the product. Counting is done by
+ * motion/counters.ts; the markup holds the real value until a count starts.
+ */
+import SplitHeading from '@/components/primitives/SplitHeading.astro';
+import { site, display } from '@/config/site';
+
+const figures = [
+  { value: display.photographs, count: site.canvas.photographs, label: 'photographs read in one library' },
+  { value: display.reclaimable, count: site.canvas.reclaimableGb, decimals: 1, suffix: ' GB', label: 'shown as reclaimable before anything moved' },
+  { value: '0', label: 'photographs uploaded, ever' },
+  { value: `${site.license.devices}`, count: site.license.devices, label: 'of your devices on one license' },
+];
+---
+
+<section class="t-void numbers" id="numbers">
+  <div class="wrap">
+    <div class="numbers__head rv">
+      <p class="kicker">By the numbers</p>
+      <SplitHeading lines={['You ask what is there.', 'Folio counts it.']} class="numbers__title" />
+    </div>
+    <dl class="numbers__grid">
+      {figures.map((f, i) => (
+        <div class={`numbers__f rv${i % 2 ? ' rv-d1' : ''}`}>
+          <dt>
+            {'count' in f && f.count !== undefined ? (
+              <span data-count={f.count} data-decimals={f.decimals} data-suffix={f.suffix}>{f.value}</span>
+            ) : f.value}
+          </dt>
+          <dd>{f.label}</dd>
+        </div>
+      ))}
+    </dl>
+    <p class="tiny numbers__note rv">
+      The first two figures come from the library in Folio&rsquo;s own design canvas,
+      {' '}{site.canvas.sourceName}. They show what the app reports, not an average you should expect.
+    </p>
+  </div>
+</section>
+
+<style>
+  .numbers { background: var(--bg); color: var(--t1); padding: clamp(90px, 12vw, 160px) 0; border-top: 1px solid var(--border); }
+  .numbers__title { margin-top: 16px; }
+  .numbers__grid {
+    margin: clamp(40px, 6vw, 76px) 0 0; display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--border);
+  }
+  .numbers__f { padding: clamp(22px, 3vw, 36px) clamp(12px, 2vw, 28px) 0 0; }
+  .numbers__f + .numbers__f { padding-left: clamp(16px, 2vw, 28px); border-left: 1px solid var(--border); }
+  .numbers__f dt {
+    font-size: clamp(38px, 5.4vw, 80px); font-weight: 300; letter-spacing: -.045em; line-height: 1;
+    font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .numbers__f dd {
+    margin: 14px 0 0; font-size: 11.5px; font-weight: 650; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--t3); max-width: 22ch; line-height: 1.5;
+  }
+  .numbers__note { margin-top: clamp(28px, 4vw, 44px); }
+  @media (max-width: 900px) {
+    .numbers__grid { grid-template-columns: 1fr 1fr; }
+    .numbers__f:nth-child(3) { border-left: 0; padding-left: 0; }
+    .numbers__f:nth-child(n + 3) { border-top: 1px solid var(--border); margin-top: 22px; }
+  }
+</style>

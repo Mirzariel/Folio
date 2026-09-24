@@ -14,7 +14,7 @@ Source: `../Folio-WinUI/docs/product/FOLIO_VISION.md`.
 | S4 four pillars: organize, duplicate, rename, transfer from phone | three doors ship today; the fourth pillar has its own roadmap card rather than a footnote |
 | S5 Maintain, the collection keeps growing | the closing section |
 | S6 understand before you move, verify before you remove | the promise section, wording unchanged |
-| S6 say what you know and what you do not | *likely* vs *verified*, and quarantine "frees 0 B now" |
+| S6 say what you know and what you do not | *likely* vs *verified*, "would release at most", and the refusal to remove the last copy |
 | S6 the catalogue is not a backup | the local-first section says so outright |
 | S6 no invented health score, no storage visualisation | the site has none, and the caption under the hub says so |
 | S6 no "risk free" promise | the safety section opens by refusing to make one |
@@ -34,7 +34,7 @@ trust row is one line with its own space.
 |---|---|
 | Catalogue and gallery, metadata, exact duplicates | Import from a connected phone or camera |
 | Recoverable cleanup via the Recycle Bin | Folio for macOS |
-| Quarantine to the `.Folio` folder, with restore | |
+| Removal to the Recycle Bin, with put back | Duplicates demo |
 | Rename in bulk with preview | |
 | Organize by capture date within one source | |
 | Plan, approve, verify on every mutation | |

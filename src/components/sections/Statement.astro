@@ -1,0 +1,46 @@
+---
+/**
+ * The rules, read at the speed you scroll. One paragraph, very large, lit a
+ * word at a time.
+ *
+ * Every sentence is a safety guarantee the application keeps (ADRs 0014 and
+ * 0015), so AGENTS.md forbids softening any of them. Motion: wordLight.ts.
+ * Without scripting, or under reduced motion, the paragraph is simply lit.
+ */
+const text =
+  'Folio never changes a file you have not seen in a plan. Scanning only reads. ' +
+  'Removed copies go to the Recycle Bin, where you can put them back. ' +
+  'One copy of every photograph always remains. Every change is checked against the plan. ' +
+  'And if a job is interrupted, Folio tells you exactly what finished, and what did not.';
+
+const words = text.split(' ');
+const strong = new Set(['never', 'reads.', 'Recycle', 'Bin,', 'always', 'checked', 'exactly']);
+---
+
+<section class="t-void stmt" id="rules">
+  <div class="stmt__track" id="stmtTrack">
+    <div class="stmt__sticky">
+      <div class="wrap">
+        <p class="kicker kicker--accent">The rules it keeps</p>
+        <p class="stmt__p" id="stmt">
+          {words.map((w) => <><span class={`stmt__w${strong.has(w) ? ' stmt__w--em' : ''}`}>{w}</span>{' '}</>)}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .stmt { background: var(--bg); color: var(--t1); }
+  .stmt__sticky { padding: clamp(90px, 14vw, 170px) 0; }
+  :global(.js) .stmt__track { height: 220vh; }
+  :global(.js) .stmt__sticky { position: sticky; top: 0; min-height: 100svh; display: flex; align-items: center; }
+  .stmt__p {
+    margin-top: 22px; max-width: 26ch; font-family: var(--serif); font-weight: 600;
+    font-size: clamp(30px, 4.6vw, 64px); line-height: 1.14; letter-spacing: -.02em; text-wrap: pretty;
+  }
+  .stmt__w { transition: opacity .35s var(--ease), color .35s var(--ease); }
+  :global(.js) .stmt__w { opacity: .16; }
+  :global(.js) .stmt__w.is-lit { opacity: 1; }
+  .stmt__w--em.is-lit, :global(html:not(.js)) .stmt__w--em { color: var(--accent-t); }
+</style>

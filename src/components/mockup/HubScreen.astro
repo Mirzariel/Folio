@@ -8,6 +8,7 @@
  * this window is sized by its own column.
  */
 import Icon from '@/components/primitives/Icon.astro';
+import HubTimeline from './HubTimeline.astro';
 import { doors, hubStats } from '@/data/mockup';
 ---
 
@@ -34,6 +35,8 @@ import { doors, hubStats } from '@/data/mockup';
     ))}
   </div>
 </div>
+
+<HubTimeline />
 
 <div class="doors">
   {doors.map((door, i) => (

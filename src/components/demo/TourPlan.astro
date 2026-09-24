@@ -1,0 +1,88 @@
+---
+/**
+ * Steps two and three of the live demo share this stage. Preview draws each
+ * photograph as a faint ghost in the folder it will go to; nothing has moved.
+ * Approve moves them for real, one at a time, and a folder gets its check only
+ * once every photograph planned for it has arrived.
+ */
+import { Image } from 'astro:assets';
+import Icon from '@/components/primitives/Icon.astro';
+import { tourFolders, tourPhotos, scanTotal } from '@/data/tour';
+
+const tiles = import.meta.glob<{ default: ImageMetadata }>('../../assets/tiles/*.jpg', { eager: true });
+const img = (file: string) => tiles[`../../assets/tiles/${file}`]!.default;
+const fmt = new Intl.NumberFormat('en-US');
+---
+
+<div class="tp" id="tourPlan">
+  <div class="tp__panel">
+    <div class="tp__head"><Icon name="folder" size={15} />Pictures<span>{tourPhotos.length} of {fmt.format(scanTotal)} shown</span></div>
+    <div class="tp__grid">
+      {tourPhotos.map((photo, i) => (
+        <div class="tp__cell" data-i={i} title={photo.name}>
+          <Image src={img(photo.file)} alt="" width={120} height={90} loading="lazy" />
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <span class="tp__arrow" aria-hidden="true"><Icon name="arrow" size={22} /></span>
+
+  <div class="tp__panel">
+    <div class="tp__head"><Icon name="calendar" size={15} />By date<em class="tp__chip">Preview</em></div>
+    {tourFolders.map((folder, f) => (
+      <div class="tp__row" data-folder={f}>
+        <span class="tp__flab"><Icon name="folder" size={14} />{folder}</span>
+        <div class="tp__slots">
+          {tourPhotos.map((photo, i) => photo.into === f && (
+            <div class="tp__slot" data-i={i}>
+              <Image src={img(photo.file)} alt="" width={120} height={90} loading="lazy" />
+            </div>
+          ))}
+        </div>
+        <i class="tp__ok" aria-hidden="true"><Icon name="check" size={13} /></i>
+      </div>
+    ))}
+    <p class="tp__state" id="tourState">{tourPhotos.length} planned &middot; Nothing has moved</p>
+  </div>
+</div>
+
+<style>
+  .tp { display: grid; grid-template-columns: minmax(0, .8fr) auto minmax(0, 1fr); gap: clamp(10px, 2cqw, 22px); align-items: center; min-height: 300px; }
+  .tp__panel { border: 1px solid var(--border); background: var(--surface); border-radius: 6px; }
+  .tp__head { display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px; border-bottom: 1px solid var(--border); font-size: 12px; color: var(--t2); }
+  .tp__head span { margin-left: auto; font-size: 11px; color: var(--t3); font-variant-numeric: tabular-nums; }
+  .tp__chip {
+    margin-left: auto; font-style: normal; font-size: 10.5px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--accent-t); border: 1px solid var(--accent); border-radius: 999px; padding: 2px 9px;
+  }
+  .tp__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 18px 14px; }
+  .tp__cell, .tp__slot { aspect-ratio: 4 / 3; border-radius: 4px; overflow: hidden; position: relative; }
+  .tp__cell :global(img), .tp__slot :global(img) { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tp__cell { outline: 1px dashed transparent; outline-offset: -1px; transition: outline-color .25s; }
+  .tp__cell.is-gone { outline-color: var(--border-2); }
+  .tp__cell.is-gone :global(img) { visibility: hidden; }
+  .tp__arrow { color: var(--t3); transition: color .3s; }
+  :global(.tour[data-step="2"]) .tp__arrow { color: var(--accent-t); }
+  .tp.is-done .tp__arrow { color: var(--good); }
+
+  .tp__row { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  .tp__flab { flex: 0 0 76px; display: flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11.5px; color: var(--t2); }
+  .tp__flab :global(svg) { color: var(--t3); }
+  .tp__slots { display: flex; gap: 8px; flex: 1; }
+  .tp__slot { width: clamp(38px, 6.4cqw, 60px); outline: 1px dashed var(--border-2); outline-offset: -1px; }
+  .tp__slot :global(img) { opacity: 0; transition: opacity .25s; }
+  .tp__slot.is-planned { outline-color: var(--accent); }
+  .tp__slot.is-planned :global(img) { opacity: .34; }
+  .tp__slot.is-filled { outline-color: transparent; box-shadow: 0 6px 14px rgba(0, 0, 0, .35); }
+  .tp__slot.is-filled :global(img) { opacity: 1; }
+  .tp__ok { margin-left: auto; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; color: var(--good); border: 1px solid var(--good); opacity: 0; transform: scale(.5); transition: opacity .3s var(--ease), transform .3s var(--ease); }
+  .tp__row.is-ok .tp__ok { opacity: 1; transform: none; }
+  .tp__state { padding: 11px 14px; font-size: 12px; color: var(--t2); font-variant-numeric: tabular-nums; }
+  .tp.is-done .tp__state { color: var(--good); }
+
+  @container (max-width: 640px) {
+    .tp { grid-template-columns: 1fr; }
+    .tp__arrow { justify-self: center; transform: rotate(90deg); }
+  }
+</style>

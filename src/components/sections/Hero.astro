@@ -1,118 +1,140 @@
 ---
 /**
- * The signature moment. Five prints start as a scattered pile and resolve into
- * an ordered grid as the visitor scrolls.
+ * The first screen, full-bleed. Title at the top, the two actions at the
+ * bottom, and between them three prints developing like paper in a tray.
  *
- * Claim: scattered photographs become an ordered archive. This is the whole
- * pitch, made before a word is read.
- *
- * Each print sits at its FINAL grid slot in CSS; the scattered state is an
- * offset scaled by (1 - --p). Motion drives --p from 0 to 1; see
- * src/scripts/motion/heroPrints.ts. Set --p to 1 in devtools to see the
- * ordered state on its own.
+ * Claim: a photograph arrives as itself. The prints go from blank paper to the
+ * full picture, the same "develop" the application plays on its first screen.
+ * It is CSS only, so it runs before any script and is simply finished under
+ * reduced motion (see src/styles/reduced-motion.css).
  */
 import { Image } from 'astro:assets';
 import SplitHeading from '@/components/primitives/SplitHeading.astro';
 import BuyButton from '@/components/primitives/BuyButton.astro';
-import TrustList from '@/components/primitives/TrustList.astro';
-import { site } from '@/config/site';
-import { prints } from '@/data/gallery';
+import Icon from '@/components/primitives/Icon.astro';
+import { site, display } from '@/config/site';
+import left from '@/assets/tiles/t09.jpg';
+import right from '@/assets/tiles/t12.jpg';
+import front from '@/assets/tiles/t05.jpg';
 
-const tiles = import.meta.glob<{ default: ImageMetadata }>('../../assets/tiles/*.jpg', { eager: true });
+const prints = [
+  { src: left, cls: 'p1' },
+  { src: right, cls: 'p2' },
+  { src: front, cls: 'p3' },
+];
 
-const guarantees = [
-  { label: 'Pay once, own it' },
-  { label: 'Runs entirely on your PC' },
-  { label: 'Deletions go to the Recycle Bin' },
-  { label: 'Nothing moves without approval' },
+const specs = [
+  { v: display.price, l: 'once, no subscription' },
+  { v: `${site.license.devices}`, l: 'of your devices' },
+  { v: 'Offline', l: 'photos stay on this PC' },
+  { v: 'Recycle Bin', l: 'never a silent delete' },
 ];
 ---
 
-<section class="sect t-dark hero" id="hero">
+<section class="t-void hero" id="hero">
   <div class="hero__glow" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="hero__grid">
-      <div class="hero__text">
-        <p class="eyebrow ld ld-1">
-          {site.platforms.shipping[0]?.split(' ')[0]} and macOS &middot; Buy once &middot; No subscription
-        </p>
 
-        <SplitHeading
-          lines={[
-            'You capture the moments.',
-            '<span class="mark-under">Folio</span> organizes the memories.',
-          ]}
-          as="h1"
-          variant="display"
-          class="ld ld-2"
-        />
+  <div class="hero__top">
+    <p class="kicker ld ld-1">Folio for {site.platforms.shipping[0]?.split(' ')[0]}</p>
+    <SplitHeading
+      lines={['You capture the moments.', 'Folio organizes the memories.']}
+      as="h1"
+      variant="display"
+      class="hero__title ld ld-2"
+    />
+    <p class="hero__sub ld ld-3">Every photograph, in its place.</p>
+  </div>
 
-        <p class="lede ld ld-3">
-          {site.visionTagline.replace(/\.$/, ':')} it reads your drives, proves what is
-          really there, and changes nothing until you say so.
-        </p>
+  <div class="hero__prints" aria-hidden="true">
+    {prints.map((print, i) => (
+      <figure class={`hero__print ${print.cls}`} style={`--i:${i}`}>
+        <Image src={print.src} alt="" width={560} height={700} loading="eager" />
+      </figure>
+    ))}
+  </div>
 
-        <div class="cta-row ld ld-4">
-          <BuyButton label="Get Folio" sub="one time" />
-          <a class="btn btn--ghost" href="#how">See how it works</a>
-        </div>
-      </div>
-
-      <div class="prints" id="prints" aria-hidden="true">
-        {prints.map((print, i) => (
-          <div
-            class="prints__p"
-            style={`--dx:${print.dx}; --dy:${print.dy}; --dr:${print.dr}; --ds:${print.ds}; --z:${print.z}`}
-          >
-            <Image
-              src={tiles[`../../assets/tiles/${print.file}`]!.default}
-              alt=""
-              width={440}
-              height={440}
-              loading={i < 3 ? 'eager' : 'lazy'}
-            />
-          </div>
-        ))}
-      </div>
+  <div class="hero__bottom">
+    <div class="hero__cta ld ld-4">
+      <BuyButton label="Get Folio" sub={display.priceOnce} />
+      <a class="btn btn--glass" href="#try"><Icon name="play" size={14} />Try it on this page</a>
     </div>
-
-    <TrustList items={guarantees} class="ld ld-5" />
+    <dl class="hero__specs ld ld-5">
+      {specs.map((spec) => (
+        <div><dt>{spec.v}</dt><dd>{spec.l}</dd></div>
+      ))}
+    </dl>
+    <a class="hero__scroll" href="#film" aria-label="Scroll to the story"><i></i></a>
   </div>
 </section>
 
 <style>
-  .hero { padding: 130px 0 0; overflow: hidden; }
+  .hero {
+    position: relative; min-height: 100svh; overflow: hidden; background: var(--bg);
+    display: grid; grid-template-rows: auto 1fr auto; color: var(--t1);
+    padding: calc(var(--nav-h) + clamp(28px, 6vh, 64px)) var(--gut) clamp(22px, 4vh, 40px);
+  }
   .hero__glow {
-    position: absolute; left: 50%; top: -230px; width: min(1200px, 130vw); height: 680px;
-    transform: translateX(-50%); pointer-events: none; z-index: 0;
-    background: radial-gradient(ellipse at center, rgba(224, 128, 58, .17), rgba(224, 128, 58, 0) 68%);
-    animation: breathe 14s ease-in-out infinite;
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(60% 50% at 50% 62%, rgba(224, 128, 58, .22), transparent 70%),
+      radial-gradient(40% 30% at 50% 100%, rgba(224, 128, 58, .12), transparent 70%);
+    animation: breathe 12s ease-in-out infinite;
   }
-  /* The only thing on the page that loops, and it is nearly imperceptible. */
-  @keyframes breathe { 0%, 100% { opacity: .8; } 50% { opacity: 1; } }
-  .hero .wrap { z-index: 1; }
-  .hero__grid { display: grid; gap: clamp(34px, 4vw, 56px); align-items: center; }
-  @media (min-width: 1020px) { .hero__grid { grid-template-columns: 1.05fr .95fr; } }
-  .hero :global(.display) { margin: 22px 0 0; }
-  .hero .lede { margin-top: 22px; }
-  .hero .cta-row { margin-top: 32px; }
+  @keyframes breathe { 0%, 100% { opacity: .75; } 50% { opacity: 1; } }
 
-  .prints { position: relative; aspect-ratio: 4 / 3.3; --p: 0; }
-  .prints__p {
-    position: absolute; width: 30%; aspect-ratio: 1; z-index: var(--z, 1);
-    border-radius: 2px; overflow: hidden; background: var(--ink-raised);
-    border: 5px solid #F3ECE0; border-bottom-width: 17px;
-    box-shadow: 0 26px 60px rgba(0, 0, 0, .62), 0 2px 6px rgba(0, 0, 0, .5);
-    transform:
-      translate(calc(var(--dx) * (1 - var(--p))), calc(var(--dy) * (1 - var(--p))))
-      rotate(calc(var(--dr) * (1 - var(--p))))
-      scale(calc(1 + var(--ds) * (1 - var(--p))));
-    will-change: transform;
+  .hero__top { position: relative; z-index: 2; text-align: center; }
+  .hero__title { margin: 16px auto 0; max-width: 16ch; font-size: clamp(40px, 6.6vw, 92px); }
+  .hero__sub { margin-top: 18px; font-size: var(--fs-lede); color: var(--t2); }
+
+  /* The prints own the middle band, between the title and the actions, so
+     they never sit under text on a short screen. They drift slowly. */
+  .hero__prints { position: relative; z-index: 1; pointer-events: none; min-height: clamp(220px, 40vh, 520px); margin: clamp(10px, 3vh, 34px) 0; }
+  .hero__print {
+    position: absolute; left: 50%; top: 50%; width: clamp(130px, min(20vw, 26vh), 300px);
+    aspect-ratio: 4 / 5; padding: clamp(8px, .9vw, 13px); padding-bottom: clamp(26px, 2.6vw, 40px);
+    background: #EFE6D8; border-radius: 3px;
+    box-shadow: 0 40px 90px rgba(0, 0, 0, .7), 0 3px 10px rgba(0, 0, 0, .5);
+    transform: translate(-50%, -50%) translate(var(--x), var(--y)) rotate(var(--r));
+    animation: place 1.1s var(--ease) both, drift 16s ease-in-out infinite alternate;
+    animation-delay: calc(.35s + var(--i) * .18s), calc(1.6s + var(--i) * 1.3s);
   }
-  .prints__p :global(img) { width: 100%; height: 100%; object-fit: cover; }
-  .prints__p:nth-child(1) { left: 2%;    top: 10%; }
-  .prints__p:nth-child(2) { left: 35%;   top: 10%; }
-  .prints__p:nth-child(3) { left: 68%;   top: 10%; }
-  .prints__p:nth-child(4) { left: 18.5%; top: 53%; }
-  .prints__p:nth-child(5) { left: 51.5%; top: 53%; }
+  .hero__print :global(img) {
+    width: 100%; height: 100%; object-fit: cover;
+    animation: develop 3.4s var(--ease) both; animation-delay: calc(.7s + var(--i) * .22s);
+  }
+  .p1 { --x: -84%; --y: 2%; --r: -8deg; z-index: 1; }
+  .p2 { --x: 82%; --y: -6%; --r: 7deg; z-index: 2; }
+  .p3 { --x: 0%; --y: 4%; --r: -1.5deg; z-index: 3; width: clamp(150px, min(24vw, 31vh), 340px); }
+  @keyframes place { from { opacity: 0; translate: 0 60px; } }
+  @keyframes drift { to { translate: 0 -14px; rotate: .8deg; } }
+  @keyframes develop {
+    0% { filter: grayscale(1) brightness(2.6) contrast(.2); }
+    55% { filter: grayscale(.5) brightness(1.3) contrast(.75); }
+    100% { filter: none; }
+  }
+
+  .hero__bottom { position: relative; z-index: 2; align-self: end; display: grid; justify-items: center; gap: 26px; }
+  .hero__cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+  .hero__cta :global(.btn) { min-width: 250px; }
+  .hero__specs {
+    display: grid; grid-template-columns: repeat(4, auto); gap: 0; margin: 0;
+    border-top: 1px solid rgba(245, 234, 223, .14);
+  }
+  .hero__specs div { padding: 14px clamp(14px, 2.4vw, 34px) 0; text-align: center; }
+  .hero__specs div + div { border-left: 1px solid rgba(245, 234, 223, .1); }
+  .hero__specs dt { font-size: clamp(16px, 1.5vw, 20px); font-weight: 650; letter-spacing: -.01em; }
+  .hero__specs dd { margin: 2px 0 0; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--t3); }
+  .hero__scroll {
+    width: 26px; height: 40px; border: 1.5px solid rgba(245, 234, 223, .35); border-radius: 14px;
+    display: flex; justify-content: center; padding-top: 7px;
+  }
+  .hero__scroll i { width: 3px; height: 8px; border-radius: 2px; background: var(--t1); animation: wheel 1.8s var(--ease) infinite; }
+  @keyframes wheel { 0% { opacity: 0; transform: translateY(-3px); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(10px); } }
+
+  @media (max-width: 760px) {
+    .hero__specs { grid-template-columns: repeat(2, auto); }
+    .hero__specs div:nth-child(3) { border-left: 0; }
+    .p1 { --x: -62%; } .p2 { --x: 60%; }
+    .hero__scroll { display: none; }
+  }
 </style>

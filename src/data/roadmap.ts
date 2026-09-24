@@ -26,8 +26,9 @@ export const roadmapCards: readonly RoadmapCard[] = [
     icon: 'apple',
     title: 'Folio for macOS',
     body:
-      'The same Rust engine underneath, a native Mac interface on top. That boundary was ' +
-      'drawn on day one, so a Mac client needs no architectural rewrite.',
-    note: `Your ${display.price} licence already covers it, at no extra cost.`,
+      'The engine that reads, plans and verifies has no Windows dependency, so the Mac ' +
+      'version builds on it rather than starting over. What differs is how each system ' +
+      'handles recoverable removal, and that part is being written for the Mac.',
+    note: `Your ${display.price} license already covers it, at no extra cost.`,
   },
 ] as const;

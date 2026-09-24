@@ -1,0 +1,118 @@
+---
+/**
+ * The duplicates task, working: one group of identical copies, marks you can
+ * change, and a Recycle Bin you can empty back out. Behaviour and the rule that
+ * one copy always remains: src/scripts/demos/dupes.ts.
+ */
+import { Image } from 'astro:assets';
+import Icon from '@/components/primitives/Icon.astro';
+import photo from '@/assets/tiles/t01.jpg';
+import { dupCopies, dupName, dupSizeMb } from '@/data/dupes';
+---
+
+<div class="dup" id="dupes">
+  <div class="dup__bar">
+    <div class="dup__sum">
+      <b>{dupCopies.length} identical copies</b> of {dupName} &middot; {dupSizeMb} MB each
+      <span class="dup__line" id="dupLine">Nothing marked for removal.</span>
+    </div>
+    <button type="button" class="btn btn--ghost btn--sm" id="dupChoose">Let Folio choose</button>
+    <button type="button" class="btn btn--primary btn--sm" id="dupReview" disabled>Review and remove&hellip;</button>
+    <div class="dup__bin" id="dupBin"><Icon name="recycle" size={18} /><span>Recycle Bin</span><i id="dupBinN">0</i></div>
+  </div>
+
+  <div class="dup__copies">
+    {dupCopies.map((copy, i) => (
+      <article class={`dup__c${copy.backup ? ' is-backup' : ''}`} data-i={i}>
+        <div class="dup__pic">
+          <Image src={photo} alt={i === 0 ? `One of ${dupCopies.length} identical copies of the same photograph` : ''} width={360} height={270} loading="lazy" />
+          <span class="dup__tag"><Icon name="recycle" size={12} />To Recycle Bin</span>
+        </div>
+        <p class="dup__path" title={copy.path}>{copy.path}</p>
+        <p class="dup__place"><Icon name={copy.backup ? 'shield' : 'folder'} size={13} />{copy.place}</p>
+        <p class="dup__fate"><Icon name="check-c" size={14} /><span>This copy will remain</span></p>
+        <p class="dup__refuse" role="status"></p>
+        <button type="button" class="dup__toggle" aria-pressed="false">Mark for removal</button>
+      </article>
+    ))}
+  </div>
+
+  <div class="dup__done" id="dupDone" hidden>
+    <Icon name="check-c" size={18} />
+    <p><b id="dupDoneN">0 copies moved to the Recycle Bin.</b> You can put any of them back.</p>
+    <button type="button" class="btn btn--ghost btn--sm" id="dupRestore">Put them back</button>
+  </div>
+
+  <div class="dup__confirm" id="dupConfirm" role="dialog" aria-modal="true" aria-labelledby="dupConfirmT" hidden>
+    <div class="dup__card">
+      <h4 id="dupConfirmT">Move these copies to the Recycle Bin?</h4>
+      <p class="dup__big"><b id="dupConfirmN">0</b> copies would be moved to the Recycle Bin</p>
+      <p>This is not permanent deletion. Anything moved stays in the Windows Recycle Bin until you empty it yourself.</p>
+      <p class="dup__stay" id="dupConfirmStay"></p>
+      <div class="dup__acts">
+        <button type="button" class="btn btn--ghost btn--sm" id="dupCancel">Not now</button>
+        <button type="button" class="btn btn--primary btn--sm" id="dupProceed">Move to Recycle Bin</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .dup { position: relative; padding: clamp(16px, 2.6cqw, 28px); background: var(--bg); }
+  .dup__bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+  .dup__sum { flex: 1 1 260px; font-size: 13px; color: var(--t2); }
+  .dup__sum b { color: var(--t1); font-weight: 620; }
+  .dup__line { display: block; margin-top: 3px; font-size: 12.5px; color: var(--accent-t); font-variant-numeric: tabular-nums; }
+  .dup__bar .btn:disabled { opacity: .45; cursor: default; transform: none; }
+  .dup__bin {
+    display: flex; align-items: center; gap: 8px; padding: 0 12px; height: 40px; border: 1px dashed var(--border-2);
+    border-radius: 6px; font-size: 12px; color: var(--t2); transition: border-color .3s, color .3s, transform .3s var(--ease);
+  }
+  .dup__bin i { font-style: normal; min-width: 20px; padding: 1px 6px; border-radius: 999px; text-align: center; font-size: 11px; font-weight: 650; background: var(--inset); }
+  .dup__bin.is-full { border-style: solid; border-color: var(--accent); color: var(--accent-t); }
+  .dup__bin.is-full i { background: var(--accent-w); color: var(--accent-t); }
+  .dup__bin.is-bump { animation: bump .45s var(--ease); }
+  @keyframes bump { 40% { transform: scale(1.08); } }
+
+  .dup__copies { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 2cqw, 20px); padding-top: 20px; }
+  .dup__c { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+  .dup__pic { position: relative; aspect-ratio: 4 / 3; border-radius: 5px; overflow: hidden; transition: filter .3s; }
+  .dup__pic :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .dup__tag {
+    position: absolute; left: 8px; top: 8px; display: none; align-items: center; gap: 5px; height: 22px; padding: 0 8px;
+    border-radius: 4px; background: rgba(12, 7, 5, .78); color: #F5EADF; font-size: 11px; font-weight: 600;
+  }
+  .dup__c.is-marked .dup__pic { filter: saturate(.3) brightness(.6); }
+  .dup__c.is-marked .dup__tag { display: inline-flex; }
+  .dup__c.is-binned .dup__pic { opacity: .16; filter: grayscale(1); }
+  .dup__path { font-family: var(--mono); font-size: 11px; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; direction: rtl; text-align: left; }
+  .dup__place, .dup__fate { display: flex; gap: 6px; align-items: center; font-size: 11.5px; color: var(--t3); line-height: 1.35; }
+  .dup__place :global(svg), .dup__fate :global(svg) { flex: 0 0 auto; }
+  .dup__c.is-backup .dup__place { color: var(--accent-t); }
+  .dup__fate { color: var(--good); font-size: 12px; }
+  .dup__c.is-marked .dup__fate { color: var(--accent-t); }
+  .dup__c.is-binned .dup__fate { color: var(--t3); }
+  .dup__refuse { font-size: 11.5px; color: var(--bad); min-height: 0; }
+  .dup__refuse:empty { display: none; }
+  .dup__toggle { align-self: flex-start; margin-top: 2px; padding: 6px 11px; border: 1px solid var(--border-2); border-radius: 5px; font-size: 12px; color: var(--t1); transition: border-color .2s, background .2s; }
+  .dup__toggle:hover { border-color: var(--accent); }
+  .dup__toggle[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-w); color: var(--accent-t); }
+  .dup__toggle:disabled { opacity: .4; cursor: default; }
+
+  .dup__done { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 20px; padding: 12px 16px; border: 1px solid var(--good); border-radius: 6px; color: var(--good); animation: capIn .45s var(--ease) both; }
+  .dup__done[hidden] { display: none; }
+  .dup__done p { flex: 1; font-size: 13px; color: var(--t2); }
+  .dup__done b { color: var(--t1); font-weight: 620; }
+  @keyframes capIn { from { opacity: 0; transform: translateY(8px); } }
+
+  .dup__confirm { position: absolute; inset: 0; z-index: 8; display: grid; place-items: center; padding: 16px; background: rgba(5, 3, 2, .72); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); animation: fadeIn .2s both; }
+  .dup__confirm[hidden] { display: none; }
+  @keyframes fadeIn { from { opacity: 0; } }
+  .dup__card { width: min(460px, 100%); background: var(--raised); border: 1px solid var(--border-2); border-radius: 10px; padding: 24px; display: grid; gap: 10px; box-shadow: var(--shadow); animation: capIn .3s var(--ease) both; }
+  .dup__card h4 { font-family: var(--serif); font-weight: 600; font-size: 21px; }
+  .dup__card p { font-size: 13px; color: var(--t2); line-height: 1.5; }
+  .dup__big b { font-size: 30px; font-weight: 620; color: var(--t1); margin-right: 6px; }
+  .dup__acts { display: flex; justify-content: flex-end; gap: 10px; margin-top: 6px; }
+
+  @container (max-width: 760px) { .dup__copies { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>

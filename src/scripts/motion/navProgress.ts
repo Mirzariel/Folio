@@ -85,7 +85,12 @@ export const initNavProgress: MotionModule = () => {
         trigger: section,
         start: 'top 55%',
         end: 'bottom 50%',
-        onToggle: (self) => { if (self.isActive) mark(id); },
+        /* Unmark on leave too: a trigger that was active during an early
+           layout must not leave its link lit once the layout settles. */
+        onToggle: (self) => {
+          if (self.isActive) mark(id);
+          else linkFor.get(id)?.classList.remove('is-here');
+        },
       }),
     );
   });

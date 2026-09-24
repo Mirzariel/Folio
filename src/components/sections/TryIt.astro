@@ -1,0 +1,105 @@
+---
+/**
+ * The live demo: Drop, Preview, Approve. The application's own first-run tour,
+ * rebuilt so a visitor can do it rather than watch it.
+ *
+ * Claim: nothing changes until you approve, and what changes is verified. The
+ * scan reads, the plan is shown in full, and only the Approve step moves
+ * anything. Behaviour lives in src/scripts/demos/tour.ts and works under every
+ * motion preference; motion/tourAutoplay.ts only offers to play it once.
+ */
+import SplitHeading from '@/components/primitives/SplitHeading.astro';
+import Window from '@/components/mockup/Window.astro';
+import TourDrop from '@/components/demo/TourDrop.astro';
+import TourPlan from '@/components/demo/TourPlan.astro';
+import { tourSteps } from '@/data/tour';
+
+const first = tourSteps[0];
+---
+
+<section class="t-void chapter tryit" id="try">
+  <div class="wrap">
+    <div class="chapter__head rv">
+      <p class="kicker kicker--accent">Try it</p>
+      <SplitHeading lines={['You drop a folder.', 'Folio shows the plan first.']} variant="h2" class="mega mega--md" />
+      <p class="lede">Three steps, the same ones the app walks you through on day one. Drag the folder, or just press the buttons.</p>
+    </div>
+
+    <Window name="Folio" id="tourwin" statusId="tourStatus" cue="Live demo" cueHint="it runs in this page. Nothing here touches your computer.">
+      <div class="tour" id="tour" data-step="0">
+        <ol class="tour__steps">
+          {tourSteps.map((step, i) => (
+            <>
+              {i > 0 && <li class="tour__line" aria-hidden="true"><i></i></li>}
+              <li>
+                <button type="button" class="tour__st" data-go={i} disabled={i > 0}>
+                  <span class="tour__node">{i + 1}</span>{step.name}
+                </button>
+              </li>
+            </>
+          ))}
+        </ol>
+
+        <div class="tour__view">
+          <div class="tour__track">
+            <div class="tour__slide"><TourDrop /></div>
+            <div class="tour__slide"><TourPlan /></div>
+          </div>
+        </div>
+
+        <div class="tour__cap" aria-live="polite">
+          <h3 id="tourTitle">{first.title}</h3>
+          <p id="tourBody">{first.body}</p>
+        </div>
+
+        <div class="tour__foot">
+          <button type="button" class="btn btn--ghost btn--sm" id="tourBack" disabled>Back</button>
+          <span class="tour__count" id="tourStep">1 of 3</span>
+          <button type="button" class="btn btn--primary btn--sm" id="tourNext">Scan Pictures</button>
+        </div>
+      </div>
+    </Window>
+  </div>
+</section>
+
+<style>
+  .tryit { background: var(--bg); color: var(--t1); }
+  .tour { background: var(--bg); padding: clamp(16px, 2.6cqw, 28px) clamp(14px, 3cqw, 34px) clamp(16px, 2.4cqw, 26px); }
+  .tour__steps { display: flex; align-items: center; justify-content: center; gap: clamp(6px, 1.4cqw, 14px); }
+  .tour__st {
+    display: inline-flex; align-items: center; gap: 8px; padding: 4px; border-radius: 6px;
+    font-size: 12.5px; color: var(--t3); transition: color .25s;
+  }
+  .tour__st:disabled { cursor: default; }
+  .tour__node {
+    width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--border-2);
+    display: grid; place-items: center; font-size: 11px; font-variant-numeric: tabular-nums;
+    transition: background .3s, border-color .3s, color .3s, box-shadow .3s;
+  }
+  .tour__st.is-on { color: var(--t1); }
+  .tour__st.is-on .tour__node { border-color: var(--accent); color: var(--accent-t); box-shadow: 0 0 0 4px var(--accent-w); }
+  .tour__st.is-done .tour__node { background: var(--accent); border-color: var(--accent); color: var(--on-acc); }
+  .tour__line { width: clamp(22px, 7cqw, 84px); height: 1px; background: var(--border-2); position: relative; overflow: hidden; }
+  .tour__line i { position: absolute; inset: 0; background: var(--accent); transform: scaleX(0); transform-origin: 0 50%; transition: transform .6s var(--ease-io); }
+  .tour__line.is-done i { transform: none; }
+
+  .tour__view { overflow: hidden; margin-top: clamp(16px, 2.6cqw, 30px); }
+  .tour__track { display: flex; transition: transform .7s var(--ease-io); }
+  .tour[data-step="1"] .tour__track, .tour[data-step="2"] .tour__track { transform: translateX(-100%); }
+  .tour__slide { flex: 0 0 100%; min-width: 0; }
+  /* The slide that is not showing must not take keyboard focus. */
+  .tour[data-step="0"] .tour__slide:nth-child(2), .tour:not([data-step="0"]) .tour__slide:nth-child(1) { visibility: hidden; transition: visibility 0s .7s; }
+
+  .tour__cap { text-align: center; margin-top: clamp(18px, 2.8cqw, 30px); min-height: 84px; }
+  .tour__cap h3 {
+    font-family: var(--serif); font-weight: 600; font-size: clamp(22px, 3.2cqw, 34px);
+    letter-spacing: -.012em; line-height: 1.15; animation: capIn .5s var(--ease) both;
+  }
+  .tour__cap p { margin: 8px auto 0; color: var(--t2); font-size: var(--fs-body); max-width: 50ch; animation: capIn .5s var(--ease) .08s both; }
+  @keyframes capIn { from { opacity: 0; transform: translateY(8px); } }
+
+  .tour__foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
+  .tour__foot .btn:disabled { opacity: .45; cursor: default; transform: none; }
+  #tourBack:disabled { visibility: hidden; }
+  .tour__count { font-size: 12px; color: var(--t3); font-variant-numeric: tabular-nums; }
+</style>

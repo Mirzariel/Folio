@@ -2,7 +2,6 @@
  * "Six things Folio will not do to you". Each card states a safety guarantee
  * that AGENTS.md forbids weakening. `body` carries inline markup.
  */
-import { site } from '@/config/site';
 
 export interface SafetyCard {
   readonly icon: string;
@@ -20,10 +19,10 @@ export const safetyCards: readonly SafetyCard[] = [
   },
   {
     icon: 'folder',
-    title: 'Quarantine before removal',
+    title: 'One copy always remains',
     body:
-      `Duplicate copies move to a <code>${site.canvas.quarantineFolder}</code> folder on the ` +
-      'same drive, where you can put them back. Until you reclaim, Folio says it freed nothing.',
+      'Folio will not propose removing every copy of a photograph. A plan that would leave ' +
+      'you none is refused, and the review says which copy stays.',
   },
   {
     icon: 'fingerprint',

@@ -110,3 +110,13 @@
   --shadow: var(--lift-pap);
   color-scheme: light;
 }
+
+/* The stage. One step darker than the app canvas, for the full-bleed chapters
+   where the product is the only light in the room. Everything else about the
+   dark theme is inherited, so a component cannot tell the difference. */
+.t-void {
+  --bg: #050302;
+  --surface: #120B07;
+  --raised: #1F140D;
+  color-scheme: dark;
+}

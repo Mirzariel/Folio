@@ -1,0 +1,105 @@
+---
+/**
+ * Organize by date, as a working task page. Choose how deep the folders go and
+ * how they are named, and the plan rewrites itself before anything moves.
+ *
+ * Claim: the plan is complete and honest before you approve it. A photograph
+ * with no capture date is not guessed at; it stays, and the plan says why.
+ * Behaviour: src/scripts/demos/arrange.ts. The initial state is rendered here
+ * from the same functions, so the panel is correct without scripting.
+ */
+import SplitHeading from '@/components/primitives/SplitHeading.astro';
+import Window from '@/components/mockup/Window.astro';
+import { site } from '@/config/site';
+import { arrangeFiles, arrangeDepths, arrangeStyles, destFor, foldersFor } from '@/data/arrange';
+
+const depth = 'm';
+const style = 'nested';
+const moving = arrangeFiles.filter((f) => f.taken).length;
+const folders = foldersFor(depth, style);
+---
+
+<section class="t-void chapter organize" id="organize">
+  <div class="wrap">
+    <div class="chapter__head rv">
+      <p class="kicker kicker--accent">01 &middot; Organize by date</p>
+      <SplitHeading lines={['You pick the folders.', 'Folio files them by the day they were taken.']} class="mega mega--md" />
+      <p class="lede">The date the camera recorded, not the date Windows stamped on the copy. Change a choice and watch the plan change with it.</p>
+    </div>
+
+    <Window name="Organize by date" back statusId="arrStatus" status="Plan ready · nothing has moved" cue="Try it" cueHint="every control works. The plan updates as you choose.">
+      <div class="arr" id="arrange">
+        <div class="arr__cfg">
+          <p class="klabel">Folders</p>
+          <div class="seg" role="radiogroup" aria-label="Folders" id="arrDepth">
+            {arrangeDepths.map((d) => (
+              <button type="button" role="radio" data-v={d.id} class={d.id === depth ? 'is-on' : undefined} aria-checked={d.id === depth ? 'true' : 'false'} tabindex={d.id === depth ? 0 : -1}>{d.label}</button>
+            ))}
+          </div>
+          <p class="klabel">Folder names</p>
+          <div class="seg seg--mono" role="radiogroup" aria-label="Folder names" id="arrStyle">
+            {arrangeStyles.map((s) => (
+              <button type="button" role="radio" data-v={s.id} class={s.id === style ? 'is-on' : undefined} aria-checked={s.id === style ? 'true' : 'false'} tabindex={s.id === style ? 0 : -1}>{s.label}</button>
+            ))}
+          </div>
+          <p class="arr__note">Only the date the camera recorded is used. A photograph without one stays where it is.</p>
+
+          <div class="arr__result">
+            <p class="arr__fig"><b id="arrCount">{moving}</b><span>photographs will move</span></p>
+            <h3 id="arrHead">{arrangeDepths.find((d) => d.id === depth)!.headline}</h3>
+            <p class="arr__detail">Inside <code>{site.canvas.sourcePath}</code>. Nothing leaves this folder, and nothing is put on top of another photograph.</p>
+          </div>
+        </div>
+
+        <div class="arr__plan">
+          <p class="klabel">The plan</p>
+          <div class="rows" id="arrRows">
+            {arrangeFiles.map((file) => {
+              const dest = destFor(file.taken, depth, style);
+              return (
+                <div class="rows__r">
+                  <span>{file.name}</span>
+                  <span class="rows__arw" aria-hidden="true">&rarr;</span>
+                  <b data-taken={file.taken ?? ''} class={dest ? undefined : 'arr__stay'}>{dest ?? 'Stays: no capture date'}</b>
+                </div>
+              );
+            })}
+          </div>
+          <p class="klabel arr__tl">New folders <span id="arrFolderN">{folders.length}</span></p>
+          <ul class="arr__tree" id="arrTree">
+            {folders.map((f) => <li style={`--d:${f.split('\\').length - 2}`}>{f}</li>)}
+          </ul>
+        </div>
+      </div>
+    </Window>
+  </div>
+</section>
+
+<style>
+  .organize { background: var(--bg); color: var(--t1); }
+  .arr { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); }
+  .arr__cfg { padding: clamp(18px, 3cqw, 34px); display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .arr__cfg .klabel:not(:first-child) { margin-top: 8px; }
+  .arr__note { font-size: 12px; color: var(--t3); max-width: 44ch; line-height: 1.5; }
+  .arr__result { margin-top: 14px; padding-top: 18px; border-top: 1px solid var(--border); width: 100%; }
+  .arr__fig { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .arr__fig b { font-size: clamp(44px, 7cqw, 68px); font-weight: 620; letter-spacing: -.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .arr__fig span { color: var(--t2); font-size: 14px; }
+  .arr__result h3 { font-family: var(--serif); font-weight: 600; font-size: clamp(20px, 2.6cqw, 26px); margin-top: 10px; letter-spacing: -.01em; }
+  .arr__detail { margin-top: 6px; font-size: 13px; color: var(--t2); line-height: 1.5; }
+  .arr__plan { padding: clamp(18px, 3cqw, 34px); background: var(--surface); border-left: 1px solid var(--border); display: flex; flex-direction: column; gap: 10px; }
+  .arr__stay { color: var(--t3) !important; font-family: var(--sans) !important; font-style: italic; }
+  .arr__tl { margin-top: 10px; }
+  .arr__tl span { color: var(--accent-t); margin-left: 6px; }
+  .arr__tree { display: flex; flex-direction: column; gap: 4px; font-family: var(--mono); font-size: 12px; min-height: 120px; }
+  .arr__tree :global(li) {
+    display: flex; align-items: center; gap: 8px; padding-left: calc(var(--d, 0) * 18px); color: var(--t1);
+    animation: leaf .45s var(--ease) both; animation-delay: calc(var(--k, 0) * 55ms);
+  }
+  .arr__tree :global(li)::before { content: ""; width: 12px; height: 9px; border-radius: 2px; background: var(--accent); opacity: .75; }
+  @keyframes leaf { from { opacity: 0; transform: translateX(-8px); } }
+  @container (max-width: 760px) {
+    .arr { grid-template-columns: 1fr; }
+    .arr__plan { border-left: 0; border-top: 1px solid var(--border); }
+  }
+</style>

@@ -1,11 +1,15 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/sections/Hero.astro';
+import Film from '@/components/sections/Film.astro';
+import Numbers from '@/components/sections/Numbers.astro';
 import Stage from '@/components/sections/Stage.astro';
-import Problem from '@/components/sections/Problem.astro';
-import HowItWorks from '@/components/sections/HowItWorks.astro';
+import TryIt from '@/components/sections/TryIt.astro';
+import Organize from '@/components/sections/Organize.astro';
+import Duplicates from '@/components/sections/Duplicates.astro';
+import Rename from '@/components/sections/Rename.astro';
 import Gallery from '@/components/sections/Gallery.astro';
-import Jobs from '@/components/sections/Jobs.astro';
+import Statement from '@/components/sections/Statement.astro';
 import Promise from '@/components/sections/Promise.astro';
 import Safety from '@/components/sections/Safety.astro';
 import Private from '@/components/sections/Private.astro';
@@ -21,11 +25,15 @@ import { site } from '@/config/site';
 
 <BaseLayout title={`Folio. ${site.tagline}`}>
   <Hero />
+  <Film />
+  <Numbers />
   <Stage />
-  <Problem />
-  <HowItWorks />
+  <TryIt />
+  <Organize />
+  <Duplicates />
+  <Rename />
   <Gallery />
-  <Jobs />
+  <Statement />
   <Promise />
   <Safety />
   <Private />

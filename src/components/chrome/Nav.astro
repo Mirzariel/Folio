@@ -37,14 +37,14 @@ import Icon from '@/components/primitives/Icon.astro';
     border-bottom: 1px solid transparent;
   }
   .nav.is-stuck {
-    background: rgba(12, 7, 5, .88);
-    -webkit-backdrop-filter: blur(14px) saturate(1.2);
-    backdrop-filter: blur(14px) saturate(1.2);
+    background: rgba(5, 3, 2, .72);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    backdrop-filter: blur(20px) saturate(1.4);
     border-bottom-color: var(--ink-border);
   }
   .nav__in {
     width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gut);
-    display: flex; align-items: center; gap: 18px;
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 18px;
   }
   .nav__progress {
     position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%;
@@ -52,7 +52,7 @@ import Icon from '@/components/primitives/Icon.astro';
     opacity: 0; transition: opacity .3s;
   }
   .nav.is-stuck .nav__progress { opacity: .9; }
-  .brand { display: flex; align-items: center; gap: 10px; margin-right: auto; }
+  .brand { display: flex; align-items: center; gap: 10px; justify-self: start; }
   .brand img { width: 30px; height: 30px; border-radius: 7px; }
   .brand span {
     font-family: var(--serif); font-weight: 600; font-size: 19px;
@@ -60,7 +60,7 @@ import Icon from '@/components/primitives/Icon.astro';
   }
   .nav__links { display: flex; gap: 2px; }
   .nav__links a {
-    position: relative; padding: 8px 13px; border-radius: var(--r); font-size: var(--fs-small);
+    position: relative; padding: 8px 14px; border-radius: 999px; font-size: var(--fs-small); font-weight: 500;
     color: var(--ink-t2); transition: color .16s, background .16s;
   }
   .nav__links a:hover { color: var(--ink-t1); background: rgba(245, 234, 223, .06); }
@@ -69,12 +69,14 @@ import Icon from '@/components/primitives/Icon.astro';
     content: ""; position: absolute; left: 13px; right: 13px; bottom: 3px; height: 1px;
     background: var(--ink-accent);
   }
-  .nav__cta { display: flex; align-items: center; gap: 12px; }
+  .nav__cta { display: flex; align-items: center; gap: 12px; justify-self: end; }
   .nav__burger {
     display: none; width: 42px; height: 42px; align-items: center; justify-content: center;
     border: 1px solid var(--ink-border-2); border-radius: var(--r); color: var(--ink-t1);
   }
   @media (max-width: 1000px) {
+    /* The links leave the grid, so the actions take the second column. */
+    .nav__in { grid-template-columns: 1fr auto; }
     .nav__links { display: none; }
     .nav__burger { display: flex; }
     .nav__cta :global(.btn) { display: none; }

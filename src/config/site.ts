@@ -47,7 +47,7 @@ const schema = z.object({
   }),
 
   license: z.object({
-    /** Must match what the licence server actually enforces. */
+    /** Must match what the license server actually enforces. */
     devices: z.number().int().positive(),
     updatesScope: z.string(),
     /** A binding promise to every Windows buyer. */
@@ -76,8 +76,6 @@ const schema = z.object({
     sourcePath: z.string(),
     galleryMonth: z.string(),
     galleryItems: z.number().int(),
-    /** The quarantine folder name. Appears in copy and in the mockups. */
-    quarantineFolder: z.string(),
   }),
 
   unsplashUrl: z.url(),
@@ -120,7 +118,6 @@ const config = schema.parse({
     sourcePath: 'D:\\Family Archive',
     galleryMonth: 'August 2019',
     galleryItems: 1204,
-    quarantineFolder: '.Folio',
   },
 
   unsplashUrl: 'https://unsplash.com',
