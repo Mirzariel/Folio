@@ -20,6 +20,10 @@ export function initOffer(): void {
     const left = Math.max(0, end - Date.now());
     if (left === 0) {
       document.documentElement.classList.add('offer-ended');
+      /* Buy buttons stop carrying the launch discount code. */
+      document.querySelectorAll<HTMLAnchorElement>('[data-checkout-regular]').forEach((a) => {
+        a.href = a.dataset.checkoutRegular ?? a.href;
+      });
       window.clearInterval(timer);
     }
     const s = Math.floor(left / 1000);

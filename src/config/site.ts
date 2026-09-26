@@ -38,6 +38,12 @@ const schema = z.object({
       endsAt: z.string(),
       /** The last day it applies, as the page says it. */
       lastDay: z.string(),
+      /**
+       * The discount code in the payment provider that makes checkout charge
+       * the launch price. Buy buttons carry it while the offer runs and drop it
+       * when it ends. Create it with the same amount and the same expiry.
+       */
+      discountCode: z.string(),
     })
     .nullable(),
 
@@ -113,10 +119,11 @@ const config = schema.parse({
   price: { amount: 20, currency: 'USD' },
   launchOffer: {
     amount: 10,
-    endsAt: '2026-10-03T00:00:00+07:00',
+    endsAt: '2026-10-03T00:00:00Z',
     lastDay: 'October 2, 2026',
+    discountCode: 'LAUNCH10',
   },
-  checkoutUrl: '',
+  checkoutUrl: 'https://folioarchiveapp.lemonsqueezy.com/checkout/buy/db33bfdf-fc27-4662-b70e-4d9b4db49aad',
   support: { email: 'folioarchive@gmail.com' },
   feedback: { accessKey: '' },
 
@@ -164,7 +171,16 @@ const offer =
   site.launchOffer && Date.now() < Date.parse(site.launchOffer.endsAt) ? site.launchOffer : null;
 const amount = offer ? offer.amount : site.price.amount;
 
+/** Where a buy button goes: the checkout, with the launch code while it runs. */
+const withCode = (url: string, code: string) =>
+  `${url}${url.includes('?') ? '&' : '?'}checkout%5Bdiscount_code%5D=${encodeURIComponent(code)}`;
+const checkoutRegular = site.checkoutUrl;
+const checkoutNow = site.checkoutUrl && offer ? withCode(site.checkoutUrl, offer.discountCode) : site.checkoutUrl;
+
 export const display = Object.freeze({
+  /** The checkout link a buy button uses today, and the one after the offer. */
+  checkoutNow,
+  checkoutRegular,
   /** What a buyer pays today: "$10" during the launch offer, else "$20". */
   price: `$${amount}`,
   amount,

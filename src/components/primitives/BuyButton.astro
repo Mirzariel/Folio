@@ -26,12 +26,16 @@ const {
 } = Astro.props;
 
 const live = site.checkoutUrl !== '';
-const href = live ? site.checkoutUrl : '#pricing';
+/* During the launch offer the link carries the discount code. It also names
+   the plain link, so the page can drop the code the moment the offer ends
+   (BaseLayout before paint, scripts/offer.ts at the deadline). */
+const href = live ? display.checkoutNow : '#pricing';
+const regular = live && display.checkoutNow !== display.checkoutRegular ? display.checkoutRegular : undefined;
 const classes = ['btn', 'btn--primary', size === 'sm' && 'btn--sm', className]
   .filter(Boolean)
   .join(' ');
 ---
 
-<a class={classes} href={href} rel={live ? 'noopener' : undefined}>
+<a class={classes} href={href} rel={live ? 'noopener' : undefined} data-checkout-regular={regular}>
   {label}{sub && <span class="btn__sub" set:html={sub} />}
 </a>

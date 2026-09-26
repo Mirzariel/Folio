@@ -41,7 +41,7 @@ const banner = offer ? `Launch week · ${display.offerPercent} off · ends ${off
     {offer && (
       <p class="oc__save offer-only">
         You save {display.offerSave} ({display.offerPercent}) &middot; then {display.regularPrice} from {' '}
-        {new Date(Date.parse(offer.endsAt)).toLocaleDateString('en-US', { month: 'long', day: 'numeric', timeZone: 'Asia/Jakarta' })}
+        {new Date(Date.parse(offer.endsAt)).toLocaleDateString('en-US', { month: 'long', day: 'numeric', timeZone: 'UTC' })}
       </p>
     )}
 

@@ -72,7 +72,11 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
     {display.offer && (
       /* The offer ends on the visitor's clock too, not only at the next build. */
       <script is:inline define:vars={{ endsAt: display.offer.endsAt }}>
-        if (Date.now() >= Date.parse(endsAt)) document.documentElement.classList.add('offer-ended');
+        if (Date.now() >= Date.parse(endsAt)) {
+          document.documentElement.classList.add('offer-ended');
+          addEventListener('DOMContentLoaded', () => document.querySelectorAll('[data-checkout-regular]')
+            .forEach((a) => a.setAttribute('href', a.getAttribute('data-checkout-regular'))));
+        }
       </script>
     )}
   </head>

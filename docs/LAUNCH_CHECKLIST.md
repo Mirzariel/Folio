@@ -22,7 +22,7 @@ Gumroad). They handle US sales tax and EU VAT. Stripe alone does not.
 All of these live in `src/config/site.ts` and update the whole site at once.
 
 **Regular price** `price.amount` is 20 (USD). **Launch offer** `launchOffer` is 10 USD (50% off) through
-October 2, 2026 (`endsAt` is 2026-10-03 00:00 +07:00). The page shows the offer, with the $20
+October 2, 2026 (`endsAt` is 2026-10-03 00:00 UTC, 07:00 WIB, the same moment the `LAUNCH10` code expires in Lemon Squeezy). The page shows the offer, with the $20
 crossed out and the end date, only when it is built before `endsAt`, so rebuild and redeploy on
 or after October 3 and it disappears by itself. Two things only you can do:
 
