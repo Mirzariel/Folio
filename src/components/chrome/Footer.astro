@@ -35,8 +35,9 @@ const year = new Date().getFullYear();
         </div>
       ))}
     </div>
+    <p class="foot__mark" aria-hidden="true">Folio</p>
     <div class="foot__bot">
-      <span>&copy; {year} Folio. All rights reserved.</span>
+      <span>&copy; {year} Folio. Made by one person, with care. <a href="#top" class="foot__top-link">Back to top &uarr;</a></span>
       <span>
         Photographs on this page are from
         <a href={site.unsplashUrl} rel="noopener" class="link">Unsplash</a>
@@ -71,7 +72,20 @@ const year = new Date().getFullYear();
   }
   .foot li + li { margin-top: 9px; }
   .foot a:hover { color: var(--ink-t1); }
+  /* The signature: the wordmark, very large and nearly not there, cut off by
+     the bottom rule like a name embossed into the page. */
+  .foot__mark {
+    margin: clamp(24px, 4vw, 48px) 0 0; font-family: var(--serif); font-weight: 600;
+    font-size: clamp(96px, 24vw, 340px); line-height: .8; letter-spacing: -.055em; text-align: center;
+    background: linear-gradient(180deg, rgba(245, 234, 223, .09), rgba(245, 234, 223, 0) 85%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    user-select: none; height: .62em; overflow: hidden;
+  }
+  .foot__top-link { margin-left: 10px; color: var(--ink-t2); }
+  .foot__top-link:hover { color: var(--ink-accent-t); }
+  .foot a { transition: color .2s var(--ease); }
   .foot__bot {
+    border-top: 1px solid var(--ink-border);
     padding-top: 24px; display: flex; flex-wrap: wrap; gap: 12px 24px;
     justify-content: space-between; font-size: var(--fs-micro); color: var(--ink-t3);
   }

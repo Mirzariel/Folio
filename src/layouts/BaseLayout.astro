@@ -9,7 +9,7 @@
 import Nav from '@/components/chrome/Nav.astro';
 import Footer from '@/components/chrome/Footer.astro';
 import BuyBar from '@/components/chrome/BuyBar.astro';
-import { site } from '@/config/site';
+import { site, display } from '@/config/site';
 
 /* Self-hosted, so a page load contacts no third party. The privacy page says
    so, and check-copy.mjs fails if a Google Fonts URL comes back. */
@@ -69,6 +69,12 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
 
     <!-- Gates every reveal. Without scripting the page is static and complete. -->
     <script is:inline>document.documentElement.classList.add('js');</script>
+    {display.offer && (
+      /* The offer ends on the visitor's clock too, not only at the next build. */
+      <script is:inline define:vars={{ endsAt: display.offer.endsAt }}>
+        if (Date.now() >= Date.parse(endsAt)) document.documentElement.classList.add('offer-ended');
+      </script>
+    )}
   </head>
 
   <body>

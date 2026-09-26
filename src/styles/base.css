@@ -105,3 +105,15 @@ html:not(.js) .eyebrow::after, html:not(.js) .eyebrow--center::before { transfor
   background: linear-gradient(180deg, var(--t1) 30%, var(--accent-t) 140%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
+
+/* ---- seams between dark chapters ------------------------------------------ */
+/* Two dark sections meeting show a hairline that fades out at both ends, the
+   way a lens flare catches a seam, rather than a hard full-width rule. */
+.t-void { position: relative; }
+.t-void + .t-void::before {
+  content: ""; position: absolute; top: 0; left: 50%; z-index: 1; width: min(1100px, 88%); height: 1px;
+  translate: -50% 0; pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(245, 234, 223, .13) 50%, transparent);
+}
+/* Tabular figures anywhere a number sits next to another number. */
+.num, time, [data-count], .oc__cell b, td { font-variant-numeric: tabular-nums; }

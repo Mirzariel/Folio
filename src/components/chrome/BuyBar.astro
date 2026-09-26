@@ -6,7 +6,7 @@ import BuyButton from '@/components/primitives/BuyButton.astro';
 
 <div class="buybar" id="buybar">
   <div class="buybar__t">
-    <b>Folio, {display.price}</b>one-time, no subscription
+    <b>Folio, <Fragment set:html={display.priceHtml} /></b>one-time, no subscription
   </div>
   <BuyButton label="Get it" size="sm" />
 </div>

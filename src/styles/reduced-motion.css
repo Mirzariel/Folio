@@ -26,6 +26,11 @@
   .js .film__beats li { position: static !important; opacity: 1 !important; transform: none !important; }
   .js .film__meter, .prints__scan { display: none !important; }
 
+  /* the offer is still announced, just without the movement */
+  .oc__track, .oc__sticker, .oc__cell b, .price::before { animation: none !important; }
+  .oc__cta .oc__btn::after { display: none !important; }
+  .js .cmpx__t tbody tr, .js .cmpx__t td.is-us .cmpx__ic { opacity: 1 !important; transform: none !important; animation: none !important; }
+
   /* the rules are simply lit, the timeline simply drawn */
   .js .stmt__w { opacity: 1 !important; }
   .js .tl__bars i { transform: none !important; animation: none !important; }

@@ -23,6 +23,8 @@ import { initPlanRunner } from './planRunner';
 import { initRenameType } from './renameType';
 import { initTourAutoplay } from './tourAutoplay';
 import { initWordLight } from './wordLight';
+import { initPriceDrop } from './priceDrop';
+import { initSpotlight } from './spotlight';
 import { initTilt } from './tilt';
 
 const modules: MotionModule[] = [
@@ -35,6 +37,8 @@ const modules: MotionModule[] = [
   initRenameType,
   initTourAutoplay,
   initWordLight,
+  initPriceDrop,
+  initSpotlight,
   initTilt,
 ];
 

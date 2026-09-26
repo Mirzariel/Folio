@@ -11,7 +11,8 @@ import { site, display } from '@/config/site';
 interface Props {
   /** Defaults to "Get Folio" plus the price from site config. */
   label?: string;
-  /** Small trailing note inside the button, e.g. "one time". */
+  /** Small trailing note inside the button, e.g. "one time". May carry markup
+      (display.priceHtml), so it is rendered as HTML and must come from our own data. */
   sub?: string;
   size?: 'default' | 'sm';
   class?: string;
@@ -32,5 +33,5 @@ const classes = ['btn', 'btn--primary', size === 'sm' && 'btn--sm', className]
 ---
 
 <a class={classes} href={href} rel={live ? 'noopener' : undefined}>
-  {label}{sub && <span class="btn__sub">{sub}</span>}
+  {label}{sub && <span class="btn__sub" set:html={sub} />}
 </a>

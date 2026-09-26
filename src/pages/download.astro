@@ -21,7 +21,7 @@ const requirements = [
 
 <BaseLayout
   title="Download Folio"
-  description={`Folio for ${site.platforms.shipping.join(' and ')}. ${display.price} once, no subscription.`}
+  description={`Folio for ${site.platforms.shipping.join(' and ')}. Pay once, no subscription.`}
   showBuyBar={false}
 >
   <section class="sect t-paper dl__sect">
@@ -29,7 +29,7 @@ const requirements = [
       <Eyebrow center>Download</Eyebrow>
       <h1 class="h2 dl__title">Folio for Windows.</h1>
       <p class="lede dl__lede">
-        One installer, {display.price} once. Your license key arrives at checkout and includes
+        One installer, <Fragment set:html={display.priceHtml} /> once. Your license key arrives at checkout and includes
         {site.license.devices} activations.
       </p>
 
@@ -41,7 +41,7 @@ const requirements = [
             <span class="small">64-bit installer</span>
           </div>
         </div>
-        <BuyButton label={`Get Folio, ${display.price}`} />
+        <BuyButton label="Get Folio" sub={`${display.priceHtml} once`} />
         <p class="tiny dl__note">
           Bought already? Your download link and license key are in your purchase email.
         </p>

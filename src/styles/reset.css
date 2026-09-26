@@ -30,3 +30,44 @@ code { font-family: var(--mono); font-size: .88em; }
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
+
+/* ---- finish ----------------------------------------------------------------
+   The details nobody names but everybody feels. Each one is small; together
+   they are the difference between a template and a made thing. */
+html {
+  text-rendering: optimizeLegibility; font-kerning: normal;
+  /* a warm, thin scrollbar instead of the system's grey slab */
+  scrollbar-width: thin; scrollbar-color: #4E382A #050302;
+}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #050302; }
+::-webkit-scrollbar-thumb { background: #3A281D; border-radius: 10px; border: 2px solid #050302; }
+::-webkit-scrollbar-thumb:hover { background: #5C4130; }
+::selection { background: rgba(224, 128, 58, .34); color: #FFF6EC; }
+
+/* Headings balance their lines; paragraphs avoid a lonely last word. */
+h1, h2, h3 { text-wrap: balance; font-kerning: normal; font-variant-ligatures: common-ligatures; }
+p, li, dd { text-wrap: pretty; hanging-punctuation: first; }
+
+/* Links that underline well: off the descenders, hairline, and it eases in. */
+a { text-underline-offset: .22em; text-decoration-thickness: 1px; -webkit-tap-highlight-color: transparent; }
+button { -webkit-tap-highlight-color: transparent; }
+
+/* Focus is a ring with air around it, not the browser's default box. */
+:focus-visible {
+  outline: 2px solid var(--accent-t, #F0A468); outline-offset: 3px; border-radius: 6px;
+  box-shadow: 0 0 0 6px rgba(224, 128, 58, .16);
+}
+
+input, textarea { caret-color: var(--accent, #E0803A); }
+input[type="checkbox"], input[type="radio"] { accent-color: var(--accent, #E0803A); }
+img { -webkit-user-drag: none; }
+
+/* Film grain over the page, very faintly, and under the nav and the photo
+   viewer, where a picture is judged and nothing may sit on it. Flat digital black reads cheap;
+   paper and darkroom black have tooth. Static, so it costs nothing. */
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 58; pointer-events: none; opacity: .045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}

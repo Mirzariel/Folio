@@ -14,6 +14,7 @@ import { initTour } from './demos/tour';
 import { initArrange } from './demos/arrange';
 import { initDupes } from './demos/dupes';
 import { initRename } from './demos/rename';
+import { initOffer } from './offer';
 
 initInteractions();
 
@@ -23,6 +24,9 @@ initTour();
 initArrange();
 initDupes();
 initRename();
+
+/* The launch offer's countdown is state: it ends the offer on screen. */
+initOffer();
 
 void import('./motion').then((module) => module.initMotion());
 

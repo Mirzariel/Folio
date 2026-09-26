@@ -1,66 +1,124 @@
 ---
-import Eyebrow from '@/components/primitives/Eyebrow.astro';
-import { compareRows, compareColumns } from '@/data/compare';
+/**
+ * Folio against the two things people use instead. The Folio column is drawn
+ * as a lifted card, and every cell carries a verdict icon that must follow from
+ * its own words (see src/data/compare.ts). Rows arrive one after another and
+ * Folio's checks land last, when the section reveals.
+ *
+ * On a phone the table becomes one card per question, each naming its column,
+ * so there is no sideways scrolling.
+ */
+import SplitHeading from '@/components/primitives/SplitHeading.astro';
+import Icon from '@/components/primitives/Icon.astro';
+import { compareRows, compareColumns, type Verdict } from '@/data/compare';
+
+const icon: Record<Verdict, string> = { yes: 'check', no: 'close', some: 'minus' };
+const said: Record<Verdict, string> = { yes: 'Good for you', no: 'A cost or a risk', some: 'It depends' };
 ---
 
-<section class="sect t-paper" id="compare">
+<section class="sect t-paper cmpx" id="compare">
   <div class="wrap">
-    <div class="head rv">
-      <Eyebrow>Where it fits</Eyebrow>
-      <h2 class="h2">Not cloud storage. Not another cleaner.</h2>
-      <p class="lede">
-        It does not compete with where your photos are stored. It competes with the afternoon
-        you keep not spending on this.
-      </p>
+    <div class="head head--center rv">
+      <p class="kicker kicker--accent">Where it fits</p>
+      <SplitHeading lines={['You have other options.', 'Folio is the one that asks first.']} />
+      <p class="lede">Not cloud storage. Not another cleaner. Here is the difference, row by row.</p>
     </div>
 
-    <div class="tbl-scroll rv">
-      <table class="cmp">
-        <thead>
-          <tr>
-            <th scope="col"><span class="vh">Feature</span></th>
-            {compareColumns.map((col, i) => (
-              <th scope="col" class={i === 0 ? 'is-us' : undefined}>{col}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {compareRows.map((row) => (
-            <tr>
-              <th scope="row">{row.feature}</th>
-              <td class="is-us">{row.folio}</td>
-              <td>{row.cloud}</td>
-              <td>{row.cleaner}</td>
-            </tr>
+    <table class="cmpx__t rv">
+      <caption class="vh">Folio compared with a cloud photo subscription and a generic duplicate cleaner</caption>
+      <thead>
+        <tr>
+          <td></td>
+          {compareColumns.map((col) => (
+            <th scope="col" class={col.key === 'folio' ? 'is-us' : undefined}>
+              {col.key === 'folio' && <img src="/folio-mark.png" alt="" width="34" height="34" />}
+              <b>{col.name}</b>
+              <span>{col.note}</span>
+            </th>
           ))}
-        </tbody>
-      </table>
-    </div>
-    <p class="tiny rv cmp__note">
-      Categories of product, not any specific vendor. Subscription prices are typical and
-      change often, so check current pricing yourself.
+        </tr>
+      </thead>
+      <tbody>
+        {compareRows.map((row, r) => (
+          <tr style={`--r:${r}`}>
+            <th scope="row">{row.feature}</th>
+            {compareColumns.map((col) => {
+              const cell = row[col.key];
+              return (
+                <td class={`v-${cell.v}${col.key === 'folio' ? ' is-us' : ''}`} data-col={col.name}>
+                  <span class="cmpx__ic" role="img" aria-label={said[cell.v]}><Icon name={icon[cell.v]} size={14} /></span>
+                  <span class="cmpx__tx" set:html={cell.text} />
+                </td>
+              );
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    <p class="tiny center rv cmpx__note">
+      Categories of product, not any specific vendor. Subscription prices are typical and change
+      often, so check current pricing yourself.
     </p>
   </div>
 </section>
 
 <style>
-  .tbl-scroll {
-    overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--border);
-    border-radius: var(--r); background: var(--surface); margin-top: clamp(32px, 4vw, 48px);
+  .cmpx__t {
+    width: 100%; margin-top: clamp(36px, 5vw, 60px); border-collapse: separate; border-spacing: 0;
+    table-layout: fixed;
   }
-  table.cmp { width: 100%; min-width: 740px; border-collapse: collapse; }
-  table.cmp th, table.cmp td {
-    padding: 15px 18px; text-align: left; font-size: var(--fs-small);
-    border-bottom: 1px solid var(--border); vertical-align: top;
+  .cmpx__t th, .cmpx__t td { padding: 18px 20px; text-align: left; vertical-align: top; }
+  .cmpx__t thead th { padding-top: 26px; padding-bottom: 22px; }
+  .cmpx__t thead th b { display: block; font-size: 15px; font-weight: 700; color: var(--t1); }
+  .cmpx__t thead th span { display: block; margin-top: 3px; font-size: 12.5px; color: var(--t3); font-weight: 450; }
+  .cmpx__t tbody th { width: 24%; font-size: 15px; font-weight: 650; color: var(--t1); border-top: 1px solid var(--border); }
+  .cmpx__t tbody td { font-size: var(--fs-small); color: var(--t2); border-top: 1px solid var(--border); }
+  .cmpx__t td { position: relative; }
+  .cmpx__t tbody td { padding-left: 50px; }
+  .cmpx__ic {
+    position: absolute; left: 18px; top: 18px; width: 22px; height: 22px; border-radius: 50%;
+    display: grid; place-items: center;
   }
-  table.cmp thead th {
-    font-size: 11px; letter-spacing: .11em; text-transform: uppercase; font-weight: 650;
-    color: var(--t3); background: var(--inset); white-space: nowrap;
+  .v-yes .cmpx__ic { background: rgba(39, 96, 65, .14); color: var(--good); }
+  .v-no .cmpx__ic { background: rgba(155, 47, 41, .12); color: var(--bad); }
+  .v-some .cmpx__ic { background: var(--inset); color: var(--t3); }
+
+  /* The Folio column: a dark, lifted card running the height of the table. */
+  .cmpx__t .is-us {
+    background: #1C1109; color: #F5EADF; border-top-color: rgba(245, 234, 223, .09) !important;
+    box-shadow: inset 1px 0 0 rgba(224, 128, 58, .55), inset -1px 0 0 rgba(224, 128, 58, .55);
   }
-  table.cmp thead th.is-us { color: var(--accent-t); }
-  table.cmp tbody th { font-weight: 640; color: var(--t1); width: 28%; }
-  table.cmp td { color: var(--t2); }
-  table.cmp td.is-us { color: var(--t1); background: var(--accent-w); font-weight: 550; }
-  table.cmp tbody tr:last-child th, table.cmp tbody tr:last-child td { border-bottom: 0; }
-  .cmp__note { margin-top: 14px; }
+  .cmpx__t thead th.is-us { border-radius: 16px 16px 0 0; box-shadow: inset 0 1px 0 rgba(224, 128, 58, .55), inset 1px 0 0 rgba(224, 128, 58, .55), inset -1px 0 0 rgba(224, 128, 58, .55); }
+  .cmpx__t thead th.is-us img { width: 34px; height: 34px; border-radius: 8px; margin-bottom: 10px; }
+  .cmpx__t thead th.is-us b { color: #F5EADF; font-family: var(--serif); font-size: 22px; }
+  .cmpx__t thead th.is-us span { color: #F0A468; }
+  .cmpx__t tbody tr:last-child td.is-us { border-radius: 0 0 16px 16px; box-shadow: inset 0 -1px 0 rgba(224, 128, 58, .55), inset 1px 0 0 rgba(224, 128, 58, .55), inset -1px 0 0 rgba(224, 128, 58, .55); }
+  .cmpx__t td.is-us { font-weight: 560; font-size: 15px; }
+  .cmpx__t td.is-us.v-yes .cmpx__ic { background: #9BBF7E; color: #0C0705; }
+  .cmpx__t thead th.is-us, .cmpx__t td.is-us { filter: drop-shadow(0 24px 30px rgba(42, 35, 27, .12)); }
+
+  /* Arrival: rows slide in, then Folio's checks land. */
+  :global(.js) .cmpx__t tbody tr { opacity: 0; transform: translateY(14px); }
+  :global(.js) .cmpx__t.in tbody tr { animation: rowIn .6s var(--ease) both; animation-delay: calc(.15s + var(--r) * .09s); }
+  :global(.js) .cmpx__t td.is-us .cmpx__ic { transform: scale(0); }
+  :global(.js) .cmpx__t.in td.is-us .cmpx__ic { animation: pop .45s cubic-bezier(.3, 1.6, .5, 1) both; animation-delay: calc(.7s + var(--r) * .11s); }
+  @keyframes rowIn { to { opacity: 1; transform: none; } }
+  @keyframes pop { to { transform: scale(1); } }
+  .cmpx__note { margin: 22px auto 0; }
+
+  @media (max-width: 760px) {
+    .cmpx__t, .cmpx__t tbody, .cmpx__t tr, .cmpx__t th, .cmpx__t td { display: block; width: auto; }
+    .cmpx__t thead { display: none; }
+    .cmpx__t tbody tr { margin-top: 16px; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--surface); }
+    .cmpx__t tbody th { border-top: 0; padding-bottom: 6px; font-size: 16px; }
+    .cmpx__t tbody td { border-top: 1px solid var(--border); }
+    .cmpx__t tbody td::before {
+      content: attr(data-col); display: block; margin-bottom: 3px; font-size: 10.5px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase; color: var(--t3);
+    }
+    .cmpx__t td.is-us::before { color: #F0A468; }
+    .cmpx__t .is-us, .cmpx__t tbody tr:last-child td.is-us { border-radius: 0; box-shadow: none; filter: none; }
+    .cmpx__ic { top: 34px; }
+  }
 </style>

@@ -40,7 +40,8 @@ import Icon from '@/components/primitives/Icon.astro';
     background: rgba(5, 3, 2, .72);
     -webkit-backdrop-filter: blur(20px) saturate(1.4);
     backdrop-filter: blur(20px) saturate(1.4);
-    border-bottom-color: var(--ink-border);
+    border-bottom-color: rgba(245, 234, 223, .07);
+    box-shadow: 0 10px 30px -18px rgba(0, 0, 0, .8);
   }
   .nav__in {
     width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gut);
@@ -64,6 +65,13 @@ import Icon from '@/components/primitives/Icon.astro';
     color: var(--ink-t2); transition: color .16s, background .16s;
   }
   .nav__links a:hover { color: var(--ink-t1); background: rgba(245, 234, 223, .06); }
+  /* A hairline slides in under the link you point at, from the left. */
+  .nav__links a::before {
+    content: ""; position: absolute; left: 14px; right: 14px; bottom: 4px; height: 1px;
+    background: rgba(245, 234, 223, .5); transform: scaleX(0); transform-origin: 0 50%;
+    transition: transform .35s var(--ease);
+  }
+  .nav__links a:hover::before { transform: scaleX(1); }
   .nav__links a.is-here { color: var(--ink-accent-t); }
   .nav__links a.is-here::after {
     content: ""; position: absolute; left: 13px; right: 13px; bottom: 3px; height: 1px;

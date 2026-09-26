@@ -1,0 +1,136 @@
+---
+/**
+ * The top of the pricing card: during the launch offer, a promotion that looks
+ * like one. A running banner, a sticker, a live countdown to the real deadline,
+ * and the price falling from the regular one. Every figure is from
+ * src/config/site.ts and every deadline is the real one, so the excitement is
+ * earned: nothing here invents urgency.
+ *
+ * Without an offer, or once it ends (html.offer-ended), only the plain price
+ * remains. Countdown: src/scripts/offer.ts. The drop: motion/priceDrop.ts.
+ */
+import BuyButton from '@/components/primitives/BuyButton.astro';
+import Icon from '@/components/primitives/Icon.astro';
+import { site, display } from '@/config/site';
+
+const offer = display.offer;
+const units = [['d', 'Days'], ['h', 'Hours'], ['m', 'Min'], ['s', 'Sec']] as const;
+const banner = offer ? `Launch week · ${display.offerPercent} off · ends ${offer.lastDay} · ` : '';
+---
+
+<div class="oc">
+  {offer && (
+    <div class="oc__run offer-only" aria-hidden="true">
+      <div class="oc__track">{Array.from({ length: 6 }, () => <span>{banner}</span>)}</div>
+    </div>
+  )}
+
+  <div class="oc__body">
+    {offer && <span class="oc__sticker offer-only" aria-hidden="true"><b>Save</b>{display.offerSave}</span>}
+
+    <span class="oc__badge">
+      {offer ? <><span class="offer-only">Launch price</span><span class="regular-only">One-time purchase</span></> : 'One-time purchase'}
+    </span>
+
+    <div class="oc__price" id="offerPrice" data-from={site.price.amount} data-to={display.amount}>
+      {offer && <s class="oc__was offer-only" aria-label={`Regular price ${display.regularPrice}`}>{display.regularPrice}<i></i></s>}
+      <span class="oc__cur">$</span>
+      <span class="oc__amt">{offer ? <><span class="offer-only" id="offerAmt">{offer.amount}</span><span class="regular-only">{site.price.amount}</span></> : site.price.amount}</span>
+    </div>
+
+    {offer && (
+      <p class="oc__save offer-only">
+        You save {display.offerSave} ({display.offerPercent}) &middot; then {display.regularPrice} from {' '}
+        {new Date(Date.parse(offer.endsAt)).toLocaleDateString('en-US', { month: 'long', day: 'numeric', timeZone: 'Asia/Jakarta' })}
+      </p>
+    )}
+
+    {offer && (
+      <div class="oc__clock offer-only" data-offer-ends={offer.endsAt} role="timer" aria-label={`Launch price ends ${offer.lastDay}`}>
+        <span class="oc__ends">Launch price ends in</span>
+        <div class="oc__cells">
+          {units.map(([u, label]) => (
+            <div class="oc__cell"><b data-unit={u}>00</b><span>{label}</span></div>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <p class="oc__per">{display.priceCurrency} Not per month. Not per year. Not per photo.</p>
+    <div class="oc__cta">
+      <BuyButton label={offer ? 'Get Folio at the launch price' : 'Get Folio'} class="oc__btn" />
+    </div>
+    <p class="oc__fine"><Icon name="shield" size={13} />Secure checkout &middot; license key by email &middot; 14-day refund if it does not work for you</p>
+  </div>
+</div>
+
+<style>
+  .oc { position: relative; }
+  .oc__run {
+    overflow: hidden; background: var(--accent); color: var(--on-acc); white-space: nowrap;
+    font-size: 12px; font-weight: 750; letter-spacing: .2em; text-transform: uppercase; padding: 9px 0;
+  }
+  .oc__track { display: inline-flex; animation: run 28s linear infinite; }
+  .oc__track span { padding-right: .6em; }
+  @keyframes run { to { transform: translateX(-50%); } }
+
+  .oc__body { position: relative; padding: clamp(34px, 4.4vw, 56px) clamp(22px, 4vw, 48px); display: grid; gap: 18px; justify-items: center; text-align: center; }
+  .oc__sticker {
+    position: absolute; top: 22px; right: clamp(14px, 4vw, 40px); width: 94px; height: 94px; border-radius: 50%;
+    display: grid; place-content: center; background: radial-gradient(circle at 30% 30%, #F6B37A, var(--accent) 60%, #A85A1E);
+    color: #1A0E05; font-size: 26px; font-weight: 800; line-height: .95; letter-spacing: -.02em;
+    box-shadow: 0 14px 34px rgba(224, 128, 58, .35); transform: rotate(-12deg); animation: wobble 3.2s var(--ease) infinite;
+  }
+  .oc__sticker b { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; font-weight: 800; }
+  @keyframes wobble { 0%, 100% { transform: rotate(-12deg) scale(1); } 50% { transform: rotate(-6deg) scale(1.06); } }
+
+  .oc__badge {
+    padding: 6px 14px; border-radius: 999px; border: 1px solid var(--accent); background: var(--accent-w);
+    color: var(--accent-t); font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  }
+  .oc__price { display: flex; align-items: flex-start; justify-content: center; gap: 4px; }
+  .oc__was {
+    position: relative; align-self: center; margin-right: 18px; text-decoration: none;
+    font-family: var(--serif); font-size: clamp(30px, 3.6vw, 46px); color: var(--t3);
+  }
+  /* The strike is drawn, not printed: it slashes across when the card arrives. */
+  .oc__was i {
+    position: absolute; left: -8%; right: -8%; top: 52%; height: 3px; border-radius: 2px; background: var(--bad);
+    transform: rotate(-14deg) scaleX(var(--strike, 1)); transform-origin: 0 50%; transition: transform .5s var(--ease) .35s;
+  }
+  :global(.js) .oc__was i { --strike: 0; }
+  :global(.js) .oc__price.is-dropped .oc__was i { --strike: 1; }
+  .oc__cur { font-family: var(--serif); font-size: clamp(30px, 3.4vw, 44px); color: var(--t2); margin-top: .35em; }
+  .oc__amt {
+    font-family: var(--serif); font-weight: 600; font-size: clamp(96px, 14vw, 168px); line-height: .9; letter-spacing: -.05em;
+    font-variant-numeric: tabular-nums;
+    background: linear-gradient(180deg, #FFF3E6 20%, var(--accent-t) 120%); -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .oc__save { font-size: var(--fs-body); font-weight: 650; color: var(--accent-t); margin-top: -4px; }
+
+  .oc__clock { display: grid; gap: 10px; justify-items: center; }
+  .oc__ends { font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--t3); }
+  .oc__cells { display: flex; gap: 10px; }
+  .oc__cell { min-width: 70px; padding: 10px 8px 8px; border-radius: 10px; background: var(--inset); border: 1px solid var(--border-2); display: grid; gap: 2px; }
+  .oc__cell b { font-size: clamp(26px, 3vw, 34px); font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; color: var(--t1); }
+  .oc__cell b.is-tick { animation: tick .45s var(--ease); }
+  .oc__cell span { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--t3); }
+  @keyframes tick { from { transform: translateY(-40%); opacity: 0; } }
+
+  .oc__per { font-size: var(--fs-body); color: var(--t2); }
+  .oc__cta :global(.oc__btn) {
+    position: relative; overflow: hidden; min-width: min(380px, 100%); min-height: 60px; font-size: 18px;
+    box-shadow: 0 18px 40px rgba(224, 128, 58, .28);
+  }
+  .oc__cta :global(.oc__btn)::after {
+    content: ""; position: absolute; inset: 0; transform: translateX(-120%);
+    background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, .45) 50%, transparent 70%);
+    animation: shine 3.4s var(--ease-io) infinite 1s;
+  }
+  @keyframes shine { 0%, 60% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+  .oc__fine { display: inline-flex; align-items: center; gap: 7px; flex-wrap: wrap; justify-content: center; font-size: var(--fs-micro); color: var(--t3); }
+  @media (max-width: 560px) {
+    .oc__sticker { width: 74px; height: 74px; font-size: 20px; top: 12px; right: 10px; }
+    .oc__cell { min-width: 58px; }
+  }
+</style>

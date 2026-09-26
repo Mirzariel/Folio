@@ -5,8 +5,9 @@
  * buyer: see docs/LAUNCH_CHECKLIST.md before changing either.
  */
 import Eyebrow from '@/components/primitives/Eyebrow.astro';
+import SplitHeading from '@/components/primitives/SplitHeading.astro';
 import Icon from '@/components/primitives/Icon.astro';
-import BuyButton from '@/components/primitives/BuyButton.astro';
+import OfferCard from '@/components/pricing/OfferCard.astro';
 import CopyEmail from '@/components/primitives/CopyEmail.astro';
 import { site, display } from '@/config/site';
 
@@ -22,37 +23,18 @@ const included = [
 ];
 ---
 
-<section class="sect t-dark" id="pricing">
+<section class="sect t-void" id="pricing">
   <div class="wrap wrap--narrow">
     <div class="head head--center rv pricing__head">
-      <Eyebrow center>Pricing</Eyebrow>
-      <h2 class="h2">One price. One payment. Yours.</h2>
+      <Eyebrow center>{display.offer ? 'Launch week' : 'Pricing'}</Eyebrow>
+      <SplitHeading lines={['You pay once.', 'Folio is yours for good.']} />
       <p class="lede">
         Less than a year of even the cheapest cloud photo plan, paid once instead of forever.
       </p>
     </div>
 
     <div class="price rv">
-      <div class="price__top">
-        <span class="price__badge">{display.offer ? 'Launch price' : 'One-time purchase'}</span>
-        <div class="price__tag">
-          {display.offer && <s class="price__was" aria-label={`Regular price ${display.regularPrice}`}>{display.regularPrice}</s>}
-          <span class="price__cur">$</span>
-          <span class="price__amt">{display.amount}</span>
-        </div>
-        {display.offerNote && <p class="price__offer">{display.offerNote}</p>}
-        <p class="price__per">
-          {display.priceCurrency} Not per month. Not per year. Not per photo.
-        </p>
-        <div class="price__plat" aria-hidden="true">
-          <span><Icon name="windows" size={15} />Windows</span>
-          <span><Icon name="apple" size={15} />macOS</span>
-        </div>
-        <BuyButton label="Get Folio" />
-        <p class="price__strike">
-          Secure checkout &middot; instant license key
-        </p>
-      </div>
+      <OfferCard />
 
       <ul class="price__list">
         {included.map((item) => (
@@ -78,37 +60,23 @@ const included = [
 
 <style>
   .pricing__head { margin-bottom: clamp(32px, 4vw, 48px); }
+  /* The card glows along its edge: a slow conic sweep behind a 1px gap. */
   .price {
-    border: 1px solid var(--border-2); border-radius: var(--r-lg); background: var(--raised);
-    overflow: hidden; box-shadow: var(--shadow);
+    position: relative; border-radius: 18px; background: var(--raised); box-shadow: var(--shadow);
+    isolation: isolate;
   }
-  .price__top {
-    padding: clamp(30px, 3.6vw, 46px); display: grid; gap: 18px;
-    text-align: center; justify-items: center;
+  .price::before {
+    content: ""; position: absolute; inset: -1.5px; z-index: -1; border-radius: 19.5px;
+    background: conic-gradient(from var(--spin, 0deg), var(--accent), transparent 30%, transparent 60%, var(--accent-t), var(--accent));
+    animation: spin 6s linear infinite;
   }
-  .price__tag { display: flex; align-items: baseline; justify-content: center; gap: 8px; }
-  .price__amt {
-    font-family: var(--serif); font-weight: 600; font-size: clamp(64px, 9vw, 106px);
-    line-height: .88; letter-spacing: -.035em; color: var(--t1);
+  .price::after {
+    content: ""; position: absolute; inset: -40px; z-index: -2; border-radius: 40px;
+    background: radial-gradient(60% 50% at 50% 30%, rgba(224, 128, 58, .22), transparent 70%);
   }
-  .price__cur {
-    font-family: var(--serif); font-size: clamp(26px, 3vw, 38px); color: var(--t2);
-    align-self: flex-start; margin-top: .12em;
-  }
-  .price__per { font-size: var(--fs-body); color: var(--t2); }
-  .price__was {
-    font-family: var(--serif); font-size: clamp(24px, 2.8vw, 34px); color: var(--t3);
-    align-self: center; margin-right: 10px; text-decoration-thickness: 2px;
-  }
-  .price__offer { font-size: var(--fs-small); font-weight: 620; color: var(--accent-t); margin-top: -8px; }
-  .price__plat { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
-  .price__plat span {
-    display: inline-flex; align-items: center; gap: 7px; padding: 5px 13px;
-    border: 1px solid var(--border); border-radius: 999px; font-size: var(--fs-micro); color: var(--t2);
-  }
-  .price__plat :global(svg) { color: var(--t1); }
-  .price__top :global(.btn) { min-width: min(340px, 100%); }
-  .price__strike { color: var(--t3); font-size: var(--fs-small); }
+  .price :global(.oc) { overflow: hidden; border-radius: 18px 18px 0 0; background: var(--raised); }
+  @property --spin { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+  @keyframes spin { to { --spin: 360deg; } }
   /* One centred column. Two columns worked at eight items and went ragged at
      five, with a hole where the sixth used to be. A single column also reads
      as a list rather than as a table of specifications. */
@@ -124,13 +92,8 @@ const included = [
   .price__list :global(svg) { flex: 0 0 17px; color: var(--good); margin-top: 3px; }
   .price__list :global(b) { color: var(--t1); font-weight: 620; }
   .price__foot {
-    border-top: 1px solid var(--border); padding: 16px clamp(24px, 3vw, 34px);
+    border-radius: 0 0 18px 18px; border-top: 1px solid var(--border); padding: 16px clamp(24px, 3vw, 34px);
     font-size: var(--fs-micro); color: var(--t3); background: var(--inset); text-wrap: pretty;
-  }
-  .price__badge {
-    display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px;
-    border: 1px solid var(--accent); background: var(--accent-w); color: var(--accent-t);
-    font-size: 11.5px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase;
   }
   .pricing__team { margin-top: 26px; }
 </style>

@@ -4,7 +4,6 @@
  * footnote, and the Mac/iPhone FAQ answers. A buyer who thought they were
  * paying for phone import costs more than the sale.
  */
-import { display } from '@/config/site';
 export interface RoadmapCard {
   readonly icon: string;
   readonly title: string;
@@ -29,6 +28,6 @@ export const roadmapCards: readonly RoadmapCard[] = [
       'The engine that reads, plans and verifies has no Windows dependency, so the Mac ' +
       'version builds on it rather than starting over. What differs is how each system ' +
       'handles recoverable removal, and that part is being written for the Mac.',
-    note: `Your ${display.price} license already covers it, at no extra cost.`,
+    note: 'Your license already covers it, at no extra cost.',
   },
 ] as const;

@@ -24,7 +24,12 @@ const prints = [
 ];
 
 const specs = [
-  { v: display.price, l: display.offer ? `launch price, then ${display.regularPrice}` : 'once, no subscription' },
+  {
+    v: display.priceHtml,
+    l: display.offer
+      ? `<span class="offer-only">launch price, then ${display.regularPrice}</span><span class="regular-only">once, no subscription</span>`
+      : 'once, no subscription',
+  },
   { v: `${site.license.devices}`, l: 'activations' },
   { v: 'Offline', l: 'photos stay on this PC' },
   { v: 'Recycle Bin', l: 'never a silent delete' },
@@ -55,12 +60,12 @@ const specs = [
 
   <div class="hero__bottom">
     <div class="hero__cta ld ld-4">
-      <BuyButton label="Get Folio" sub={display.priceOnce} />
+      <BuyButton label="Get Folio" sub={`${display.priceHtml} once`} />
       <a class="btn btn--glass" href="#try"><Icon name="play" size={14} />Try it on this page</a>
     </div>
     <dl class="hero__specs ld ld-5">
       {specs.map((spec) => (
-        <div><dt>{spec.v}</dt><dd>{spec.l}</dd></div>
+        <div><dt set:html={spec.v} /><dd set:html={spec.l} /></div>
       ))}
     </dl>
     <a class="hero__scroll" href="#film" aria-label="Scroll to the story"><i></i></a>

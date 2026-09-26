@@ -176,6 +176,19 @@ export const display = Object.freeze({
   offer,
   /** "Launch price through October 2, 2026. Then $20." or null. */
   offerNote: offer ? `Launch price through ${offer.lastDay}. Then $${site.price.amount}.` : null,
+  /** "$5" saved during the offer, or null. */
+  offerSave: offer ? `$${site.price.amount - offer.amount}` : null,
+  /** "25%" off during the offer, or null. */
+  offerPercent: offer ? `${Math.round((1 - offer.amount / site.price.amount) * 100)}%` : null,
+  /**
+   * The price as markup that stays right after the offer ends without a
+   * rebuild: both prices are in the page, and the `offer-ended` class on
+   * <html> (set in BaseLayout, and by scripts/offer.ts at the deadline)
+   * decides which one shows. Render with set:html.
+   */
+  priceHtml: offer
+    ? `<span class="offer-only">$${offer.amount}</span><span class="regular-only">$${site.price.amount}</span>`
+    : `$${site.price.amount}`,
   /** "USD, once." */
   priceCurrency: `${site.price.currency}, once.`,
   /** "128,432" */
