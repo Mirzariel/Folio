@@ -21,14 +21,14 @@ Gumroad). They handle US sales tax and EU VAT. Stripe alone does not.
 
 All of these live in `src/config/site.ts` and update the whole site at once.
 
-**Regular price** `price.amount` is 20 (USD). **Launch offer** `launchOffer` is 15 USD through
+**Regular price** `price.amount` is 20 (USD). **Launch offer** `launchOffer` is 10 USD (50% off) through
 October 2, 2026 (`endsAt` is 2026-10-03 00:00 +07:00). The page shows the offer, with the $20
 crossed out and the end date, only when it is built before `endsAt`, so rebuild and redeploy on
 or after October 3 and it disappears by itself. Two things only you can do:
 
 - **Make the checkout charge the same thing.** In Lemon Squeezy, keep the product at $20 and
-  create a $5-off (or 25%) discount that expires at the same moment, applied automatically
-  through the checkout link (`?checkout[discount_code]=YOURCODE`); or set the price to $15 and
+  create a $10-off (50%) discount that expires at the same moment, applied automatically
+  through the checkout link (`?checkout[discount_code]=YOURCODE`); or set the price to $10 and
   change it back to $20 on October 3. The page and the checkout must agree.
 - **Really charge $20 afterwards.** Showing "$20" crossed out is only honest if $20 is the price
   that applies after the offer. Do not extend the offer indefinitely; set a new, dated one or

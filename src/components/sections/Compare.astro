@@ -94,7 +94,11 @@ const said: Record<Verdict, string> = { yes: 'Good for you', no: 'A cost or a ri
   .cmpx__t thead th.is-us b { color: #F5EADF; font-family: var(--serif); font-size: 22px; }
   .cmpx__t thead th.is-us span { color: #F0A468; }
   .cmpx__t tbody tr:last-child td.is-us { border-radius: 0 0 16px 16px; box-shadow: inset 0 -1px 0 rgba(224, 128, 58, .55), inset 1px 0 0 rgba(224, 128, 58, .55), inset -1px 0 0 rgba(224, 128, 58, .55); }
-  .cmpx__t td.is-us { font-weight: 560; font-size: 15px; }
+  /* tbody td.is-us, not .is-us: the scoped plain-cell colour above is more
+     specific, and it left Folio's text dim on the dark column. */
+  .cmpx__t tbody td.is-us { font-weight: 560; font-size: 15px; color: #F5EADF; }
+  .cmpx__t td.is-us :global(s) { color: rgba(245, 234, 223, .5); text-decoration-thickness: 2px; text-decoration-color: #F0817B; }
+  .cmpx__t td.is-us :global(b) { color: #F0A468; font-size: 17px; font-weight: 750; }
   .cmpx__t td.is-us.v-yes .cmpx__ic { background: #9BBF7E; color: #0C0705; }
   .cmpx__t thead th.is-us, .cmpx__t td.is-us { filter: drop-shadow(0 24px 30px rgba(42, 35, 27, .12)); }
 

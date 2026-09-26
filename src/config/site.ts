@@ -112,7 +112,7 @@ const config = schema.parse({
 
   price: { amount: 20, currency: 'USD' },
   launchOffer: {
-    amount: 15,
+    amount: 10,
     endsAt: '2026-10-03T00:00:00+07:00',
     lastDay: 'October 2, 2026',
   },
@@ -165,10 +165,10 @@ const offer =
 const amount = offer ? offer.amount : site.price.amount;
 
 export const display = Object.freeze({
-  /** What a buyer pays today: "$15" during the launch offer, else "$20". */
+  /** What a buyer pays today: "$10" during the launch offer, else "$20". */
   price: `$${amount}`,
   amount,
-  /** "$15 once" */
+  /** "$10 once" */
   priceOnce: `$${amount} once`,
   /** The regular price, "$20". */
   regularPrice: `$${site.price.amount}`,
@@ -178,7 +178,7 @@ export const display = Object.freeze({
   offerNote: offer ? `Launch price through ${offer.lastDay}. Then $${site.price.amount}.` : null,
   /** "$5" saved during the offer, or null. */
   offerSave: offer ? `$${site.price.amount - offer.amount}` : null,
-  /** "25%" off during the offer, or null. */
+  /** "50%" off during the offer, or null. */
   offerPercent: offer ? `${Math.round((1 - offer.amount / site.price.amount) * 100)}%` : null,
   /**
    * The price as markup that stays right after the offer ends without a

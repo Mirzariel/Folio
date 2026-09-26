@@ -7,7 +7,15 @@
  * cell's own words; if the words do not justify a check, it is not a check.
  * `folio` may carry markup (the price), and is rendered as HTML.
  */
-import { display } from '@/config/site';
+import { site, display } from '@/config/site';
+
+/* During the launch offer the cell says both prices and why; afterwards (or
+   once html.offer-ended is set on the visitor's clock) only the regular one. */
+const cost = display.offer
+  ? `<span class="offer-only"><s>${display.regularPrice}</s> <b>$${display.offer.amount}</b>, once. ` +
+    `Launch price through ${display.offer.lastDay}, then ${display.regularPrice}.</span>` +
+    `<span class="regular-only">$${site.price.amount}, once</span>`
+  : `$${site.price.amount}, once`;
 
 export type Verdict = 'yes' | 'no' | 'some';
 
@@ -32,7 +40,7 @@ export const compareColumns = [
 export const compareRows: readonly CompareRow[] = [
   {
     feature: 'What it costs',
-    folio: { text: `${display.priceHtml}, once`, v: 'yes' },
+    folio: { text: cost, v: 'yes' },
     cloud: { text: 'Roughly $2 to $10 a month, for as long as you want your photos', v: 'no' },
     cleaner: { text: 'Often free, or a yearly “PC utilities” bundle', v: 'some' },
   },
