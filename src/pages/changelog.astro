@@ -3,7 +3,7 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Eyebrow from '@/components/primitives/Eyebrow.astro';
 
-/* Entries still in beta come first; released ones follow, newest first. */
+/* Upcoming entries come first; released ones follow, newest first. */
 const time = (d?: Date) => d?.getTime() ?? Number.POSITIVE_INFINITY;
 const entries = (await getCollection('changelog')).sort(
   (a, b) => time(b.data.date) - time(a.data.date),
@@ -28,8 +28,8 @@ const rendered = await Promise.all(
           <header class="log__head">
             <h2 class="h3">{entry.data.version}</h2>
             <span class="card__tag">{entry.data.platform}</span>
-            {entry.data.status === 'beta' || !entry.data.date ? (
-              <span class="small">In private beta, not released yet</span>
+            {entry.data.status === 'upcoming' || !entry.data.date ? (
+              <span class="small">Not released yet</span>
             ) : (
               <time class="small" datetime={entry.data.date.toISOString()}>
                 {entry.data.date.toLocaleDateString('en-US', {

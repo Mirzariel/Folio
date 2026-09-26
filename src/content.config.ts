@@ -15,10 +15,11 @@ const changelog = defineCollection({
   schema: z.object({
     version: z.string(),
     /**
-     * "beta" until the version is really released. A beta entry has no date:
-     * AGENTS.md forbids a release date for anything still in development.
+     * "upcoming" until the version is really out. An upcoming entry has no
+     * date: AGENTS.md forbids a release date for anything still in development.
+     * Test builds are internal and never appear here.
      */
-    status: z.enum(['released', 'beta']).default('released'),
+    status: z.enum(['released', 'upcoming']).default('released'),
     /** Required once released. */
     date: z.coerce.date().optional(),
     /** Shown as a tag. "Windows" until a second platform ships. */

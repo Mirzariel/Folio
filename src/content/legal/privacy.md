@@ -45,9 +45,6 @@ receives your IP address and standard request details, as with any download.
 **No telemetry.** Folio does not collect usage statistics, crash reports, or a device
 identifier. Nothing is sent when you scan, review, organize, rename or clean up.
 
-**Beta builds** have no license check and no update check, and make no network requests of
-their own.
-
 ## This website
 
 **No analytics and no cookies.** This site sets no cookies, runs no tracker, and builds no
