@@ -14,7 +14,7 @@ import { site, display } from '@/config/site';
 const requirements = [
   { label: `${site.platforms.shipping.join(' or ')}, 64-bit` },
   { label: 'Reads only the folders and drives you nominate' },
-  { label: 'Works completely offline' },
+  { label: 'Works offline after a one-time activation' },
 ];
 ---
 
@@ -28,8 +28,8 @@ const requirements = [
       <Eyebrow center>Download</Eyebrow>
       <h1 class="h2 dl__title">Folio for Windows.</h1>
       <p class="lede dl__lede">
-        One installer, {display.price} once. Your license key arrives at checkout and works
-        on up to {site.license.devices} of your own devices.
+        One installer, {display.price} once. Your license key arrives at checkout and includes
+        {site.license.devices} activations.
       </p>
 
       <div class="dl__box">

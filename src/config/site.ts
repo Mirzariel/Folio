@@ -18,10 +18,28 @@ const schema = z.object({
   visionTagline: z.string(),
   description: z.string(),
 
+  /** The regular price. What a buyer pays once any launch offer has ended. */
   price: z.object({
     amount: z.number().int().positive(),
     currency: z.literal('USD'),
   }),
+
+  /**
+   * A time-limited launch price, or null. Honest only while the regular price
+   * above genuinely applies afterwards, and while the checkout charges the same
+   * amount (set a matching discount in the payment provider, with the same
+   * end). The page shows the offer only when it is built before `endsAt`, so a
+   * rebuild after that date drops it by itself.
+   */
+  launchOffer: z
+    .object({
+      amount: z.number().int().positive(),
+      /** The moment the offer stops, ISO 8601 with offset. */
+      endsAt: z.string(),
+      /** The last day it applies, as the page says it. */
+      lastDay: z.string(),
+    })
+    .nullable(),
 
   /**
    * Paste the link from your payment provider (Gumroad, Paddle, Lemon Squeezy,
@@ -49,7 +67,8 @@ const schema = z.object({
   license: z.object({
     /** Must match what the license server actually enforces. */
     devices: z.number().int().positive(),
-    updatesScope: z.string(),
+    /** Free updates for life, major versions included (FOLIO_LICENSING_SPEC.md). */
+    updatesForLife: z.literal(true),
     /** A binding promise to every Windows buyer. */
     macOsIncluded: z.boolean(),
     /** Stays null until a date is genuinely committed. The page says so. */
@@ -91,13 +110,18 @@ const config = schema.parse({
     'before anything changes.',
 
   price: { amount: 20, currency: 'USD' },
+  launchOffer: {
+    amount: 15,
+    endsAt: '2026-10-03T00:00:00+07:00',
+    lastDay: 'October 2, 2026',
+  },
   checkoutUrl: '',
   support: { email: 'folioarchive@gmail.com' },
   feedback: { accessKey: '' },
 
   license: {
     devices: 3,
-    updatesScope: 'version 1',
+    updatesForLife: true,
     macOsIncluded: true,
     macOsReleaseDate: null,
   },
@@ -132,11 +156,23 @@ export type Site = typeof site;
 
 const int = new Intl.NumberFormat('en-US');
 
+/** Decided when the page is built. A build after the end drops the offer. */
+const offer =
+  site.launchOffer && Date.now() < Date.parse(site.launchOffer.endsAt) ? site.launchOffer : null;
+const amount = offer ? offer.amount : site.price.amount;
+
 export const display = Object.freeze({
-  /** "$20" */
-  price: `$${site.price.amount}`,
-  /** "$20 once" */
-  priceOnce: `$${site.price.amount} once`,
+  /** What a buyer pays today: "$15" during the launch offer, else "$20". */
+  price: `$${amount}`,
+  amount,
+  /** "$15 once" */
+  priceOnce: `$${amount} once`,
+  /** The regular price, "$20". */
+  regularPrice: `$${site.price.amount}`,
+  /** The live launch offer, or null. */
+  offer,
+  /** "Launch price through October 2, 2026. Then $20." or null. */
+  offerNote: offer ? `Launch price through ${offer.lastDay}. Then $${site.price.amount}.` : null,
   /** "USD, once." */
   priceCurrency: `${site.price.currency}, once.`,
   /** "128,432" */

@@ -1,39 +1,32 @@
 ---
 /**
- * The hub: four real figures and three doors. No dashboard, no invented health
- * score, no storage visualisation. FOLIO_VISION.md section 6 rules those out,
- * and the caption under this window says so out loud.
+ * The hub, as the app draws it: the size of the archive, one line of facts
+ * (the days it spans, what is reclaimable, the last scan), the timeline of when
+ * the photographs were taken, and three doors. No dashboard, no invented health
+ * score. FOLIO_VISION.md section 6 rules those out.
  *
  * Internals size themselves with container queries (cqw), not the viewport:
  * this window is sized by its own column.
  */
 import Icon from '@/components/primitives/Icon.astro';
 import HubTimeline from './HubTimeline.astro';
-import { doors, hubStats } from '@/data/mockup';
+import { doors } from '@/data/mockup';
+import { timelineDays, timelineFrom } from '@/data/timeline';
+import { site, display } from '@/config/site';
+
+const line = [
+  `Taken on ${new Intl.NumberFormat('en-US').format(timelineDays)} days since ${timelineFrom}`,
+  `${display.reclaimable} reclaimable`,
+  `Last scan ${site.canvas.lastScan}`,
+];
 ---
 
 <div class="hub__head">
-  <h2 class="hub__title">Everything in its place.</h2>
-  <div class="stats" id="stats">
-    {hubStats.map((stat, i) => (
-      <>
-        {i > 0 && <span class="stats__sep" aria-hidden="true"></span>}
-        <div class="stats__c">
-          <span class="stats__l">{stat.label}</span>
-          <span class={`stats__v${'link' in stat && stat.link ? ' stats__v--link' : ''}`}>
-            {'count' in stat && stat.count !== undefined ? (
-              <span
-                data-count={stat.count}
-                data-decimals={'decimals' in stat ? stat.decimals : undefined}
-                data-suffix={'suffix' in stat ? stat.suffix : undefined}
-              >{stat.value}</span>
-            ) : stat.value}
-            {'link' in stat && stat.link && <Icon name="chevron" size={9} />}
-          </span>
-        </div>
-      </>
-    ))}
-  </div>
+  <p class="hub__fig">
+    <span class="hub__count" data-count={site.canvas.photographs}>{display.photographs}</span>
+    <span class="hub__unit">photographs</span>
+  </p>
+  <p class="hub__line">{line.map((part, i) => <>{i > 0 && <span class="hub__dot" aria-hidden="true">&middot;</span>}<span>{part}</span></>)}</p>
 </div>
 
 <HubTimeline />
@@ -52,29 +45,17 @@ import { doors, hubStats } from '@/data/mockup';
 
 <style>
   .hub__head {
-    padding: clamp(26px, 3.6cqw, 44px) 24px clamp(24px, 3.2cqw, 38px);
-    display: flex; flex-direction: column; align-items: center;
-    gap: clamp(16px, 2.2cqw, 26px); text-align: center;
+    padding: clamp(24px, 3.4cqw, 40px) clamp(18px, 4cqw, 44px) clamp(16px, 2.2cqw, 24px);
+    max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px;
   }
-  .hub__title {
-    font-family: var(--serif); font-weight: 600; font-size: clamp(21px, 3.3cqw, 36px);
-    letter-spacing: -.015em; line-height: 1.1; color: var(--t1);
-  }
-  .stats {
-    display: flex; align-items: center; gap: clamp(14px, 3cqw, 36px);
-    flex-wrap: wrap; justify-content: center;
-  }
-  .stats__c { display: flex; flex-direction: column; gap: 4px; text-align: left; }
-  .stats__l {
-    font-size: 10px; font-weight: 650; letter-spacing: .11em;
-    text-transform: uppercase; color: var(--t3);
-  }
-  .stats__v {
-    font-size: clamp(15px, 1.7cqw, 18px); font-weight: 650;
+  .hub__fig { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+  .hub__count {
+    font-size: clamp(38px, 5.6cqw, 60px); font-weight: 620; line-height: 1; letter-spacing: -.02em;
     font-variant-numeric: tabular-nums; color: var(--t1);
   }
-  .stats__v--link { color: var(--accent-t); display: inline-flex; align-items: center; gap: 5px; }
-  .stats__sep { width: 1px; height: 32px; background: var(--border); }
+  .hub__unit { font-size: clamp(14px, 1.6cqw, 17px); color: var(--t2); padding-bottom: 6px; }
+  .hub__line { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: clamp(12.5px, 1.4cqw, 14px); color: var(--t2); }
+  .hub__dot { color: var(--t3); }
 
   .doors { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--border); }
   .door {

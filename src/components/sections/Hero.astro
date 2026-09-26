@@ -24,8 +24,8 @@ const prints = [
 ];
 
 const specs = [
-  { v: display.price, l: 'once, no subscription' },
-  { v: `${site.license.devices}`, l: 'of your devices' },
+  { v: display.price, l: display.offer ? `launch price, then ${display.regularPrice}` : 'once, no subscription' },
+  { v: `${site.license.devices}`, l: 'activations' },
   { v: 'Offline', l: 'photos stay on this PC' },
   { v: 'Recycle Bin', l: 'never a silent delete' },
 ];

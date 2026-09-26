@@ -29,14 +29,15 @@ export const safetyCards: readonly SafetyCard[] = [
     title: 'A matching name proves nothing',
     body:
       'Two files called <code>IMG_4821.CR2</code> are not duplicates because they share a ' +
-      'name. Folio compares content, and says <em>likely</em> until it has verified.',
+      'name. Folio compares what is inside them, and a group appears only when every copy ' +
+      'in it is byte-for-byte identical.',
   },
   {
     icon: 'shield',
     title: 'Your backups stay backups',
     body:
-      'A second copy on a different drive can be a deliberate backup, so Folio treats it as ' +
-      'one. Mark copies as protected and it respects that.',
+      'A second copy can be a deliberate backup. Mark it <em>Keep as backup</em> and Folio ' +
+      'never offers it for removal, not even when it chooses for you.',
   },
   {
     icon: 'scale',
@@ -49,7 +50,7 @@ export const safetyCards: readonly SafetyCard[] = [
     icon: 'resume',
     title: 'Unplugging a drive is not a disaster',
     body:
-      'Drives that come and go are the normal case, not an error state. Work resumes where ' +
-      'it stopped instead of starting from zero.',
+      'Drives that come and go are the normal case. Their records stay in the catalog while ' +
+      'they are away, and a stopped scan picks up where it left off when you choose Resume.',
   },
 ] as const;

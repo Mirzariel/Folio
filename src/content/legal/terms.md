@@ -1,95 +1,108 @@
 ---
 title: Terms of Sale
 description: What you are buying, what is promised, and what is not.
-updated: 2026-09-10
+updated: 2026-09-26
 draft: false
 ---
 
-These terms apply when you buy Folio from this website. The seller is [[SELLER]].
+These terms apply when you buy a Folio license from this website.
+
+## Who you are buying from
+
+Folio is made by an independent developer ("the Folio developer", "we", "us"). Orders are
+processed by **Lemon Squeezy, LLC**, which acts as the merchant of record: it is the seller of
+record for your payment, handles checkout, sales tax and VAT, and issues your receipt. We provide
+the software, the license and support.
 
 ## What you are buying
 
-A perpetual license to use Folio on Windows. Payment is a single charge. There is no
-subscription, no renewal, and nothing stops working if you never pay again.
+A perpetual license to use Folio on Windows, paid once. There is no subscription, no renewal,
+and nothing stops working if you never pay again.
 
-Three things are promised on the pricing page, and they are promised here too, on the terms
-stated there at the time of your purchase:
+These promises are made on the pricing page, and they are made here too, on the terms stated
+there on the day you paid:
 
-- **Folio for macOS at no extra cost when it ships.** Your license already covers it.
-- **Use on up to the number of personal devices stated on the pricing page.** One license is for
-  one person, not a site license for an office.
-- **Updates within the version scope stated on the pricing page, free.**
+- **The number of activations stated on the pricing page.** Each Windows user account you
+  activate Folio in uses one. The [License Agreement](/license) explains exactly what uses one.
+- **Every future update for life, free, major versions included.**
+- **Folio for macOS at no extra cost when it ships.**
 
-Those figures live in one place on this site, so this page can never contradict the page that
-sold you the product. If they ever disagree, the pricing page as it stood on the day you paid is
-the one that binds us.
+If this page and the pricing page ever disagree, the pricing page as it stood on the day you paid
+is the one that binds us.
+
+## Price
+
+The price is in US dollars and is charged once. Taxes are calculated by the merchant of record
+at checkout and shown before you pay.
+
+We may offer a launch price for a stated period. When we do, the page says when it ends and what
+the regular price is afterwards, and the checkout charges the price shown. The price you pay is
+the one on your receipt; a later lower price does not entitle you to a partial refund.
 
 ## What is not promised
 
-**No release date, for anything in development.** Folio for macOS and connected-device transfer
-are described on this site as direction, not delivery. Neither has a date, and neither is what
-your payment is for. If either is the reason you are buying, do not buy yet.
+**No release date for anything in development.** Folio for macOS and importing directly from a
+phone or camera are described on this site as direction, not delivery. Neither has a date, and
+neither is what your payment is for. If either is the reason you want Folio, please wait.
 
 **No risk-free file operation.** No such thing exists, and Folio does not claim one. What it
-offers is written plans you approve, recoverable steps, verification after the fact, and a
-refusal to act when it cannot prove what it is about to do.
+offers is a written plan you approve, removal through the Windows Recycle Bin rather than
+deletion, verification of each change, and a refusal to act when it cannot make a change safely.
 
-**The catalog is not a backup.** Folio helps you understand your archive. Keeping a real second
-copy of your photographs remains your responsibility.
+**The catalog is not a backup.** Keeping a real second copy of your photographs remains your
+responsibility.
+
+## System requirements
+
+Folio runs on 64-bit Windows 11 and Windows 10 (version 1809 or later). On Windows 10 the
+installer may need to install Microsoft Edge WebView2, which requires an internet connection
+once. Activating your license requires an internet connection once.
 
 ## Delivery
 
-Delivery is immediate: the license key is issued as soon as payment clears, and the application
-is downloaded from this site. By completing the purchase you ask for that immediate delivery and
-you acknowledge that, once the key has been issued, a statutory right to cancel a digital
-purchase no longer applies where the law allows it to be waived this way.
-
-If your key does not arrive, write to [[SUPPORT_EMAIL]] and we will send it.
+Delivery is electronic and immediate. Your license key and download link are sent to the email
+address you give at checkout, and appear on your order receipt. If they do not arrive, write to
+folioarchive@gmail.com and we will send them again.
 
 ## Refunds
 
-**No refund period is advertised, and none is promised.** Everything this page and the pricing
-page claim can be checked before you pay, and the roadmap is stated plainly in three places so
-that nothing arrives as a surprise.
+If Folio does not install or run on your computer, or does not do what this site says it does,
+write to folioarchive@gmail.com **within 14 days of your purchase** and tell us what happened. If
+we cannot fix it, you get a full refund. When a license is refunded, its key is disabled.
 
-Two things are still true, and neither is us being generous:
+Beyond that:
 
 - **Your statutory rights are unaffected.** Where the law of your country gives you a right to a
-  refund or a remedy, you have it, whatever this page says.
-- **The payment provider has its own policy.** [[PROVIDER]] is the merchant of record and may
-  grant a refund under its own rules, including for a charge you did not authorize.
-
-If Folio does not do what this site says it does, write to [[SUPPORT_EMAIL]] before anything
-else. A product sold on being checkable should be able to answer the question.
+  refund or another remedy, you have it, whatever this page says.
+- **The merchant of record has its own policy.** Lemon Squeezy may also refund a payment under
+  its own rules, including a charge you did not authorize.
 
 ## Your license
 
-Use of the application itself is governed by the [License Agreement](/license), which forms part
-of these terms.
+Use of the application is governed by the [License Agreement](/license), which forms part of
+these terms.
 
 ## Liability
 
-Folio is provided as it is. To the fullest extent the law allows, we are not liable for indirect
-or consequential loss, for lost profit, or for the loss or corruption of data, however it
-arises. Where liability cannot be excluded, it is limited to the amount you paid.
+Folio is provided "as is". To the fullest extent the law allows, we are not liable for indirect
+or consequential loss, for lost profit, or for the loss or corruption of data. Where liability
+cannot be excluded, it is limited to the amount you paid.
 
-Nothing here excludes liability for death or personal injury caused by negligence, for fraud, or
-for anything else that cannot lawfully be excluded.
+Nothing here limits liability that cannot lawfully be limited, including liability for death or
+personal injury caused by negligence, for fraud, or your rights as a consumer.
 
 ## Changes
 
 These terms may change for future purchases. The version that applies to you is the one
-published on the day you paid, and the date at the top of this page tells you when it last
-changed.
+published on the day you paid. The date at the top of this page shows when it last changed.
 
 ## Governing law
 
-These terms are governed by the law of [[JURISDICTION]], and its courts have jurisdiction. If
-you buy as a consumer, this does not deprive you of the protection of the mandatory rules of the
-country where you live.
+These terms are governed by the laws of the Republic of Indonesia, and disputes are for the
+courts of the Republic of Indonesia. If you buy as a consumer, you keep the protection of the
+mandatory consumer laws of the country where you live, and you may use its courts.
 
 ## Contact
 
-[[SELLER]]
-
-Email: [[SUPPORT_EMAIL]]
+The Folio developer
+Email: folioarchive@gmail.com

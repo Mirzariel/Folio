@@ -2,15 +2,16 @@
  * Find duplicates, live.
  *
  * The rules are the application's: at least one copy always remains, so the
- * mark that would leave none is refused and the card says why; a copy on
- * another drive starts kept as a possible backup; removal goes to the Recycle
- * Bin, after a confirmation that says it is not permanent; and everything that
- * went in can be put back.
+ * mark that would leave none is refused and the card says why; a copy marked
+ * Keep as backup is never offered for removal; Let Folio choose keeps exactly
+ * one copy, preferring one marked Keep as backup (engine: recommend_survivors);
+ * removal goes to the Recycle Bin after a confirmation that says it is not
+ * permanent. Putting copies back happens in Windows, so the demo only resets.
  *
  * State is set by class immediately. The flight into and out of the bin is a
  * Web Animation on top, skipped under reduced motion.
  */
-import { dupCopies, dupSizeMb } from '@/data/dupes';
+import { dupCopies } from '@/data/dupes';
 
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -33,10 +34,12 @@ export function initDupes(): void {
 
   const cards = Array.from(root.querySelectorAll<HTMLElement>('.dup__c'));
   const marked = new Set<number>();
+  const kept = new Set<number>();
   const binned = new Set<number>();
 
   const card = (i: number) => cards[i]!;
   const toggleOf = (i: number) => card(i).querySelector<HTMLButtonElement>('.dup__toggle')!;
+  const keepOf = (i: number) => card(i).querySelector<HTMLButtonElement>('.dup__keep')!;
   const fateOf = (i: number) => card(i).querySelector<HTMLElement>('.dup__fate span')!;
   const refuseOf = (i: number) => card(i).querySelector<HTMLElement>('.dup__refuse')!;
   const remaining = () => dupCopies.length - binned.size;
@@ -47,19 +50,22 @@ export function initDupes(): void {
       const isBinned = binned.has(i);
       card(i).classList.toggle('is-marked', isMarked && !isBinned);
       card(i).classList.toggle('is-binned', isBinned);
+      const isKept = kept.has(i);
       const t = toggleOf(i);
       t.setAttribute('aria-pressed', isMarked ? 'true' : 'false');
       t.textContent = isMarked ? 'Keep this copy' : 'Mark for removal';
-      t.disabled = isBinned;
+      t.disabled = isBinned || isKept;
+      const k = keepOf(i);
+      k.setAttribute('aria-pressed', isKept ? 'true' : 'false');
+      k.disabled = isBinned;
       fateOf(i).textContent = isBinned
         ? 'In the Recycle Bin'
+        : isKept ? 'Removal not offered: you marked this copy to keep'
         : isMarked ? 'Selected for the Recycle Bin' : 'This copy will remain';
     });
     const a = [...marked].filter((i) => !binned.has(i)).length;
     const stay = remaining() - a;
-    line.textContent = a === 0
-      ? 'Nothing marked for removal.'
-      : `${a} marked · ${stay} would remain · would release at most ${(a * dupSizeMb).toFixed(1)} MB`;
+    line.textContent = a === 0 ? 'Nothing marked for removal.' : `${a} marked · ${stay} will remain`;
     review.disabled = a === 0;
     choose.disabled = binned.size > 0;
     binN.textContent = String(binned.size);
@@ -89,10 +95,24 @@ export function initDupes(): void {
     });
   });
 
+  cards.forEach((_, i) => {
+    keepOf(i).addEventListener('click', () => {
+      if (binned.has(i)) return;
+      if (kept.has(i)) kept.delete(i);
+      else { kept.add(i); marked.delete(i); }
+      render();
+    });
+  });
+
+  /* Exactly one survivor: a copy marked Keep as backup if there is one,
+     otherwise the first copy in path order. Kept copies are never marked. */
   choose.addEventListener('click', () => {
+    const live = dupCopies.map((_, i) => i).filter((i) => !binned.has(i));
+    const survivor = live.find((i) => kept.has(i)) ?? live[0];
     marked.clear();
-    dupCopies.forEach((copy, i) => { if (copy.suggest) marked.add(i); });
+    live.forEach((i) => { if (i !== survivor && !kept.has(i)) marked.add(i); });
     render();
+    line.textContent = `Folio chose one copy to keep. Change anything you like. ${line.textContent}`;
     cards.forEach((c, i) => { if (marked.has(i)) { c.classList.remove('is-flash'); void c.offsetWidth; c.classList.add('is-flash'); } });
   });
 
@@ -137,16 +157,18 @@ export function initDupes(): void {
     }, reducedMotion() ? 0 : going.length * 220 + 700);
   });
 
+  /* In the app, copies come back from the Windows Recycle Bin. The demo just
+     starts over, flying its copies back so the reset is visible. */
   restore.addEventListener('click', () => {
     const back = [...binned];
     binned.clear();
     marked.clear();
+    kept.clear();
     done.hidden = true;
     render();
     back.forEach((i, k) => window.setTimeout(() => fly(i, false), reducedMotion() ? 0 : k * 160));
     choose.focus();
   });
 
-  /* A copy on another drive starts kept, as a possible backup. */
   render();
 }

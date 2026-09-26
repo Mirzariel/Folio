@@ -4,7 +4,6 @@
  * promise, the hub doors) must match the application rather than be improved
  * here.
  */
-import { site, display } from '@/config/site';
 
 /** Sits in the status bar permanently, not as a warning that appears late. */
 export const approvalPromise = 'Changes require approval';
@@ -35,20 +34,6 @@ export const doors: readonly Door[] = [
     title: 'Rename in bulk',
     body: 'Consistent names for many files at once, with a preview first.',
   },
-] as const;
-
-export const hubStats = [
-  { label: 'Photographs', value: display.photographs, count: site.canvas.photographs },
-  {
-    label: 'Reclaimable',
-    value: display.reclaimable,
-    count: site.canvas.reclaimableGb,
-    decimals: 1,
-    suffix: ' GB',
-    link: true,
-  },
-  { label: 'Single copy', value: display.singleCopy, count: site.canvas.singleCopy },
-  { label: 'Last scan', value: site.canvas.lastScan },
 ] as const;
 
 /** Rows in the organize-by-date plan. Six of 12,480 shown, as the page says. */

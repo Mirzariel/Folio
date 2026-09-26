@@ -6,14 +6,16 @@ order: 1
 
 ## Choose a source
 
-Point Folio at a folder or a drive and it becomes a Folio library. Plug in a phone, camera or
-memory card and you can browse it without adding it to anything. Browsing costs nothing and
-changes nothing.
+Add a folder or a drive as a location: from the Library with Add location, or by dropping the
+folder on one of the three doors on the home screen. Folio can hold several locations at once.
+Photos on a phone or camera need to be copied to a folder first; importing from them directly
+is not in today's build.
 
 ## Let it read
 
-The scan only reads. It never changes, moves or deletes your files, and it can be paused and
-resumed. Large collections and drives that get unplugged do not send you back to the start.
+The scan only reads. It never changes, moves or deletes your files. You can stop it, even close
+Folio, and choose Resume later to continue where it left off. A drive that gets unplugged keeps
+its records in the catalog until you remove the location yourself.
 
 ## Pick a task
 

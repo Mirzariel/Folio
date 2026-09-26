@@ -11,7 +11,7 @@ Commercial facts never live in a component. They come from `src/config/site.ts` 
 
 | Task | Component | Content source |
 |---|---|---|
-| Price, device count, checkout URL, support email | any | **src/config/site.ts** |
+| Price, launch offer, activation count, checkout URL, support email | any | **src/config/site.ts** |
 | Hero: full-bleed title, developing prints, actions, spec row | src/components/sections/Hero.astro | inline, figures from src/config/site.ts |
 | Pinned film: scattered, read, placed | src/components/sections/Film.astro | src/data/gallery.ts (`prints`), motion in src/scripts/motion/film.ts |
 | Launch-readout figures | src/components/sections/Numbers.astro | src/config/site.ts |
@@ -29,7 +29,8 @@ Commercial facts never live in a component. They come from `src/config/site.ts` 
 | Local-first section | src/components/sections/Private.astro | inline, one section |
 | Comparison table | src/components/sections/Compare.astro | src/data/compare.ts |
 | Roadmap, the two in-development items | src/components/sections/Roadmap.astro | src/data/roadmap.ts |
-| Pricing card and the included list | src/components/sections/Pricing.astro | src/config/site.ts |
+| Pricing card, launch offer and the included list | src/components/sections/Pricing.astro | src/config/site.ts (`price`, `launchOffer`) |
+| A note from the developer, support | src/components/sections/Developer.astro | inline, first person |
 | FAQ | src/components/sections/Faq.astro | **src/data/faq.ts** |
 | Feedback and feature requests | src/components/sections/Feedback.astro, src/components/FeedbackForm.astro | src/data/feedback.ts, behaviour in src/scripts/feedback.ts, Web3Forms key in src/config/site.ts |
 | Final call to action | src/components/sections/FinalCta.astro | inline |

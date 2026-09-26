@@ -47,6 +47,7 @@ export const footerColumns: readonly { title: string; links: readonly (Link | Co
     links: [
       { href: '/#faq', label: 'FAQ' },
       { href: '/#feedback', label: 'Feedback' },
+      { href: '/#support', label: 'Support the developer' },
       { href: '/docs', label: 'Documentation' },
       { label: 'Contact', copy: site.support.email },
     ],

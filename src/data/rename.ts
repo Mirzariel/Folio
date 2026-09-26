@@ -46,8 +46,10 @@ export function renameTo(file: RenameFile, index: number, base: string, seq: Seq
   const sep = separators.find((s) => s.id === sepId)!.sep;
   if (seq === 'time') {
     if (!file.taken) return null;
+    /* The app's format (ui/src/pages/task/naming.ts, rnNameFor): date, then
+       the time as HHMMSS, each after the chosen separator. */
     const [d, t] = file.taken.split('T');
-    return `${base}${sep}${d} ${t!.replace(/:/g, '.')}`;
+    return `${base}${sep}${d}${sep}${t!.replace(/:/g, '')}`;
   }
   return `${base}${sep}${seq === 'number' ? String(index + 1).padStart(3, '0') : letters(index + 1)}`;
 }

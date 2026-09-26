@@ -20,3 +20,7 @@ export const timelineMonths: readonly number[] = Array.from(
 );
 
 export const timelinePeak = timelineMonths.indexOf(Math.max(...timelineMonths));
+
+/** Days on which at least one photograph was taken, for the hub's line. Canvas data, like the
+ *  bars: roughly one day in three of each month that has any photographs. */
+export const timelineDays = timelineMonths.reduce((sum, n) => sum + (n > 0 ? Math.min(28, 6 + Math.round(n / 60)) : 0), 0);

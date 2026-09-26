@@ -10,14 +10,15 @@ import BuyButton from '@/components/primitives/BuyButton.astro';
 import CopyEmail from '@/components/primitives/CopyEmail.astro';
 import { site, display } from '@/config/site';
 
-/* Five, and one column. The update scope is not repeated here, the FAQ carries
-   it. A list that restates what is two inches above it stops being read. */
+/* One column, short. A list that restates what is two inches above it stops
+   being read. */
 const included = [
   `<b>Folio for ${site.platforms.shipping.join(' and ')}</b> (64-bit)`,
   '<b>Folio for macOS when it ships</b>, at no extra cost',
-  `<b>Up to ${site.license.devices} of your personal devices</b>`,
+  `<b>${site.license.devices} activations</b>, one per Windows account you use it in`,
+  '<b>Every future update, free for life</b>, major versions included',
   '<b>Unlimited photos and drives.</b> No per-gigabyte limits',
-  '<b>Works completely offline</b>',
+  '<b>Works offline</b> after a one-time activation',
 ];
 ---
 
@@ -27,17 +28,19 @@ const included = [
       <Eyebrow center>Pricing</Eyebrow>
       <h2 class="h2">One price. One payment. Yours.</h2>
       <p class="lede">
-        About two months of the cloud storage you were going to pay for forever.
+        Less than a year of even the cheapest cloud photo plan, paid once instead of forever.
       </p>
     </div>
 
     <div class="price rv">
       <div class="price__top">
-        <span class="price__badge">One-time purchase</span>
+        <span class="price__badge">{display.offer ? 'Launch price' : 'One-time purchase'}</span>
         <div class="price__tag">
+          {display.offer && <s class="price__was" aria-label={`Regular price ${display.regularPrice}`}>{display.regularPrice}</s>}
           <span class="price__cur">$</span>
-          <span class="price__amt">{site.price.amount}</span>
+          <span class="price__amt">{display.amount}</span>
         </div>
+        {display.offerNote && <p class="price__offer">{display.offerNote}</p>}
         <p class="price__per">
           {display.priceCurrency} Not per month. Not per year. Not per photo.
         </p>
@@ -91,6 +94,11 @@ const included = [
     align-self: flex-start; margin-top: .12em;
   }
   .price__per { font-size: var(--fs-body); color: var(--t2); }
+  .price__was {
+    font-family: var(--serif); font-size: clamp(24px, 2.8vw, 34px); color: var(--t3);
+    align-self: center; margin-right: 10px; text-decoration-thickness: 2px;
+  }
+  .price__offer { font-size: var(--fs-small); font-weight: 620; color: var(--accent-t); margin-top: -8px; }
   .price__plat { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
   .price__plat span {
     display: inline-flex; align-items: center; gap: 7px; padding: 5px 13px;

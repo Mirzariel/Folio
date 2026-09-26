@@ -1,8 +1,9 @@
 ---
 /**
- * The duplicates task, working: one group of identical copies, marks you can
- * change, and a Recycle Bin you can empty back out. Behaviour and the rule that
- * one copy always remains: src/scripts/demos/dupes.ts.
+ * The duplicates task, working: one group of identical copies, the two marks
+ * the app offers per copy (Mark for removal, Keep as backup), Let Folio choose,
+ * and the move to the Recycle Bin. Restoring happens in Windows, as in the app;
+ * the demo only offers to reset itself. Behaviour: src/scripts/demos/dupes.ts.
  */
 import { Image } from 'astro:assets';
 import Icon from '@/components/primitives/Icon.astro';
@@ -23,24 +24,27 @@ import { dupCopies, dupName, dupSizeMb } from '@/data/dupes';
 
   <div class="dup__copies">
     {dupCopies.map((copy, i) => (
-      <article class={`dup__c${copy.backup ? ' is-backup' : ''}`} data-i={i}>
+      <article class="dup__c" data-i={i}>
         <div class="dup__pic">
           <Image src={photo} alt={i === 0 ? `One of ${dupCopies.length} identical copies of the same photograph` : ''} width={360} height={270} loading="lazy" />
           <span class="dup__tag"><Icon name="recycle" size={12} />To Recycle Bin</span>
         </div>
         <p class="dup__path" title={copy.path}>{copy.path}</p>
-        <p class="dup__place"><Icon name={copy.backup ? 'shield' : 'folder'} size={13} />{copy.place}</p>
+        {copy.sharesVolume && <p class="dup__place"><Icon name="folder" size={13} />Same storage volume as another copy</p>}
         <p class="dup__fate"><Icon name="check-c" size={14} /><span>This copy will remain</span></p>
         <p class="dup__refuse" role="status"></p>
-        <button type="button" class="dup__toggle" aria-pressed="false">Mark for removal</button>
+        <div class="dup__acts2">
+          <button type="button" class="dup__toggle" aria-pressed="false">Mark for removal</button>
+          <button type="button" class="dup__keep" aria-pressed="false"><Icon name="shield" size={12} />Keep as backup</button>
+        </div>
       </article>
     ))}
   </div>
 
   <div class="dup__done" id="dupDone" hidden>
     <Icon name="check-c" size={18} />
-    <p><b id="dupDoneN">0 copies moved to the Recycle Bin.</b> You can put any of them back.</p>
-    <button type="button" class="btn btn--ghost btn--sm" id="dupRestore">Put them back</button>
+    <p><b id="dupDoneN">0 copies moved to the Recycle Bin.</b> You can put any of them back from the Windows Recycle Bin.</p>
+    <button type="button" class="btn btn--ghost btn--sm" id="dupRestore">Reset the demo</button>
   </div>
 
   <div class="dup__confirm" id="dupConfirm" role="dialog" aria-modal="true" aria-labelledby="dupConfirmT" hidden>
@@ -88,16 +92,17 @@ import { dupCopies, dupName, dupSizeMb } from '@/data/dupes';
   .dup__path { font-family: var(--mono); font-size: 11px; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; direction: rtl; text-align: left; }
   .dup__place, .dup__fate { display: flex; gap: 6px; align-items: center; font-size: 11.5px; color: var(--t3); line-height: 1.35; }
   .dup__place :global(svg), .dup__fate :global(svg) { flex: 0 0 auto; }
-  .dup__c.is-backup .dup__place { color: var(--accent-t); }
   .dup__fate { color: var(--good); font-size: 12px; }
   .dup__c.is-marked .dup__fate { color: var(--accent-t); }
   .dup__c.is-binned .dup__fate { color: var(--t3); }
   .dup__refuse { font-size: 11.5px; color: var(--bad); min-height: 0; }
   .dup__refuse:empty { display: none; }
-  .dup__toggle { align-self: flex-start; margin-top: 2px; padding: 6px 11px; border: 1px solid var(--border-2); border-radius: 5px; font-size: 12px; color: var(--t1); transition: border-color .2s, background .2s; }
-  .dup__toggle:hover { border-color: var(--accent); }
+  .dup__acts2 { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+  .dup__toggle, .dup__keep { display: inline-flex; align-items: center; gap: 5px; padding: 6px 10px; border: 1px solid var(--border-2); border-radius: 5px; font-size: 12px; color: var(--t1); transition: border-color .2s, background .2s; }
+  .dup__toggle:hover, .dup__keep:hover { border-color: var(--accent); }
   .dup__toggle[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-w); color: var(--accent-t); }
-  .dup__toggle:disabled { opacity: .4; cursor: default; }
+  .dup__keep[aria-pressed="true"] { border-color: var(--good); color: var(--good); }
+  .dup__toggle:disabled, .dup__keep:disabled { opacity: .4; cursor: default; }
 
   .dup__done { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 20px; padding: 12px 16px; border: 1px solid var(--good); border-radius: 6px; color: var(--good); animation: capIn .45s var(--ease) both; }
   .dup__done[hidden] { display: none; }

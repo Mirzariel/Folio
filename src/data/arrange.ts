@@ -25,6 +25,7 @@ export const arrangeDepths = [
 
 export const arrangeStyles = [
   { id: 'nested', label: 'Nested', sep: '\\' },
+  { id: 'full', label: 'Nested, full date', sep: '\\' },
   { id: 'dashed', label: 'Dashed', sep: '-' },
   { id: 'under', label: 'Underscored', sep: '_' },
 ] as const;
@@ -37,8 +38,12 @@ export function destFor(taken: string | null, depth: Depth, style: Style): strin
   if (!taken) return null;
   const [y, m, d] = taken.split('-');
   const parts = depth === 'y' ? [y] : depth === 'm' ? [y, m] : [y, m, d];
+  if (depth === 'y') return `${y}\\`;
+  /* "Nested, full date" repeats the date so far at each level: 2019\\2019_08. This is
+     the app's arFolderFor (ui/src/pages/task/naming.ts). */
+  if (style === 'full') return `${parts.map((_, i) => parts.slice(0, i + 1).join('_')).join('\\')}\\`;
   const sep = arrangeStyles.find((s) => s.id === style)!.sep;
-  return `${parts.join(depth === 'y' ? '' : sep)}\\`;
+  return `${parts.join(sep)}\\`;
 }
 
 /** Every folder the plan would create, parents included when nested. */

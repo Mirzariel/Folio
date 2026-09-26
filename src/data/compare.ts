@@ -44,7 +44,7 @@ export const compareRows: readonly CompareRow[] = [
   },
   {
     feature: 'Backup copies on another drive',
-    folio: 'Recognized as possibly deliberate, and protectable',
+    folio: 'Yours to protect: a copy marked Keep as backup is never offered for removal',
     cloud: 'Not modelled',
     cleaner: 'Usually counted as waste to be deleted',
   },
@@ -56,7 +56,7 @@ export const compareRows: readonly CompareRow[] = [
   },
   {
     feature: 'Works offline',
-    folio: 'Entirely',
+    folio: 'Yes, after a one-time activation',
     cloud: 'No',
     cleaner: 'Usually',
   },

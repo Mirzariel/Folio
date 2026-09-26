@@ -17,27 +17,33 @@ exists.
 For the US market prefer a provider that acts as **merchant of record** (Paddle, Lemon Squeezy,
 Gumroad). They handle US sales tax and EU VAT. Stripe alone does not.
 
-## 2. Confirm the two binding promises
+## 2. The price, the launch offer, and the binding promises
 
-These are commitments to every buyer, not facts about the code. Both are stated plainly on the
-page, so they need to be true. Both live in `src/config/site.ts`.
+All of these live in `src/config/site.ts` and update the whole site at once.
 
-| Promise | Field | Decide |
+**Regular price** `price.amount` is 20 (USD). **Launch offer** `launchOffer` is 15 USD through
+October 2, 2026 (`endsAt` is 2026-10-03 00:00 +07:00). The page shows the offer, with the $20
+crossed out and the end date, only when it is built before `endsAt`, so rebuild and redeploy on
+or after October 3 and it disappears by itself. Two things only you can do:
+
+- **Make the checkout charge the same thing.** In Lemon Squeezy, keep the product at $20 and
+  create a $5-off (or 25%) discount that expires at the same moment, applied automatically
+  through the checkout link (`?checkout[discount_code]=YOURCODE`); or set the price to $15 and
+  change it back to $20 on October 3. The page and the checkout must agree.
+- **Really charge $20 afterwards.** Showing "$20" crossed out is only honest if $20 is the price
+  that applies after the offer. Do not extend the offer indefinitely; set a new, dated one or
+  none.
+
+| Promise | Field | Note |
 |---|---|---|
-| macOS at no extra cost when it ships | `license.macOsIncluded` | Are you really giving Windows buyers the Mac build free? If macOS slips two years or is cancelled, this is the line people will quote back at you. The page repeats "no release date" next to it, which is your protection. |
-| Up to N personal devices | `license.devices` | Whatever number you pick must match what your licence server actually enforces. |
+| macOS at no extra cost when it ships | `license.macOsIncluded` | The page repeats "no release date" next to it, which is your protection. |
+| Activations per license | `license.devices` | 3, matching the activation limit the app requires from Lemon Squeezy. Set the product's activation limit to 3. |
+| Free updates for life, major versions included | `license.updatesForLife` | Chosen on 2026-09-26, matching FOLIO_LICENSING_SPEC.md. You cannot later sell a major version separately to existing buyers. |
 
-Also confirm `license.updatesScope`. Changing any of these updates the pricing list, the FAQ,
-the comparison table and the closing section at once.
-
-**There is no refund window.** The site does not advertise one, and the FAQ no longer answers a
-refund question. `src/content/legal/terms.md` states the position: no advertised period,
-statutory rights unaffected, and the merchant of record's own policy still applies. Two things
-follow. Most payment providers require a refund policy before they approve an account, so check
-your provider's rules against that page. And in the EU and UK a consumer normally has a 14-day
-right to withdraw from a digital purchase unless they expressly consent to immediate delivery
-and acknowledge losing it; the terms page relies on that consent, so your checkout has to
-actually collect it. Confirm your provider does.
+**Refunds.** `terms.md` offers a full refund within 14 days if Folio does not install, run, or do
+what the site says and it cannot be fixed. That also keeps the terms clear of Indonesian consumer
+law's ban on "no refund" standard clauses (UU 8/1999, article 18). Set the same policy in Lemon
+Squeezy, and refund through Lemon Squeezy so the key is disabled.
 
 ## 3. Confirm the support email, and connect the feedback form
 
@@ -50,25 +56,27 @@ inbox that should receive messages, and paste the access key it emails you into
 email link instead of a form, and the check reports it as a launch blocker. Once it is set, send
 one real test message and confirm it arrives.
 
-## 4. Fill in the legal pages, then have them reviewed
+## 4. The legal pages
 
-`src/content/legal/privacy.md`, `terms.md` and `license.md` are written and no longer drafts.
-They describe how Folio actually behaves and what this site actually promises. **They are not
-legal advice and have not been reviewed by a lawyer.**
+`src/content/legal/privacy.md`, `terms.md` and `license.md` are complete, with no placeholders,
+as of 2026-09-26. The choices behind them:
 
-Four facts in them are yours, and no one else can supply them. They are written as `[[TOKEN]]`
-placeholders, and `npm run check:copy` reports every one as a launch blocker, so a
-finished-looking Terms page with a blank in it cannot reach a buyer:
+- The licensor is named as **"the Folio developer"**, contact `folioarchive@gmail.com`. Lemon
+  Squeezy, LLC is the merchant of record and seller of record for payments.
+- Governing law: **the Republic of Indonesia**. Consumers keep their own country's mandatory
+  protections.
+- The privacy policy describes every network request the app makes (license activation and
+  weekly checks to Lemon Squeezy, daily update checks to GitHub) and follows the rights in
+  Indonesia's personal data protection law (UU 27/2022).
 
-| Token | What it is |
-|---|---|
-| `[[SELLER]]` | The legal entity or trading name behind Folio, and its contact address. |
-| `[[JURISDICTION]]` | The governing law and courts. Normally where the seller is established. |
-| `[[PROVIDER]]` | The payment provider acting as merchant of record. Decided in step 1. |
-| `[[SUPPORT_EMAIL]]` | The same address as `support.email` in `src/config/site.ts`, step 3. |
+**Not legal advice.** They were written to match the product exactly, not reviewed by a lawyer.
+Three things are worth a lawyer's hour when you can afford one: whether an unnamed licensor is
+enough for you (a real name or registered business is stronger if there is ever a dispute),
+whether you need an Indonesian-language version for Indonesian buyers (UU 24/2009, article 31),
+and whether your income needs registering for tax in Indonesia.
 
-Replace every token, then have a lawyer read all three. A product sold on being checkable cannot
-afford terms nobody checked.
+If the app's behavior changes (a new network request, a different update policy), change the
+privacy policy before that build ships. The privacy policy promises exactly that.
 
 ## 5. Set the domain
 

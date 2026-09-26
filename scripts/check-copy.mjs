@@ -48,6 +48,7 @@ for (const file of srcFiles) {
    a stale price survives an edit. */
 const FIGURES = [
   [/\$20\b/, '$20'],
+  [/\$15\b/, '$15'],
   [/\b84\.2\b/, '84.2'],
   [/\b128,432\b/, '128,432'],
   [/\b12,480\b/, '12,480'],

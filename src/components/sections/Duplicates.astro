@@ -24,18 +24,24 @@ const rules = [
     <div class="chapter__head rv">
       <p class="kicker kicker--accent">02 &middot; Find duplicates</p>
       <SplitHeading lines={['You choose what to keep.', 'Folio proves what is identical.']} class="mega mega--md" />
-      <p class="lede">Mark copies yourself, or let Folio suggest. Try marking all four. Then send them to the Recycle Bin, and bring them back.</p>
+      <p class="lede">Mark copies yourself, protect one with Keep as backup, or let Folio choose. Try marking all four.</p>
     </div>
 
-    <Window name="Find duplicates" back statusId="dupStatus" status="Results reflect the current catalog" cue="Try it" cueHint="mark, review, remove, then put them back.">
+    <Window name="Find duplicates" back statusId="dupStatus" status="Results reflect the current catalog" cue="Try it" cueHint="mark, protect, review, then remove.">
       <DupDemo />
     </Window>
 
     <TrustList items={rules} variant="center" class="rv dupes__rules" />
+    <p class="tiny center rv dupes__note">
+      When Windows cannot guarantee a copy can be restored, Folio refuses and says why: on USB
+      flash drives and SD cards, on exFAT drives, when the Recycle Bin is off or too full, and for a
+      file larger than the Recycle Bin. Nothing is ever deleted permanently instead.
+    </p>
   </div>
 </section>
 
 <style>
   .dupes { background: var(--bg); color: var(--t1); }
   .dupes :global(.dupes__rules) { margin-top: clamp(28px, 4vw, 44px); }
+  .dupes__note { margin: 18px auto 0; max-width: 72ch; }
 </style>
