@@ -74,6 +74,16 @@ export const faqEntries: readonly FaqEntry[] = [
     ],
   },
   {
+    question: 'Does it run on Windows 10?',
+    answer: [
+      `It is built to, but it has only been tested on ${site.platforms.shipping.join(' and ')} ` +
+        `so far. ${site.platforms.untested.join(' and ')} should work; on a computer without ` +
+        'Microsoft Edge WebView2 the installer adds it, which needs an internet connection once.',
+      'If it does not run on your Windows 10 computer, write within 14 days of buying and you ' +
+        'get a full refund.',
+    ],
+  },
+  {
     question: 'Is there a Mac version?',
     answer: [
       'In development, and your license already covers it. Folio is a Windows ' +

@@ -14,7 +14,13 @@ const changelog = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/changelog' }),
   schema: z.object({
     version: z.string(),
-    date: z.coerce.date(),
+    /**
+     * "beta" until the version is really released. A beta entry has no date:
+     * AGENTS.md forbids a release date for anything still in development.
+     */
+    status: z.enum(['released', 'beta']).default('released'),
+    /** Required once released. */
+    date: z.coerce.date().optional(),
     /** Shown as a tag. "Windows" until a second platform ships. */
     platform: z.string().default('Windows'),
     summary: z.string(),

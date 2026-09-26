@@ -77,6 +77,7 @@ const schema = z.object({
 
   platforms: z.object({
     shipping: z.array(z.string()).nonempty(),
+    untested: z.array(z.string()),
     inDevelopment: z.array(z.string()).nonempty(),
   }),
 
@@ -127,7 +128,9 @@ const config = schema.parse({
   },
 
   platforms: {
-    shipping: ['Windows 11', 'Windows 10'],
+    shipping: ['Windows 11'],
+    /** Built for, but not yet tested by anyone. Said as such wherever it appears. */
+    untested: ['Windows 10 (version 1809 or later)'],
     inDevelopment: ['macOS', 'Import from phone and camera'],
   },
 

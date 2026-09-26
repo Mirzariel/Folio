@@ -54,9 +54,11 @@ responsibility.
 
 ## System requirements
 
-Folio runs on 64-bit Windows 11 and Windows 10 (version 1809 or later). On Windows 10 the
-installer may need to install Microsoft Edge WebView2, which requires an internet connection
-once. Activating your license requires an internet connection once.
+Folio runs on 64-bit Windows 11. It is built to run on 64-bit Windows 10 (version 1809 or later)
+too, but that has not been tested yet; if it does not run on your Windows 10 computer, the refund
+below applies. On Windows 10 the installer may need to install Microsoft Edge WebView2, which
+requires an internet connection once. Activating your license requires an internet connection
+once.
 
 ## Delivery
 
