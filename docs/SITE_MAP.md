@@ -27,9 +27,10 @@ Commercial facts never live in a component. They come from `src/config/site.ts` 
 | The plan window, Plan to Done | src/components/mockup/PlanScreen.astro | src/data/mockup.ts (`planRows`, `planFlow`) |
 | Six safety cards | src/components/sections/Safety.astro | src/data/safety.ts |
 | Local-first section | src/components/sections/Private.astro | inline, one section |
-| Comparison table | src/components/sections/Compare.astro | src/data/compare.ts |
+| Comparison table, verdict icons | src/components/sections/Compare.astro | src/data/compare.ts |
 | Roadmap, the two in-development items | src/components/sections/Roadmap.astro | src/data/roadmap.ts |
-| Pricing card, launch offer and the included list | src/components/sections/Pricing.astro | src/config/site.ts (`price`, `launchOffer`) |
+| Pricing card and the included list | src/components/sections/Pricing.astro | src/config/site.ts (`price`, `launchOffer`) |
+| Launch offer: banner, sticker, countdown, price drop | src/components/pricing/OfferCard.astro | src/config/site.ts (`launchOffer`), countdown in src/scripts/offer.ts, ending via `html.offer-ended` (BaseLayout, components.css) |
 | A note from the developer, support | src/components/sections/Developer.astro | inline, first person |
 | FAQ | src/components/sections/Faq.astro | **src/data/faq.ts** |
 | Feedback and feature requests | src/components/sections/Feedback.astro, src/components/FeedbackForm.astro | src/data/feedback.ts, behaviour in src/scripts/feedback.ts, Web3Forms key in src/config/site.ts |
@@ -82,6 +83,8 @@ in `motion/index.ts` and receive a `reduced` flag.
 | renameType.ts | the preview updates before you commit (types into the real field once) |
 | tourAutoplay.ts | nothing changes until you approve, played once for a visitor who only watches |
 | wordLight.ts | these are rules, read at the visitor's own pace |
+| priceDrop.ts | the launch price really is lower than the regular one |
+| spotlight.ts | infrastructure: surfaces catch the pointer's light |
 | reveal.ts, navProgress.ts, tilt.ts | infrastructure, no claim |
 | loop.ts | infrastructure: a demo repeats while on screen, and only while on screen |
 
