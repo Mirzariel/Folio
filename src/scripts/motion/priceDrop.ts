@@ -39,6 +39,10 @@ export const initPriceDrop: MotionModule = (reduced) => {
         onUpdate: () => { amount.textContent = String(Math.round(state.v)); },
         onComplete: () => { amount.textContent = String(to); },
       });
+      /* The price a buyer pays must not depend on the animation finishing: a
+         tab that stops painting mid-count would otherwise be left showing the
+         regular price. A timer lands the real figure regardless. */
+      window.setTimeout(() => { amount.textContent = String(to); }, 1800);
     },
   });
 
