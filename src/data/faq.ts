@@ -29,8 +29,13 @@ export const faqEntries: readonly FaqEntry[] = [
       'Where Windows cannot guarantee that a copy can be restored, Folio refuses the cleanup ' +
         'and says why: on USB flash drives and SD cards, on exFAT drives, when the Recycle Bin ' +
         'is off or too full, and for a file larger than the Recycle Bin.',
-      'Today’s Folio has no permanent delete at all. Emptying the Recycle Bin stays your ' +
-        'decision, made in Windows.',
+      'Cleanup never deletes permanently. Emptying the Recycle Bin stays your decision, made ' +
+        'in Windows.',
+      'There is one exception, and it is off until you turn it on. When you import from a ' +
+        'camera card, Settings has <b>Allow deleting imported files from the card</b>. With it ' +
+        'on, Folio can delete a card file only after it has re-read your copy and the card ' +
+        'file and found them identical, and only from a plan you approve. By default imported ' +
+        'files are moved into an Imported folder on the card, not deleted.',
     ],
   },
   {
@@ -71,6 +76,32 @@ export const faqEntries: readonly FaqEntry[] = [
       'Two limits today: Folio does not yet read the capture date from ORF, RW2, CR3 and RAF ' +
         'files, so organizing by date leaves those where they are. Previews of HEIC, AVIF and ' +
         'RAW depend on the image support installed in Windows.',
+    ],
+  },
+  {
+    question: 'Windows says “Windows protected your PC” when I run the installer. Is that safe?',
+    answer: [
+      'Yes, that message is expected, and nothing is wrong with the file. Folio does not ' +
+        'carry a digital signature yet. That signature is the publisher fingerprint Windows ' +
+        'SmartScreen looks for, and a brand-new installer has no download history either. ' +
+        'Windows shows the same warning for any installer in that position.',
+      'To continue, choose <b>More info</b>, then <b>Run anyway</b>. To make sure you have ' +
+        'the genuine file first, compare its SHA-256 with the one on the download page. In ' +
+        'PowerShell, run Get-FileHash on the installer you downloaded.',
+      'We plan to sign future releases, and there is no date for that yet. Until then Folio ' +
+        'also has no automatic updates: when a new version comes out, you download the ' +
+        'installer again. Your license and your catalog carry over.',
+    ],
+  },
+  {
+    question: 'Can Folio import from my camera’s memory card?',
+    answer: [
+      'Yes. Plug in the card and Folio offers to copy or move what is new, organized by ' +
+        'date on the way in. Plug the same card in later and it shows only what you have not ' +
+        'imported yet. There is also a Safe eject button for when you are done.',
+      'Being straight with you: this is new in 1.0 and has had less real-world testing than ' +
+        'the rest of Folio. Start with <b>Copy</b>, check the result, and leave deleting from ' +
+        'the card turned off until you trust it.',
     ],
   },
   {

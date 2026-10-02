@@ -45,6 +45,17 @@ const requirements = [
         <p class="tiny dl__note">
           Bought already? Your download link and license key are in your purchase email.
         </p>
+        <div class="dl__hash tiny">
+          <span><b>{site.installer.fileName}</b></span>
+          <span>SHA-256</span>
+          <code>{site.installer.sha256}</code>
+          {!site.installer.signed && (
+            <span>
+              Windows may show “Windows protected your PC”, because this installer is not
+              digitally signed yet. Choose More info, then Run anyway. See the FAQ.
+            </span>
+          )}
+        </div>
       </div>
 
       <TrustList items={requirements} variant="center" />
@@ -72,6 +83,8 @@ const requirements = [
   .dl__plat .small { display: block; }
   .dl__box :global(.btn) { width: 100%; }
   .dl__note { text-align: center; }
+  .dl__hash { display: grid; gap: 4px; color: var(--t2); }
+  .dl__hash code { font-family: ui-monospace, monospace; font-size: 11.5px; word-break: break-all; color: var(--t1); }
   .dl__soon {
     margin-top: clamp(26px, 3vw, 36px); display: inline-flex; gap: 9px;
     align-items: flex-start; text-align: left; max-width: 56ch;

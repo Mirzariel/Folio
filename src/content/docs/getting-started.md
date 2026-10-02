@@ -8,8 +8,8 @@ order: 1
 
 Add a folder or a drive as a location: from the Library with Add location, or by dropping the
 folder on one of the three doors on the home screen. Folio can hold several locations at once.
-Photos on a phone or camera need to be copied to a folder first; importing from them directly
-is not in today's build.
+Photos on a phone need to be copied to a folder first; importing directly from a phone is not
+in today's build. A camera memory card can be imported from the Import screen once it is plugged in.
 
 ## Let it read
 

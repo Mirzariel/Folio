@@ -104,6 +104,14 @@ const schema = z.object({
     galleryItems: z.number().int(),
   }),
 
+  /** The installer a buyer downloads. Update when a new build is uploaded to the store. */
+  installer: z.object({
+    version: z.string(),
+    fileName: z.string(),
+    sha256: z.string().regex(/^[0-9A-F]{64}$/),
+    signed: z.boolean(),
+  }),
+
   unsplashUrl: z.url(),
 });
 
@@ -116,14 +124,10 @@ const config = schema.parse({
     'Find exact duplicates, organize by date, rename in bulk, and see the whole plan ' +
     'before anything changes.',
 
-  price: { amount: 20, currency: 'USD' },
-  launchOffer: {
-    amount: 10,
-    endsAt: '2026-10-03T00:00:00Z',
-    lastDay: 'October 2, 2026',
-    discountCode: 'LAUNCH10',
-  },
-  checkoutUrl: 'https://folioarchiveapp.lemonsqueezy.com/checkout/buy/db33bfdf-fc27-4662-b70e-4d9b4db49aad',
+  price: { amount: 10, currency: 'USD' },
+  /** The launch offer ended on October 2, 2026. $10 is now the regular price. */
+  launchOffer: null,
+  checkoutUrl: 'https://folioarchiveapp.lemonsqueezy.com/checkout/buy/16a759d8-e1c9-422d-a7a0-8305dd5bb644',
   support: { email: 'folioarchive@gmail.com' },
   feedback: { accessKey: '' },
 
@@ -138,7 +142,7 @@ const config = schema.parse({
     shipping: ['Windows 11'],
     /** Built for, but not yet tested by anyone. Said as such wherever it appears. */
     untested: ['Windows 10 (version 1809 or later)'],
-    inDevelopment: ['macOS', 'Import from phone and camera'],
+    inDevelopment: ['macOS', 'Import from phone'],
   },
 
   canvas: {
@@ -152,6 +156,13 @@ const config = schema.parse({
     sourcePath: 'D:\\Family Archive',
     galleryMonth: 'August 2019',
     galleryItems: 1204,
+  },
+
+  installer: {
+    version: '1.0.0',
+    fileName: 'Folio-1.0.0-Unsigned-Setup.exe',
+    sha256: 'FF0974A76B3B4374B8390F329591D37B3CB84B5442643CF8011914DE280E4D4D',
+    signed: false,
   },
 
   unsplashUrl: 'https://unsplash.com',

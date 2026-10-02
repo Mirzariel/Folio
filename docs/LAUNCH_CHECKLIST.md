@@ -21,18 +21,18 @@ Gumroad). They handle US sales tax and EU VAT. Stripe alone does not.
 
 All of these live in `src/config/site.ts` and update the whole site at once.
 
-**Regular price** `price.amount` is 20 (USD). **Launch offer** `launchOffer` is 10 USD (50% off) through
-October 2, 2026 (`endsAt` is 2026-10-03 00:00 UTC, 07:00 WIB, the same moment the `LAUNCH10` code expires in Lemon Squeezy). The page shows the offer, with the $20
-crossed out and the end date, only when it is built before `endsAt`, so rebuild and redeploy on
-or after October 3 and it disappears by itself. Two things only you can do:
+**Price** `price.amount` is 10 (USD), once. The launch offer (USD 10 through October 2, 2026, then 20) is over:
+`launchOffer` is `null`, so the page shows $10 as the regular price with no crossed-out figure, banner or
+countdown. The Lemon Squeezy product "Folio - Personal License" is priced at $10 and has no discount code.
+Two things only you can do:
 
-- **Make the checkout charge the same thing.** In Lemon Squeezy, keep the product at $20 and
-  create a $10-off (50%) discount that expires at the same moment, applied automatically
-  through the checkout link (`?checkout[discount_code]=YOURCODE`); or set the price to $10 and
-  change it back to $20 on October 3. The page and the checkout must agree.
-- **Really charge $20 afterwards.** Showing "$20" crossed out is only honest if $20 is the price
-  that applies after the offer. Do not extend the offer indefinitely; set a new, dated one or
-  none.
+- **Keep the checkout and the page in agreement.** If you ever change the price in Lemon Squeezy, change
+  `price.amount` in the same commit.
+- **Do not bring back a crossed-out higher price** unless it genuinely applies afterwards. A new launch offer
+  must be a new, dated `launchOffer` with a matching discount that expires at the same moment.
+
+**Installer facts** `installer` holds the file name and SHA-256 shown on /download. Update both whenever a new
+build is uploaded to the store, and set `signed: true` only once the installer carries a valid Authenticode signature.
 
 | Promise | Field | Note |
 |---|---|---|

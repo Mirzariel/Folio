@@ -15,11 +15,11 @@ export interface RoadmapCard {
 export const roadmapCards: readonly RoadmapCard[] = [
   {
     icon: 'phone',
-    title: 'Import from phone and camera',
+    title: 'Import from phone',
     body:
-      'A plugged-in phone or camera is a connected source, not automatically a Folio ' +
-      'library. When the transfer flow lands, copy is the default and the destination is ' +
-      'verified before anything is freed.',
+      'A plugged-in phone is a connected source, not automatically a Folio library. ' +
+      'When the transfer flow lands, copy is the default and the destination is ' +
+      'verified before anything is freed. Camera memory cards already import today.',
   },
   {
     icon: 'apple',

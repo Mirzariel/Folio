@@ -42,7 +42,7 @@ the one on your receipt; a later lower price does not entitle you to a partial r
 ## What is not promised
 
 **No release date for anything in development.** Folio for macOS and importing directly from a
-phone or camera are described on this site as direction, not delivery. Neither has a date, and
+phone are described on this site as direction, not delivery. Neither has a date, and
 neither is what your payment is for. If either is the reason you want Folio, please wait.
 
 **No risk-free file operation.** No such thing exists, and Folio does not claim one. What it
