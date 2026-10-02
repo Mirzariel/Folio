@@ -40,10 +40,10 @@ build is uploaded to the store, and set `signed: true` only once the installer c
 | Activations per license | `license.devices` | 3, matching the activation limit the app requires from Lemon Squeezy. Set the product's activation limit to 3. |
 | Free updates for life, major versions included | `license.updatesForLife` | Chosen on 2026-09-26, matching FOLIO_LICENSING_SPEC.md. You cannot later sell a major version separately to existing buyers. |
 
-**Refunds.** `terms.md` offers a full refund within 14 days if Folio does not install, run, or do
-what the site says and it cannot be fixed. That also keeps the terms clear of Indonesian consumer
-law's ban on "no refund" standard clauses (UU 8/1999, article 18). Set the same policy in Lemon
-Squeezy, and refund through Lemon Squeezy so the key is disabled.
+**Refunds.** The site no longer mentions refunds (removed on 2026-10-03 at the owner's request),
+including the Refunds section of `terms.md`. Indonesian consumer law bans "no refund" standard
+clauses (UU 8/1999, article 18), and Lemon Squeezy applies its own refund policy at checkout, so
+decide deliberately before launch whether the terms should say something.
 
 ## 3. Confirm the support email, and connect the feedback form
 

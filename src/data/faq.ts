@@ -110,8 +110,6 @@ export const faqEntries: readonly FaqEntry[] = [
       `It is built to, but it has only been tested on ${site.platforms.shipping.join(' and ')} ` +
         `so far. ${site.platforms.untested.join(' and ')} should work; on a computer without ` +
         'Microsoft Edge WebView2 the installer adds it, which needs an internet connection once.',
-      'If it does not run on your Windows 10 computer, write within 14 days of buying and you ' +
-        'get a full refund.',
     ],
   },
   {

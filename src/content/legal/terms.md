@@ -37,7 +37,7 @@ at checkout and shown before you pay.
 
 We may offer a launch price for a stated period. When we do, the page says when it ends and what
 the regular price is afterwards, and the checkout charges the price shown. The price you pay is
-the one on your receipt; a later lower price does not entitle you to a partial refund.
+the one on your receipt; a later lower price does not change what you paid.
 
 ## What is not promised
 
@@ -55,8 +55,7 @@ responsibility.
 ## System requirements
 
 Folio runs on 64-bit Windows 11. It is built to run on 64-bit Windows 10 (version 1809 or later)
-too, but that has not been tested yet; if it does not run on your Windows 10 computer, the refund
-below applies. On Windows 10 the installer may need to install Microsoft Edge WebView2, which
+too, but that has not been tested yet. On Windows 10 the installer may need to install Microsoft Edge WebView2, which
 requires an internet connection once. Activating your license requires an internet connection
 once.
 
@@ -65,19 +64,6 @@ once.
 Delivery is electronic and immediate. Your license key and download link are sent to the email
 address you give at checkout, and appear on your order receipt. If they do not arrive, write to
 folioarchive@gmail.com and we will send them again.
-
-## Refunds
-
-If Folio does not install or run on your computer, or does not do what this site says it does,
-write to folioarchive@gmail.com **within 14 days of your purchase** and tell us what happened. If
-we cannot fix it, you get a full refund. When a license is refunded, its key is disabled.
-
-Beyond that:
-
-- **Your statutory rights are unaffected.** Where the law of your country gives you a right to a
-  refund or another remedy, you have it, whatever this page says.
-- **The merchant of record has its own policy.** Lemon Squeezy may also refund a payment under
-  its own rules, including a charge you did not authorize.
 
 ## Your license
 

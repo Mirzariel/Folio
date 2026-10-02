@@ -55,7 +55,7 @@ A failed or skipped update never affects your access to Folio.
 The first activation needs an internet connection. After that, Folio works offline indefinitely.
 When it is online, Folio confirms your license with the license server about once a week. Being
 offline, a slow connection or a server error never removes your access. Only a definite answer
-from the license server can end it: that the key has been disabled (as happens after a refund),
+from the license server can end it: that the key has been disabled,
 has expired, belongs to another product, or does not exist.
 What these checks send is described in the [Privacy Policy](/privacy).
 

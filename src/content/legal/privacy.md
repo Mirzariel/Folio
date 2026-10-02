@@ -69,8 +69,7 @@ requires: your name, email address, billing country and payment details, under i
 policy, which is linked from the checkout. **We never see your card details.**
 
 From a completed order we receive your name, email address, country, what you bought and your
-license key. We use them to deliver your license, to answer you when you write, to handle a
-refund, and to keep the records tax law requires. We do not sell them, and we do not add you to
+license key. We use them to deliver your license, to answer you when you write, and to keep the records tax law requires. We do not sell them, and we do not add you to
 a mailing list.
 
 ## Why we may use your data
