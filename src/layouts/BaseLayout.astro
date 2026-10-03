@@ -9,6 +9,7 @@
 import Nav from '@/components/chrome/Nav.astro';
 import Footer from '@/components/chrome/Footer.astro';
 import BuyBar from '@/components/chrome/BuyBar.astro';
+import Analytics from '@vercel/analytics/astro';
 import { site, display } from '@/config/site';
 
 /* Self-hosted, so a page load contacts no third party. The privacy page says
@@ -71,6 +72,10 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
     <meta name="twitter:title" content={ogTitle} />
     <meta name="twitter:description" content={ogDescription} />
     <meta name="twitter:image" content={ogImage} />
+
+    <!-- Vercel Web Analytics: cookieless page views. Served from this site's own
+         /_vercel path, so it adds no third-party request. privacy.md says so. -->
+    <Analytics />
 
     <!-- Gates every reveal. Without scripting the page is static and complete. -->
     <script is:inline>document.documentElement.classList.add('js');</script>

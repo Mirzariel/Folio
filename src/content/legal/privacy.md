@@ -1,7 +1,7 @@
 ---
 title: Privacy Policy
 description: What Folio collects, what it does not, and what this website stores.
-updated: 2026-09-26
+updated: 2026-10-03
 draft: false
 ---
 
@@ -47,11 +47,14 @@ identifier. Nothing is sent when you scan, review, organize, rename or clean up.
 
 ## This website
 
-**No analytics and no cookies.** This site sets no cookies, runs no tracker, and builds no
-profile of you.
+**Page-view counts, and no cookies.** This site uses Vercel Web Analytics to count visits and
+see which pages are read. It sets no cookies and does not follow you from one site to another.
+It records the page address, the referring site, your browser, operating system and device type,
+and your country, and it tells repeat visits apart for a single day without storing your IP
+address. We use this only to see how many people read the site. It builds no profile of you.
 
-**No third-party requests when a page loads.** The typefaces are served by this site itself, so
-opening a page contacts no one else.
+**No third-party requests when a page loads.** The typefaces and the analytics script are
+served by this site itself, so opening a page contacts no one else.
 
 **The feedback form, only when you send it.** If you use the feedback form, what you wrote is
 sent to Web3Forms, the service that delivers it to us by email: the kind of message you picked,

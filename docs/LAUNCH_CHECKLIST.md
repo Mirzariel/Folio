@@ -87,10 +87,13 @@ The 1200x630 card is at `public/og-card.png`. It is generated from the site pale
 headline is set in Georgia because it was composed on Windows. If you re-cut it, Spectral
 Semibold is the correct face.
 
-## 6. Add analytics, if you want any
+## 6. Analytics
 
-There is none. A privacy-respecting, cookie-free option (Plausible, Fathom, Umami) fits a
-product whose whole pitch is "nothing is uploaded" far better than Google Analytics does.
+The site runs Vercel Web Analytics (`<Analytics />` in `src/layouts/BaseLayout.astro`). It is
+cookieless and its script is served from this site's own `/_vercel` path. It only reports once
+Web Analytics is enabled for the project in the Vercel dashboard. A privacy-respecting,
+cookie-free option fits a product whose whole pitch is "nothing is uploaded" far better than
+Google Analytics does.
 
 There is no cookie banner, on purpose: the site sets no cookies and loads nothing from a third
 party, so a banner would ask consent for nothing and contradict the privacy page. If you ever add
