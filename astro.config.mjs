@@ -1,11 +1,11 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-// TODO before launch: set `site` to the real domain. The absolute og:image and
-// twitter:image URLs derive from it, and most social networks will not resolve
-// a relative one. See docs/LAUNCH_CHECKLIST.md.
+// `site` makes og:image and twitter:image absolute; X and most social networks
+// will not resolve a relative one. Change it when a custom domain replaces the
+// Vercel one. See docs/LAUNCH_CHECKLIST.md.
 export default defineConfig({
-  site: undefined,
+  site: 'https://folio-library.vercel.app',
   output: 'static',
   trailingSlash: 'ignore',
   /* Astro 7 defaults this to 'jsx', which collapses the whitespace around a
