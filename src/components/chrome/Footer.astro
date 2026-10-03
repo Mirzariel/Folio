@@ -43,6 +43,11 @@ const year = new Date().getFullYear();
         <a href={site.unsplashUrl} rel="noopener" class="link">Unsplash</a>
         and stand in for your own.
       </span>
+      {/* Plain static link, no rel="nofollow": ShowBuild checks the HTML for it to upgrade our listing to dofollow. */}
+      <a class="foot__badge" href="https://showbuild.co" target="_blank" rel="noopener" aria-label="Featured on ShowBuild">
+        <span class="foot__badge-sb" aria-hidden="true">SB</span>
+        <span>Featured on <strong>ShowBuild</strong></span>
+      </a>
     </div>
   </div>
 </footer>
@@ -84,6 +89,15 @@ const year = new Date().getFullYear();
   .foot__top-link { margin-left: 10px; color: var(--ink-t2); }
   .foot__top-link:hover { color: var(--ink-accent-t); }
   .foot a { transition: color .2s var(--ease); }
+  .foot__badge {
+    display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px 5px 6px;
+    border: 1px solid var(--ink-border); border-radius: 999px; color: var(--ink-t2);
+  }
+  .foot__badge strong { color: var(--ink-t1); font-weight: 600; }
+  .foot__badge-sb {
+    display: grid; place-items: center; width: 20px; height: 20px; border-radius: 6px;
+    background: var(--ink-t1); color: var(--ink-rail); font-size: 9px; font-weight: 700;
+  }
   .foot__bot {
     border-top: 1px solid var(--ink-border);
     padding-top: 24px; display: flex; flex-wrap: wrap; gap: 12px 24px;
