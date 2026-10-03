@@ -120,7 +120,7 @@ const config = schema.parse({
   tagline: 'You capture the moments. Folio organizes the memories.',
   visionTagline: 'You take the photographs. Folio looks after the archive.',
   description:
-    'Folio turns scattered photos on your PC and drives into an archive you can trust. ' +
+    'Folio is a Windows photo organizer that turns scattered photos on your PC and drives into an archive you can trust. ' +
     'Find exact duplicates, organize by date, rename in bulk, and see the whole plan ' +
     'before anything changes.',
 

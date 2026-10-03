@@ -32,6 +32,8 @@ interface Props {
   showBuyBar?: boolean;
   ogTitle?: string;
   ogDescription?: string;
+  /** Emits SoftwareApplication JSON-LD. Only the home page describes the product. */
+  productSchema?: boolean;
 }
 
 const {
@@ -40,7 +42,28 @@ const {
   showBuyBar = true,
   ogTitle = 'Folio, a personal photo archive manager',
   ogDescription = 'Folio organizes the scattered photos on your PC. It shows you the whole plan first, and nothing changes until you approve it.',
+  productSchema = false,
 } = Astro.props;
+
+/* Every value comes from site.ts, so the structured data cannot drift from the
+   page. No rating or review is included: there are no real ones yet. */
+const productJsonLd = productSchema && Astro.site ? {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: site.name,
+  description: site.description,
+  url: Astro.site.href,
+  image: new URL('/og-card.png', Astro.site).href,
+  applicationCategory: 'MultimediaApplication',
+  operatingSystem: site.platforms.shipping.join(', '),
+  offers: {
+    '@type': 'Offer',
+    price: String(display.amount),
+    priceCurrency: site.price.currency,
+    availability: 'https://schema.org/InStock',
+    url: site.checkoutUrl,
+  },
+} : null;
 
 /* Bump the version when public/og-card.png changes: X and others cache the card by URL. */
 const ogPath = '/og-card.png?v=2';
@@ -72,6 +95,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
     <meta name="twitter:title" content={ogTitle} />
     <meta name="twitter:description" content={ogDescription} />
     <meta name="twitter:image" content={ogImage} />
+    {productJsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(productJsonLd)} />}
 
     <!-- Vercel Web Analytics: cookieless page views. Served from this site's own
          /_vercel path, so it adds no third-party request. privacy.md says so. -->
