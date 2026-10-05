@@ -11,6 +11,7 @@ import Footer from '@/components/chrome/Footer.astro';
 import BuyBar from '@/components/chrome/BuyBar.astro';
 import Analytics from '@vercel/analytics/astro';
 import { site, display } from '@/config/site';
+import { faqPageSchema } from '@/data/faq';
 
 /* Self-hosted, so a page load contacts no third party. The privacy page says
    so, and check-copy.mjs fails if a Google Fonts URL comes back. */
@@ -34,6 +35,8 @@ interface Props {
   ogDescription?: string;
   /** Emits SoftwareApplication JSON-LD. Only the home page describes the product. */
   productSchema?: boolean;
+  /** Emits FAQPage JSON-LD. Only the page that actually shows the FAQ. */
+  faqSchema?: boolean;
 }
 
 const {
@@ -43,6 +46,7 @@ const {
   ogTitle = 'Folio, a personal photo archive manager',
   ogDescription = 'Folio organizes the scattered photos on your PC. It shows you the whole plan first, and nothing changes until you approve it.',
   productSchema = false,
+  faqSchema = false,
 } = Astro.props;
 
 /* Every value comes from site.ts, so the structured data cannot drift from the
@@ -98,6 +102,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
     <meta name="twitter:description" content={ogDescription} />
     <meta name="twitter:image" content={ogImage} />
     {productJsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(productJsonLd)} />}
+    {faqSchema && <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema())} />}
 
     <!-- Vercel Web Analytics: cookieless page views. Served from this site's own
          /_vercel path, so it adds no third-party request. privacy.md says so. -->

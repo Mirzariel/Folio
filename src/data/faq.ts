@@ -148,3 +148,25 @@ export const faqEntries: readonly FaqEntry[] = [
     ],
   },
 ] as const;
+
+/**
+ * The same questions as schema.org FAQPage, built from `faqEntries` so the
+ * structured data cannot drift from what the page shows. Markup is stripped
+ * and paragraphs joined, because the visible answer and the markup must say
+ * the same words.
+ */
+export function faqPageSchema() {
+  const plain = (html: string) => html.replace(/<[^>]+>/g, '');
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqEntries.map((entry) => ({
+      '@type': 'Question',
+      name: entry.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: entry.answer.map(plain).join(' '),
+      },
+    })),
+  };
+}

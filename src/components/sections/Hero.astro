@@ -40,13 +40,11 @@ const specs = [
   <div class="hero__glow" aria-hidden="true"></div>
 
   <div class="hero__top">
-    <p class="kicker ld ld-1">Folio for {site.platforms.shipping[0]?.split(' ')[0]}</p>
-    <SplitHeading
-      lines={['You capture the moments.', 'Folio organizes the memories.']}
-      as="h1"
-      variant="display"
-      class="hero__title ld ld-2"
-    />
+    <h1 class="hero__h1">
+      <span class="kicker hero__kicker ld ld-1">{site.platforms.shipping[0]?.split(' ')[0]} photo organizer and duplicate finder</span>
+      <SplitHeading lines={['You capture the moments.', 'Folio organizes the memories.']}
+        as="span" variant="display" class="hero__title ld ld-2" />
+    </h1>
     <p class="hero__sub ld ld-3">Every photograph, in its place.</p>
   </div>
 
@@ -88,7 +86,8 @@ const specs = [
   @keyframes breathe { 0%, 100% { opacity: .75; } 50% { opacity: 1; } }
 
   .hero__top { position: relative; z-index: 2; text-align: center; }
-  .hero__title { margin: 16px auto 0; max-width: 16ch; font-size: clamp(40px, 6.6vw, 92px); }
+  .hero__h1 { font: inherit; } .hero__kicker { display: block; }
+  .hero__title { display: block; margin: 16px auto 0; max-width: 16ch; font-size: clamp(40px, 6.6vw, 92px); }
   .hero__sub { margin-top: 18px; font-size: var(--fs-lede); color: var(--t2); }
 
   /* The prints own the middle band, between the title and the actions, so

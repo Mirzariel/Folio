@@ -13,7 +13,8 @@
 interface Props {
   /** One entry per line. May contain inline markup. */
   lines: readonly string[];
-  as?: 'h1' | 'h2';
+  /** `span` is for a heading that sits inside a parent h1 next to other text. */
+  as?: 'h1' | 'h2' | 'span';
   /** Type role class. */
   variant?: 'display' | 'h2';
   class?: string;
