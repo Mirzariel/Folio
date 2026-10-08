@@ -128,7 +128,7 @@ const config = schema.parse({
   /** The launch offer ended on October 2, 2026. $10 is now the regular price. */
   launchOffer: null,
   checkoutUrl: 'https://folioarchiveapp.lemonsqueezy.com/checkout/buy/16a759d8-e1c9-422d-a7a0-8305dd5bb644',
-  support: { email: 'folioarchive@gmail.com' },
+  support: { email: 'folio@foliolibrary.app' },
   feedback: { accessKey: '' },
 
   license: {

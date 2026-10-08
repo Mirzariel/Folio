@@ -102,4 +102,4 @@ mandatory consumer laws of the country where you live, and you may use its court
 ## Contact
 
 The Folio developer
-Email: folioarchive@gmail.com
+Email: folio@foliolibrary.app

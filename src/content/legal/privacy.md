@@ -100,7 +100,7 @@ request. The data on your own PC is kept until you delete it.
 ## Your rights
 
 You can ask what personal data we hold about you, ask for a copy, ask us to correct or delete it,
-object to how it is used, or withdraw a consent you gave. Write to folioarchive@gmail.com and we
+object to how it is used, or withdraw a consent you gave. Write to folio@foliolibrary.app and we
 will answer within 30 days. Deleting your record does not cancel a license you have bought,
 though we may then be unable to look up your key for you. Records that tax law requires are kept
 by the merchant of record regardless.
@@ -121,4 +121,4 @@ ships.
 ## Contact
 
 The Folio developer
-Email: folioarchive@gmail.com
+Email: folio@foliolibrary.app

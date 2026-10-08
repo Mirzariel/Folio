@@ -63,7 +63,7 @@ once.
 
 Delivery is electronic and immediate. Your license key and download link are sent to the email
 address you give at checkout, and appear on your order receipt. If they do not arrive, write to
-folioarchive@gmail.com and we will send them again.
+folio@foliolibrary.app and we will send them again.
 
 ## Your license
 
@@ -93,4 +93,4 @@ mandatory consumer laws of the country where you live, and you may use its court
 ## Contact
 
 The Folio developer
-Email: folioarchive@gmail.com
+Email: folio@foliolibrary.app

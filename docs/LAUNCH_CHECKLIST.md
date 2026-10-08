@@ -47,7 +47,7 @@ decide deliberately before launch whether the terms should say something.
 
 ## 3. Confirm the support email, and connect the feedback form
 
-`src/config/site.ts`, field `support.email`. It is `folioarchive@gmail.com`, which is also where
+`src/config/site.ts`, field `support.email`. It is `folio@foliolibrary.app`, which is also where
 feedback arrives. Confirm that is the address you want buyers to see.
 
 The feedback section on the home page sends through Web3Forms. Go to web3forms.com, enter the
@@ -61,7 +61,7 @@ one real test message and confirm it arrives.
 `src/content/legal/privacy.md`, `terms.md` and `license.md` are complete, with no placeholders,
 as of 2026-09-26. The choices behind them:
 
-- The licensor is named as **"the Folio developer"**, contact `folioarchive@gmail.com`. Lemon
+- The licensor is named as **"the Folio developer"**, contact `folio@foliolibrary.app`. Lemon
   Squeezy, LLC is the merchant of record and seller of record for payments.
 - Governing law: **the Republic of Indonesia**. Consumers keep their own country's mandatory
   protections.
