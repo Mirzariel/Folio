@@ -84,7 +84,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0C0705" />
     {canonical && <link rel="canonical" href={canonical} />}
-    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon" sizes="16x16 32x32 48x48" />
     <link rel="icon" href="/folio-mark.png" type="image/png" sizes="96x96" />
     <link rel="icon" href="/folio-icon-192.png" type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" href="/folio-icon-192.png" />
